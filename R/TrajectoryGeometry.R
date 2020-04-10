@@ -1,5 +1,4 @@
 
-#' @importFrom pracma Norm
 
 
 ## ##########################################################################
@@ -72,6 +71,7 @@ testPathForDirectionality = function(path,start=1,end=nrow(path),d=ncol(path),
 #'     ncol(path)
 #' @return This returns a projection of the path onto the d-1 sphere
 #'     in the form of a (end - start) x d matrix.
+#' @importFrom pracma Norm
 #' @export
 projectPathToSphere = function(path,start=1,end=nrow(path),d=ncol(path))
 {
