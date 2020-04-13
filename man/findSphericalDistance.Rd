@@ -15,6 +15,9 @@ of length d.}
 \item{points}{- The set of target points for which spherical
 distance to the center should be calculated.  This is in the
 form of a n x d matrix.}
+
+\item{normalize}{- If this is set to TRUE, the function will start
+by normalizing the input points.}
 }
 \value{
 This returns a vector of n spherical distances in

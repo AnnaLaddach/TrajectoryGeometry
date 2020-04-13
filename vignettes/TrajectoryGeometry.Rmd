@@ -1,0 +1,23 @@
+---
+title: "TrajectoryGeometry"
+author: "Anna Laddach and Michael Shapiro"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{TrajectoryGeometry}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+# TrajectoryGeometry
+
+## Introduction
+
+The purpose of this package is to discover directionality in the
+changes in time or pseudo-time series of gene expression.  

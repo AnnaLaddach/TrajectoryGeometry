@@ -1,5 +1,26 @@
 
+## ## ##########################################################################
+#' A dummy function with no other purpose than to have somewhere to put
+#' all the imports.
+#'
+#' There really ought to be a better way to put all the importFrom comments
+#' in one place.
+#' @return Gornisht!
+#' @importFrom pracma Norm
+#' @importFrom pracma dot
+#' @importFrom pracma cross
+#' @importFrom rgl open3d
+#' @importFrom rgl spheres3d
+#' @importFrom rgl lines3d
+#' @importFrom rgl points3d
+dummyPlaceholder = function()
+{
+    
+}
 
+## ##########################################################################
+## ##########################################################################
+## Code for testing directionality in paths:
 
 ## ##########################################################################
 #' Test a path for directionality
@@ -35,21 +56,21 @@ testPathForDirectionality = function(path,start=1,end=nrow(path),d=ncol(path),
     ## ###################################################
     ## Get the spherical data:
     sphericalData = getSphericalData(path,statistic)
-
+    
     ## ###################################################
     ## Generate random paths:
     randomPaths = generateRandomPaths(path,preserveLengths,N)
-
+    
     ## ###################################################
     ## Compute the distance statistics for random paths:
     distances = getDistanceDataForPaths(randomPaths,statistic)
-
-
+    
+    
     ## ###################################################
     ## Return the p-value:
     idx = distances <= sphericalData$distance 
     pValue = sum(idx) / N
-
+    
     return(pValue)
 }
 
@@ -71,7 +92,6 @@ testPathForDirectionality = function(path,start=1,end=nrow(path),d=ncol(path),
 #'     ncol(path)
 #' @return This returns a projection of the path onto the d-1 sphere
 #'     in the form of a (end - start) x d matrix.
-#' @importFrom pracma Norm
 #' @export
 projectPathToSphere = function(path,start=1,end=nrow(path),d=ncol(path))
 {
@@ -83,13 +103,13 @@ projectPathToSphere = function(path,start=1,end=nrow(path),d=ncol(path))
     ## ###################################################
     ## Create and populate a matrix with projections:
     projection = matrix(0,nrow=n-1,ncol=d)
-
+    
     for(i in 2:n)
     {
         v = path[i,] - path[1,]
         projection[i-1,] = v / Norm(v)
     }
-
+    
     return(projection)
 }
 
@@ -115,7 +135,7 @@ projectPathToSphere = function(path,start=1,end=nrow(path),d=ncol(path))
 #' @export
 findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 {
-   n = nrow(points)
+    n = nrow(points)
     
     ## ###################################################
     ## Normalize if necessary:
@@ -125,11 +145,11 @@ findSphereClusterCenter = function(points,statistic,normalize=FALSE)
         for(i in seq_len(n))
             points[i,] = points[i,] / Norm(points[i,])
     }
-
+    
     
     ## ###################################################
     ## Where the rubber hits the road!
-
+    
 }
 
 ## ###################################################
@@ -147,11 +167,11 @@ findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 #' @param points - The set of target points for which spherical
 #' distance to the center should be calculated.  This is in the
 #' form of a n x d matrix.
-#' @normalize - If this is set to TRUE, the function will start
+#' @param normalize - If this is set to TRUE, the function will start
 #' by normalizing the input points.
 #' @return This returns a vector of n spherical distances in
 #' radians.
-#' @ export
+#' @export
 findSphericalDistance = function(center,points,normalize=FALSE)
 {
     n = nrow(points)
@@ -164,18 +184,18 @@ findSphericalDistance = function(center,points,normalize=FALSE)
         for(i in seq_len(n))
             points[i,] = points[i,] / Norm(points[i,])
     }
-
+    
     ## ###################################################
     ## Find spherical distances:
     distances = numeric(n)
     for(i in seq_len(n))
     {
-        dotProduct = sum(center * points[i,])
-        distances[i] = acos(dotProduct)
+        distances[i] = acos(dot(center,points[i,]))
     }
-
+    
     return(distances)
 }
+
 
 ## ###################################################
 #' Find the spherical data for a given path
@@ -193,7 +213,7 @@ findSphericalDistance = function(center,points,normalize=FALSE)
 #'     nrow(path).
 #' @param d - The dimension under consideration.  This defaults to
 #'     ncol(path)
-#' @param statistic
+#' @param statistic - One of 'median', 'mean' or 'max'
 #' @return This function returns a list whose elements are the
 #'     projections of the path to the sphere, the center for those
 #'     projections, the median, mean or max distance from the center
@@ -211,7 +231,7 @@ pathToSphericalData = function(path,start,end,d,statistic)
     ## Get the projections of the path to the sphere
     projections = projectPathToSphere(path)
     returnValues$projections = projections
-
+    
     ## ###################################################
     ## Find the center of those projections according to the
     ## chosen statistic.
@@ -223,15 +243,15 @@ pathToSphericalData = function(path,start,end,d,statistic)
     distances = findSphericalDistance(center,projections)
     if(statistic == 'median')
         distance = median(distances)
-
+    
     if(statistic == 'mean')
         distance = mean(distances)
-
+    
     if(statistic == 'max')
         distance = max(distances)
-
+    
     returnValues$distance = distance
-
+    
     ## ###################################################
     ## Append the name of the statistic:
     returnValues$statistic = statistic
@@ -279,7 +299,7 @@ generateRandomPaths = function(path,start=1,end=nrow(path),d=ncol(path),
     if(preserveLengths)
         stepLengths = getStepLengths(path,d)
     
-
+    
     ## ###################################################
     ## Generate the random paths:
     returnAsList = list()
@@ -289,13 +309,13 @@ generateRandomPaths = function(path,start=1,end=nrow(path),d=ncol(path),
         for(j in seq_len(n-1))
             randomPath[j+1,] = randomPath[j,] +
                 stepLengths[j] * generateRandomUnitVector(d)
-
+        
         if(N == 1)
             return(randomPath)
-
+        
         returnAsList[[i]] = randomPath
     }
-
+    
     return(returnAsList)
 }
 
@@ -320,11 +340,11 @@ getStepLengths = function(path,start=1,end=nrow(path),d=ncol(path))
     ## Subset to the data under consideration:
     path = path[start:end,1:d]
     n = nrow(path)
-
+    
     stepLengths = numeric(n-1)
-        for(i in seq_len(n-1))
-            stepLengths[i] = Norm(paths[i+1,] - paths[i,])
-
+    for(i in seq_len(n-1))
+        stepLengths[i] = Norm(paths[i+1,] - paths[i,])
+    
     return(stepLengths)
 }
 
@@ -347,7 +367,7 @@ getDistanceDataForPaths = function(paths,statistic)
     n = nrow(paths[[1]])
     N = length(paths)
     distances = numeric(N)
-
+    
     ## ###################################################
     ## Iterate over paths:
     for(i in seq_len(N))
@@ -355,7 +375,7 @@ getDistanceDataForPaths = function(paths,statistic)
         sphericalData = getSphericalData(paths[[i]],statistic)
         distances[i] = sphericalData$distance
     }
-
+    
     return(distances)
 }
 
@@ -374,10 +394,100 @@ generateRandomUnitVector = function(d)
     return(x / Norm(x))
 }
 
+
+## ##########################################################################
+## ##########################################################################
+## Code for extracting paths for single cell data:
+
+## ##########################################################################
+## ##########################################################################
+## Code for plotting paths and their spherical data:
+
 ## ###################################################
+#' Find an orthonormal basis in dimension 3
+#'
+#' Given a vector, this normalizes it and then uses it as
+#' the first basis vector in an orthonormal basis.  We'll use
+#' this to find circles around points on the sphere.
+#'
+#' @param x - A vector of length 3
+#' @return This function returns an orthonormal basis in
+#' the the form of a 3 x 3 matrix in which the first vector is
+#' parallel to v
+#' @export
+orthonormalBasis = function(x)
+{
+    x = x / Norm(x)
+    B = matrix(0,nrow=3,ncol=3)
+    
+    ## ###################################################
+    ## The first basis element:
+    B[1,] = x
+    
+    ## ###################################################
+    ## Find a vector not colinear with x:
+    y = rep(0,3)
+    while(dot(x,y) < 1e-3)
+        y = generateRandomUnitVector(3)
+    
+    ## ###################################################
+    ## Get the portion of y perpendicular to x:
+    y = y - dot(x,y) * x
+    y = y / Norm(y)
+    B[2,] = y
+    
+    ## ###################################################
+    ## The third basis element is the cross product:
+    B[3,] = cross(x,y)
+    
+    return(B)
+}
+
 ## ###################################################
-## We need the flock of functions involved in extracting
-## paths from time or pseudo-time series.  
+#' Circle on the unit sphere
+#'
+#' Find a circle on the unit sphere
+#'
+#' Given a point on the unit sphere and a radius given
+#' as a spherical distance, this finds the circle.
+#'
+#' It's not clear to me this should be exported, but it's
+#' handy to do this for testing and debugging.
+#'
+#' @param center - The center of the circle.
+#' @param radius - The radius of the circle.
+#' @param N - The number of segments to approximate the circle. It
+#'     defaults to 36.
+#' @return This returns an approximation to the the circle as a N+1 x
+#'     3 matrix
+#' @export
+circleOnTheUnitSphere = function(center,radius,N=36)
+{
+    ## ###################################################
+    ## For sanity:
+    center = center / Norm(center)
+    
+    ## ###################################################
+    ## Get the orthonormal basis:
+    B = orthonormalBasis(center)
 
+    ## ###################################################
+    ## The planar center of the circle:
+    ctr = cos(radius) * center
 
+    ## ###################################################
+    ## The planar radius of the circle:
+    R = sin(radius)
 
+    ## ###################################################
+    ## We sweep out the circle with these:
+    x = R * B[2,]
+    y = R * B[3,]
+
+    theta = (0:N) * (2 * pi / N)
+    circle = matrix(0,nrow=N+1,ncol=3)
+    for(i in 1:(N+1))
+        circle[i,] = ctr + cos(theta[i]) * x + sin(theta[i]) * y
+
+    return(circle)
+}

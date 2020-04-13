@@ -18,6 +18,8 @@ nrow(path).}
 
 \item{d}{- The dimension under consideration.  This defaults to
 ncol(path)}
+
+\item{statistic}{- One of 'median', 'mean' or 'max'}
 }
 \value{
 This function returns a list whose elements are the
