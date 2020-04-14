@@ -399,6 +399,9 @@ generateRandomUnitVector = function(d)
 ## ##########################################################################
 ## Code for extracting paths for single cell data:
 
+
+
+
 ## ##########################################################################
 ## ##########################################################################
 ## Code for plotting paths and their spherical data:
@@ -490,4 +493,74 @@ circleOnTheUnitSphere = function(center,radius,N=36)
         circle[i,] = ctr + cos(theta[i]) * x + sin(theta[i]) * y
 
     return(circle)
+}
+
+
+## ###################################################
+#' Plot a path, its projection, its center and its circle
+#'
+#' This function assumes you have a path in dimension 3 and you have
+#' found the projection for the portion under consideration, the
+#' center for its projection and the circle (i.e., radius) for the
+#' appropriate statistic.  Scales the path to keep it comparable to
+#' the sphere and plots all this in your favorite color.  It can be
+#' called repeatedly to add additional paths in different colors.
+#'
+#' @param path - A path of dimension 3 in the form of an N x 3 matrix.
+#' @param start - The starting place of the section under
+#'     consideration.  This is used for marking the relevant
+#'     portion. It defaults to 1.
+#' @param end - Likewise.  It defaults to nrow(path).
+#' @param projection - The projection of the relevant portion of the
+#'     path.
+#' @param center - The center of the projection points.
+#' @param radius - The radius of the circle.
+#' @param color - The color to use for this path and its associated
+#'     data.
+#' @param scale - The path will be start (its actual start) at 0 and
+#'     will be scaled so that its most distant point will be at this
+#'     distance from the origin.  This is to keep it comparable in
+#'     size to the sphere. It defaults to 2 Caution should be used
+#'     here when plotting multiple paths.
+#' @param newFigure - When plotting a single figure or the first of
+#'     multiple figures, this should be set to TRUE which is its
+#'     default.  Otherwise, set this to FALSE in order to add
+#'     additional paths to the same figure.
+#' @export
+plotPathProjectionCenterAndCircle = function(path,start,end,
+                                             projection,
+                                             center,
+                                             radius=2,
+                                             color,
+                                             scale,
+                                             newFigure=TRUE)
+{
+    ## ###################################################
+    ## Constants.  Maybe they should become parameters?
+    pathPointSize = 10
+    projectionPointSize = 10
+    centerSize = 15
+    pathLineSize = 8
+    circleLineSize = 8
+    
+
+    ## ###################################################
+    ## Translate the path to begin at the origin and scale:
+
+    ## ###################################################
+    ## Are we starting a new figure?
+
+    ## ###################################################
+    ## Plot the path and mark the relevant portion:
+
+    ## ###################################################
+    ## Plot the projection:
+
+    ## ###################################################
+    ## Plot the center:
+
+    ## ###################################################
+    ## Plot the circle:    
+
+
 }
