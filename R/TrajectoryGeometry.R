@@ -520,47 +520,76 @@ circleOnTheUnitSphere = function(center,radius,N=36)
 #' @param scale - The path will be start (its actual start) at 0 and
 #'     will be scaled so that its most distant point will be at this
 #'     distance from the origin.  This is to keep it comparable in
-#'     size to the sphere. It defaults to 2 Caution should be used
+#'     size to the sphere. It defaults to 1.5.  Caution should be used
 #'     here when plotting multiple paths.
 #' @param newFigure - When plotting a single figure or the first of
 #'     multiple figures, this should be set to TRUE which is its
 #'     default.  Otherwise, set this to FALSE in order to add
 #'     additional paths to the same figure.
 #' @export
-plotPathProjectionCenterAndCircle = function(path,start,end,
+plotPathProjectionCenterAndCircle = function(path,
+                                             start=1,
+                                             end=nrow(path),
                                              projection,
                                              center,
-                                             radius=2,
+                                             radius,
                                              color,
-                                             scale,
+                                             scale=1.5,
                                              newFigure=TRUE)
 {
     ## ###################################################
     ## Constants.  Maybe they should become parameters?
-    pathPointSize = 10
-    projectionPointSize = 10
+    pathPointSize = 8
+    projectionPointSize = 8
     centerSize = 15
-    pathLineSize = 8
-    circleLineSize = 8
+    pathLineWidth = 3
+    circleLineWidth = 3
+    relevantPortionPointHump = 4
+    relevantPortionLineHump = 3
+    alpha = .2
     
 
     ## ###################################################
     ## Translate the path to begin at the origin and scale:
-
+    N = nrow(path)
+    distances = numeric(N)
+    for(i in seq_len(N))
+    {
+        path[i,] = path[i,] - path[1,]
+        distances[i] = Norm(path[i])
+    }
+    path = (scale / max(distances)) * path
+    
+    
     ## ###################################################
     ## Are we starting a new figure?
+    if(newFigure)
+    {
+        open3d()
+        spheres3d(0,0,0,size=1,alpha=alpha)
+    }
 
     ## ###################################################
     ## Plot the path and mark the relevant portion:
+    points3d(path,size=pathPointSize,color=color)
+    lines3d(path,lwd=pathLineWidth,color=color)
+
+    points3d(path[start:end,],size=pathPointSize+relevantPortionPointHump,
+             color=color)
+    lines3d(path[start:end,],lwd=pathLineWidth+relevantPortionLineHump,
+            color=color)
 
     ## ###################################################
     ## Plot the projection:
+    points3d(projection,size=projectionPointSize,color=color)
 
     ## ###################################################
     ## Plot the center:
+    points3d(matrix(center,nrow=1),size=centerSize,color=color)
 
     ## ###################################################
-    ## Plot the circle:    
-
+    ## Plot the circle:
+    circle = circleOnTheUnitSphere(center,radius)
+    lines3d(circle,lwd=circleLineWidth,color=color)
 
 }
