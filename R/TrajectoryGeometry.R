@@ -128,29 +128,59 @@ projectPathToSphere = function(path,start=1,end=nrow(path),d=ncol(path))
 #' @param points - A set of n points on the (d-1) sphere given as an n
 #'     x d matrix.
 #' @param statistic - The statistic to be minimized.  Allowable values
-#'     are 'median','mean' or 'max'.
+#'     are 'median','mean' or 'max'. Need to decide how to handle 
+#'     values which are not allowed.
 #' @param normalize - If this is set to TRUE, the function will start
 #'     by normalizing the input points.
 #' @return This returns a point in dimension d given as a vector.
 #' @export
 findSphereClusterCenter = function(points,statistic,normalize=FALSE)
-{
+{ 
     n = nrow(points)
     
     ## ###################################################
-    ## Normalize if necessary:
+    # Normalize if necessary:
     if(normalize)
     {
-        center = center / Norm(center)
+        #center = center / Norm(center)  we have not found the
+        #center yet so cannot normalise it.
         for(i in seq_len(n))
             points[i,] = points[i,] / Norm(points[i,])
     }
-    
+
+    ## ###################################################
+    ## Function to be minimised
+    minFunction = function(x){
+      norm = Norm(x)
+      unitVector = x/norm
+      if (norm < 0.1){
+        return(100)
+      } 
+      distances = findSphericalDistance(unitVector)
+      if (statistic == "max"){
+        return(max(distances))
+      }
+      
+      if (statistic == "median"){
+        return(median(distances))
+      }
+      
+      if (statistic == "mean"){
+        return(mean(distances))
+      }
+    }
+    ## ###################################################
+    ## Choose a possible center as a start for minimisation
+    meanPoint = colMeans(points)
+    optimStart = meanPoint/Norm(meanPoint)
     
     ## ###################################################
-    ## Where the rubber hits the road!
+    ## Find center which minimises spherical distances.
+    minResult = optim(optimStart, minFunction, control = list(maxit = 1000))
     
-}
+    center = minResult$par/Norm(minResult$par)
+    return(center)
+}   
 
 ## ###################################################
 #' Find the spherical distance from a given point to a
@@ -190,7 +220,7 @@ findSphericalDistance = function(center,points,normalize=FALSE)
     distances = numeric(n)
     for(i in seq_len(n))
     {
-        distances[i] = acos(dot(center,points[i,]))
+        distances[i] = acos(round(dot(center,points[i,]),7))
     }
     
     return(distances)
