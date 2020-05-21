@@ -6,8 +6,8 @@
 \usage{
 plotPathProjectionCenterAndCircle(
   path,
-  start = 1,
-  end = nrow(path),
+  from = 1,
+  to = nrow(path),
   projection,
   center,
   radius,
@@ -19,11 +19,11 @@ plotPathProjectionCenterAndCircle(
 \arguments{
 \item{path}{- A path of dimension 3 in the form of an N x 3 matrix.}
 
-\item{start}{- The starting place of the section under
+\item{from}{- The starting place of the section under
 consideration.  This is used for marking the relevant
 portion. It defaults to 1.}
 
-\item{end}{- Likewise.  It defaults to nrow(path).}
+\item{to}{- Likewise.  It defaults to nrow(path).}
 
 \item{projection}{- The projection of the relevant portion of the
 path.}

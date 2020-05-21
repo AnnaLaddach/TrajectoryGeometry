@@ -19,6 +19,10 @@ dummyPlaceholder = function()
 }
 
 ## ##########################################################################
+## Yow! A global variable!
+trace = FALSE
+
+## ##########################################################################
 ## ##########################################################################
 ## Code for testing directionality in paths:
 
@@ -31,9 +35,9 @@ dummyPlaceholder = function()
 #'
 #' @param path - An n x m matrix representing a series of n points in
 #'     dimension m.
-#' @param start - The starting place along the path which will be
+#' @param from - The starting place along the path which will be
 #'     treated as the center of the sphere.  This defaults to 1.
-#' @param end - The end point of the path.  This defaults to
+#' @param to - The end point of the path.  This defaults to
 #'     nrow(path).
 #' @param d - The dimension under consideration.  This defaults to
 #'     ncol(path)
@@ -46,12 +50,16 @@ dummyPlaceholder = function()
 #' @return This returns a p-value for the directionality of the given
 #'     path.
 #' @export
-testPathForDirectionality = function(path,start=1,end=nrow(path),d=ncol(path),
+testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
                                      statistic,preserveLengths=TRUE,N)
 {
+    ## TRACE
+    if(trace)
+        print('in testPathForDirectionality')
+    
     ## ###################################################
     ## Subset to the data under consideration:
-    path = path[start:end,1:d]
+    ## path = path[from:to,1:d]
     
     ## ###################################################
     ## Get the spherical data:
@@ -59,7 +67,9 @@ testPathForDirectionality = function(path,start=1,end=nrow(path),d=ncol(path),
     
     ## ###################################################
     ## Generate random paths:
-    randomPaths = generateRandomPaths(path,preserveLengths,N)
+    randomPaths = generateRandomPaths(path,
+                                      preserveLengths=preserveLengths,
+                                      N=N)
     
     ## ###################################################
     ## Compute the distance statistics for random paths:
@@ -84,20 +94,24 @@ testPathForDirectionality = function(path,start=1,end=nrow(path),d=ncol(path),
 #'
 #' @param path - This is an mxn dimensional matrix. Each row is
 #'     considered a point.
-#' @param start - The starting place along the path which will be
+#' @param from - The starting place along the path which will be
 #'     treated as the center of the sphere.  This defaults to 1.
-#' @param end - The end point of the path.  This defaults to
+#' @param to - The end point of the path.  This defaults to
 #'     nrow(path).
 #' @param d - The dimension under consideration.  This defaults to
 #'     ncol(path)
 #' @return This returns a projection of the path onto the d-1 sphere
-#'     in the form of a (end - start) x d matrix.
+#'     in the form of a (to - from) x d matrix.
 #' @export
-projectPathToSphere = function(path,start=1,end=nrow(path),d=ncol(path))
+projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 {
+    ## TRACE
+    if(trace)
+        print('in projectPathToSphere')
+    
     ## ###################################################
     ## Subset to the data under consideration:
-    path = path[start:end,1:d]
+    path = path[from:to,1:d]
     n = nrow(path)
     
     ## ###################################################
@@ -135,15 +149,17 @@ projectPathToSphere = function(path,start=1,end=nrow(path),d=ncol(path))
 #' @return This returns a point in dimension d given as a vector.
 #' @export
 findSphereClusterCenter = function(points,statistic,normalize=FALSE)
-{ 
+{
+    ## TRACE
+    if(trace)
+        print('in findSphereClusterCenter')
+    
     n = nrow(points)
     
     ## ###################################################
     # Normalize if necessary:
     if(normalize)
     {
-        #center = center / Norm(center)  we have not found the
-        #center yet so cannot normalise it.
         for(i in seq_len(n))
             points[i,] = points[i,] / Norm(points[i,])
     }
@@ -156,7 +172,7 @@ findSphereClusterCenter = function(points,statistic,normalize=FALSE)
       if (norm < 0.1){
         return(100)
       } 
-      distances = findSphericalDistance(unitVector)
+      distances = findSphericalDistance(unitVector,points)
       if (statistic == "max"){
         return(max(distances))
       }
@@ -204,6 +220,10 @@ findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 #' @export
 findSphericalDistance = function(center,points,normalize=FALSE)
 {
+    ## TRACE
+    if(trace)
+        print('in findSphericalDistance')
+    
     n = nrow(points)
     
     ## ###################################################
@@ -226,6 +246,32 @@ findSphericalDistance = function(center,points,normalize=FALSE)
     return(distances)
 }
 
+## ###################################################
+#' This is a simplified wrapper for pathToSphericalData
+#'
+#' It handles the case in which from, to and d are all
+#' given by the dimensions of the path
+#'
+#' @param path - an m x n matrix.  Each row is considered a point
+#' @param statistic - one of 'mean','median' or 'max'
+#' @return This function returns a list whose elements are the
+#'     projections of the path to the sphere, the center for those
+#'     projections, the median, mean or max distance from the center
+#'     to those projections and the name of the statistic used.
+#' @export
+getSphericalData = function(path,statistic)
+{
+    ## TRACE
+    if(trace)
+        print('in getSphericalData')
+    
+    from = 1
+    to = nrow(path)
+    d = ncol(path)
+
+    return(pathToSphericalData(path,from,to,d,statistic))
+}
+
 
 ## ###################################################
 #' Find the spherical data for a given path
@@ -237,9 +283,9 @@ findSphericalDistance = function(center,points,normalize=FALSE)
 #'
 #' @param path - This is an mxn dimensional matrix. Each row is
 #'     considered a point.
-#' @param start - The starting place along the path which will be
+#' @param from - The starting place along the path which will be
 #'     treated as the center of the sphere.  This defaults to 1.
-#' @param end - The end point of the path.  This defaults to
+#' @param to - The end point of the path.  This defaults to
 #'     nrow(path).
 #' @param d - The dimension under consideration.  This defaults to
 #'     ncol(path)
@@ -249,12 +295,16 @@ findSphericalDistance = function(center,points,normalize=FALSE)
 #'     projections, the median, mean or max distance from the center
 #'     to those projections and the name of the statistic used.
 #' @export
-pathToSphericalData = function(path,start,end,d,statistic)
+pathToSphericalData = function(path,from,to,d,statistic)
 {
+    ## TRACE
+    if(trace)
+        print('in pathToSphericalData')
+    
     returnValues = list()
     ## ###################################################
     ## Subset to the data under consideration:
-    path = path[start:end,1:d]
+    path = path[from:to,1:d]
     n = nrow(path)
     
     ## ###################################################
@@ -301,9 +351,9 @@ pathToSphericalData = function(path,start,end,d,statistic)
 #'
 #' @param path - This is an mxn dimensional matrix. Each row is
 #'     considered a point.
-#' @param start - The starting place along the path which will be
+#' @param from - The starting place along the path which will be
 #'     treated as the center of the sphere.  This defaults to 1.
-#' @param end - The end point of the path.  This defaults to
+#' @param to - The end point of the path.  This defaults to
 #'     nrow(path).
 #' @param d - The dimension under consideration.  This defaults to
 #'     ncol(path)
@@ -314,20 +364,23 @@ pathToSphericalData = function(path,start,end,d,statistic)
 #' @return This function returns a list of random paths.  Each path is
 #'     a matrix.  Note that each random path begins at the origin.
 #' @export
-generateRandomPaths = function(path,start=1,end=nrow(path),d=ncol(path),
+generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
                                preserveLengths=TRUE,N)
 {
+    ## TRACE
+    if(trace)
+        print('in generateRandomPaths')
+
     ## ###################################################
     ## Subset to the data under consideration:
-    path = path[start:end,1:d]
+    path = path[from:to,1:d]
     n = nrow(path)
-    
-    
+
     ## ###################################################
     ## Find the length of the steps if required:
     stepLengths = rep(1,n-1)
     if(preserveLengths)
-        stepLengths = getStepLengths(path,d)
+        stepLengths = getStepLengths(path)
     
     
     ## ###################################################
@@ -356,24 +409,28 @@ generateRandomPaths = function(path,start=1,end=nrow(path),d=ncol(path),
 #'
 #' @param path - This is an mxn dimensional matrix. Each row is
 #'     considered a point.
-#' @param start - The starting place along the path which will be
+#' @param from - The starting place along the path which will be
 #'     treated as the center of the sphere.  This defaults to 1.
-#' @param end - The end point of the path.  This defaults to
+#' @param to - The end point of the path.  This defaults to
 #'     nrow(path).
 #' @param d - The dimension under consideration.  This defaults to
 #'     ncol(path)
 #' @return This function returns the length of each step in a path.
 #' @export
-getStepLengths = function(path,start=1,end=nrow(path),d=ncol(path))
+getStepLengths = function(path,from=1,to=nrow(path),d=ncol(path))
 {
+    ## TRACE
+    if(trace)
+        print('in getStepLengths')
+    
     ## ###################################################
     ## Subset to the data under consideration:
-    path = path[start:end,1:d]
+    path = path[from:to,1:d]
     n = nrow(path)
     
     stepLengths = numeric(n-1)
     for(i in seq_len(n-1))
-        stepLengths[i] = Norm(paths[i+1,] - paths[i,])
+        stepLengths[i] = Norm(path[i+1,] - path[i,])
     
     return(stepLengths)
 }
@@ -394,6 +451,10 @@ getStepLengths = function(path,start=1,end=nrow(path),d=ncol(path))
 #' @export
 getDistanceDataForPaths = function(paths,statistic)
 {
+    ## TRACE
+    if(trace)
+        print('in getDistanceDataForPaths')
+    
     n = nrow(paths[[1]])
     N = length(paths)
     distances = numeric(N)
@@ -420,6 +481,10 @@ getDistanceDataForPaths = function(paths,statistic)
 #' @export
 generateRandomUnitVector = function(d)
 {
+    ## TRACE
+    if(trace)
+        print('in generateRandomUnitVector')
+    
     x = rnorm(d)
     return(x / Norm(x))
 }
@@ -450,6 +515,10 @@ generateRandomUnitVector = function(d)
 #' @export
 orthonormalBasis = function(x)
 {
+    ## TRACE
+    if(trace)
+        print('in orthonormalBasis')
+    
     x = x / Norm(x)
     B = matrix(0,nrow=3,ncol=3)
     
@@ -496,6 +565,10 @@ orthonormalBasis = function(x)
 #' @export
 circleOnTheUnitSphere = function(center,radius,N=36)
 {
+    ## TRACE
+    if(trace)
+        print('in circleOnTheUnitSphere')
+    
     ## ###################################################
     ## For sanity:
     center = center / Norm(center)
@@ -537,10 +610,10 @@ circleOnTheUnitSphere = function(center,radius,N=36)
 #' called repeatedly to add additional paths in different colors.
 #'
 #' @param path - A path of dimension 3 in the form of an N x 3 matrix.
-#' @param start - The starting place of the section under
+#' @param from - The starting place of the section under
 #'     consideration.  This is used for marking the relevant
 #'     portion. It defaults to 1.
-#' @param end - Likewise.  It defaults to nrow(path).
+#' @param to - Likewise.  It defaults to nrow(path).
 #' @param projection - The projection of the relevant portion of the
 #'     path.
 #' @param center - The center of the projection points.
@@ -558,8 +631,8 @@ circleOnTheUnitSphere = function(center,radius,N=36)
 #'     additional paths to the same figure.
 #' @export
 plotPathProjectionCenterAndCircle = function(path,
-                                             start=1,
-                                             end=nrow(path),
+                                             from=1,
+                                             to=nrow(path),
                                              projection,
                                              center,
                                              radius,
@@ -567,6 +640,10 @@ plotPathProjectionCenterAndCircle = function(path,
                                              scale=1.5,
                                              newFigure=TRUE)
 {
+    ## TRACE
+    if(trace)
+        print('in plotPathProjectionCenterAndCircle')
+    
     ## ###################################################
     ## Constants.  Maybe they should become parameters?
     pathPointSize = 8
@@ -604,9 +681,9 @@ plotPathProjectionCenterAndCircle = function(path,
     points3d(path,size=pathPointSize,color=color)
     lines3d(path,lwd=pathLineWidth,color=color)
 
-    points3d(path[start:end,],size=pathPointSize+relevantPortionPointHump,
+    points3d(path[from:to,],size=pathPointSize+relevantPortionPointHump,
              color=color)
-    lines3d(path[start:end,],lwd=pathLineWidth+relevantPortionLineHump,
+    lines3d(path[from:to,],lwd=pathLineWidth+relevantPortionLineHump,
             color=color)
 
     ## ###################################################

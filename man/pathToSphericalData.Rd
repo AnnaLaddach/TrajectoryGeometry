@@ -4,16 +4,16 @@
 \alias{pathToSphericalData}
 \title{Find the spherical data for a given path}
 \usage{
-pathToSphericalData(path, start, end, d, statistic)
+pathToSphericalData(path, from, to, d, statistic)
 }
 \arguments{
 \item{path}{- This is an mxn dimensional matrix. Each row is
 considered a point.}
 
-\item{start}{- The starting place along the path which will be
+\item{from}{- The starting place along the path which will be
 treated as the center of the sphere.  This defaults to 1.}
 
-\item{end}{- The end point of the path.  This defaults to
+\item{to}{- The end point of the path.  This defaults to
 nrow(path).}
 
 \item{d}{- The dimension under consideration.  This defaults to

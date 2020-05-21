@@ -4,16 +4,16 @@
 \alias{projectPathToSphere}
 \title{Project a path onto the unit sphere}
 \usage{
-projectPathToSphere(path, start = 1, end = nrow(path), d = ncol(path))
+projectPathToSphere(path, from = 1, to = nrow(path), d = ncol(path))
 }
 \arguments{
 \item{path}{- This is an mxn dimensional matrix. Each row is
 considered a point.}
 
-\item{start}{- The starting place along the path which will be
+\item{from}{- The starting place along the path which will be
 treated as the center of the sphere.  This defaults to 1.}
 
-\item{end}{- The end point of the path.  This defaults to
+\item{to}{- The end point of the path.  This defaults to
 nrow(path).}
 
 \item{d}{- The dimension under consideration.  This defaults to
@@ -21,7 +21,7 @@ ncol(path)}
 }
 \value{
 This returns a projection of the path onto the d-1 sphere
-    in the form of a (end - start) x d matrix.
+    in the form of a (to - from) x d matrix.
 }
 \description{
 This function takes a path in d dimensional space and projects it onto
