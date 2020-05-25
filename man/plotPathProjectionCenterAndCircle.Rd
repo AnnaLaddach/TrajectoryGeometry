@@ -54,3 +54,11 @@ appropriate statistic.  Scales the path to keep it comparable to
 the sphere and plots all this in your favorite color.  It can be
 called repeatedly to add additional paths in different colors.
 }
+\examples{
+plotPathProjectionCenterAndCircle(path=straightPath,
+                                 projection=straightPathProjection,
+                                 center=straightPathCenter,
+                                 radius=straightPathRadius,
+                                 color='red',
+                                 newFigure=TRUE)
+}

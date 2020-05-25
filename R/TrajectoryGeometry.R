@@ -50,6 +50,9 @@ trace = FALSE
 #' @return This returns a p-value for the directionality of the given
 #'     path.
 #' @export
+#' @examples
+#' p = testPathForDirectionality(path=straightPath,statistic='median',N=100)
+#' q = testPathForDirectionality(path=crookedPath,from=6,statistic='median',N=100)
 testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
                                      statistic,preserveLengths=TRUE,N)
 {
@@ -103,6 +106,9 @@ testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
 #' @return This returns a projection of the path onto the d-1 sphere
 #'     in the form of a (to - from) x d matrix.
 #' @export
+#' @examples
+#' projection1 = projectPathToSphere(straightPath)
+#' projection2 = projectPathToSphere(crookedPath,from=6)
 projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 {
     ## TRACE
@@ -148,6 +154,9 @@ projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 #'     by normalizing the input points.
 #' @return This returns a point in dimension d given as a vector.
 #' @export
+#' @examples
+#' projection = projectPathToSphere(straightPath)
+#' center = findSphereClusterCenter(projection,'mean')
 findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 {
     ## TRACE
@@ -218,6 +227,8 @@ findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 #' @return This returns a vector of n spherical distances in
 #' radians.
 #' @export
+#' @examples
+#' distances = findSphericalDistance(straightPathCenter,straightPathProjection)
 findSphericalDistance = function(center,points,normalize=FALSE)
 {
     ## TRACE
@@ -259,6 +270,8 @@ findSphericalDistance = function(center,points,normalize=FALSE)
 #'     projections, the median, mean or max distance from the center
 #'     to those projections and the name of the statistic used.
 #' @export
+#' @examples
+#' sphericalData = getSphericalData(straightPath,'max')
 getSphericalData = function(path,statistic)
 {
     ## TRACE
@@ -295,6 +308,8 @@ getSphericalData = function(path,statistic)
 #'     projections, the median, mean or max distance from the center
 #'     to those projections and the name of the statistic used.
 #' @export
+#' @examples
+#' sphericalData = pathToSphericalData(straightPath,from=1,to=nrow(straightPath),d=3,statistic='median')
 pathToSphericalData = function(path,from,to,d,statistic)
 {
     ## TRACE
@@ -364,6 +379,7 @@ pathToSphericalData = function(path,from,to,d,statistic)
 #' @return This function returns a list of random paths.  Each path is
 #'     a matrix.  Note that each random path begins at the origin.
 #' @export
+#' @examples
 generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
                                preserveLengths=TRUE,N)
 {
@@ -563,6 +579,10 @@ orthonormalBasis = function(x)
 #' @return This returns an approximation to the the circle as a N+1 x
 #'     3 matrix
 #' @export
+#' @examples
+#' pole = c(1,0,0)
+#' radius = pi / 4
+#' circle = circleOnTheUnitSphere(pole,radius)
 circleOnTheUnitSphere = function(center,radius,N=36)
 {
     ## TRACE
@@ -630,6 +650,13 @@ circleOnTheUnitSphere = function(center,radius,N=36)
 #'     default.  Otherwise, set this to FALSE in order to add
 #'     additional paths to the same figure.
 #' @export
+#' @examples
+#' plotPathProjectionCenterAndCircle(path=straightPath,
+#'                                  projection=straightPathProjection,
+#'                                  center=straightPathCenter,
+#'                                  radius=straightPathRadius,
+#'                                  color='red',
+#'                                  newFigure=TRUE)
 plotPathProjectionCenterAndCircle = function(path,
                                              from=1,
                                              to=nrow(path),
