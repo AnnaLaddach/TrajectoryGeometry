@@ -30,3 +30,7 @@ the given points. "Distance" here is taken to mean
 angle between the points, i.e., arccos of their dot
 product.
 }
+\examples{
+projection = projectPathToSphere(straightPath)
+center = findSphereClusterCenter(projection,'mean')
+}

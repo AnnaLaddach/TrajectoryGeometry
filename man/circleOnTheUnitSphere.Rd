@@ -28,3 +28,8 @@ as a spherical distance, this finds the circle.
 It's not clear to me this should be exported, but it's
 handy to do this for testing and debugging.
 }
+\examples{
+pole = c(1,0,0)
+radius = pi / 4
+circle = circleOnTheUnitSphere(pole,radius)
+}

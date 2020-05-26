@@ -380,6 +380,7 @@ pathToSphericalData = function(path,from,to,d,statistic)
 #'     a matrix.  Note that each random path begins at the origin.
 #' @export
 #' @examples
+#' randomPaths = generateRandomPaths(crookedPath,from=6,N=10)
 generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
                                preserveLengths=TRUE,N)
 {

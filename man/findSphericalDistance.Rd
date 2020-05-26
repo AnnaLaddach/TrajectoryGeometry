@@ -29,3 +29,6 @@ a set of points and finds the spherical distance between
 the given point and each of the others.  If requested, it
 will first normalize all of them.
 }
+\examples{
+distances = findSphericalDistance(straightPathCenter,straightPathProjection)
+}

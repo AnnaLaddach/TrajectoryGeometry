@@ -45,3 +45,7 @@ This is the core function of this package.  It takes a path, and a
 choice of statistical measure and computes a statistical significance
 for the directionality of that path.
 }
+\examples{
+p = testPathForDirectionality(path=straightPath,statistic='median',N=100)
+q = testPathForDirectionality(path=crookedPath,from=6,statistic='median',N=100)
+}

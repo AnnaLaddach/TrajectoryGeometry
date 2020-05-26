@@ -44,3 +44,6 @@ preserveLengths is set to TRUE, the random paths of steps of the
 same length as the original path.  Otherwise, the steps are all
 length 1.
 }
+\examples{
+randomPaths = generateRandomPaths(crookedPath,from=6,N=10)
+}

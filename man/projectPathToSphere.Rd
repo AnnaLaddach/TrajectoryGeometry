@@ -28,3 +28,7 @@ This function takes a path in d dimensional space and projects it onto
 the d-1 sphere.  It takes as additional arguments the starting and ending points 
 under consideration and the dimension to be considered.
 }
+\examples{
+projection1 = projectPathToSphere(straightPath)
+projection2 = projectPathToSphere(crookedPath,from=6)
+}

@@ -21,3 +21,6 @@ This function returns a list whose elements are the
 It handles the case in which from, to and d are all
 given by the dimensions of the path
 }
+\examples{
+sphericalData = getSphericalData(straightPath,'max')
+}
