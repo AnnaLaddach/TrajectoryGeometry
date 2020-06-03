@@ -42,19 +42,23 @@ trace = FALSE
 #' @param d - The dimension under consideration.  This defaults to
 #'     ncol(path)
 #' @param statistic - Allowable values are 'median', 'mean' or 'max'
-#' @param preserveLengths - If this is set to TRUE, the length of the
-#'     steps in the randomized paths will match those of the given
-#'     path.
+#' @param randomizationParams - A character vector which is used to
+#'     control the production of randomized paths for comparison.
 #' @param N - The number of random paths to generated for statistical
 #'     comparison to the given path.
 #' @return This returns a p-value for the directionality of the given
 #'     path.
 #' @export
 #' @examples
-#' p = testPathForDirectionality(path=straightPath,statistic='median',N=100)
-#' q = testPathForDirectionality(path=crookedPath,from=6,statistic='median',N=100)
+#' randomizationParams = c('byPermutation','permuteWithinColumns')
+#' p = testPathForDirectionality(path=straightPath,
+#'                               randomizationParams=randomizationParams,
+#'                               statistic='median',N=100)
+#' q = testPathForDirectionality(path=crookedPath,from=6,
+#'                               randomizationParams=randomizationParams,
+#'                               statistic='median',N=100)
 testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
-                                     statistic,preserveLengths=TRUE,N)
+                                     randomizationParams,statistic,N)
 {
     ## TRACE
     if(trace)
@@ -71,7 +75,7 @@ testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
     ## ###################################################
     ## Generate random paths:
     randomPaths = generateRandomPaths(path,
-                                      preserveLengths=preserveLengths,
+                                      randomizationParams=randomizationParams,
                                       N=N)
     
     ## ###################################################
@@ -358,12 +362,11 @@ pathToSphericalData = function(path,from,to,d,statistic)
 #' Produce random paths modeled on a given path
 #'
 #' This function takes a path and produces N random paths of the same
-#' dimension and length based on it. The steps along the random paths
-#' are based on uniform sampling of the unit sphere.  If 
-#' preserveLengths is set to TRUE, the random paths of steps of the
-#' same length as the original path.  Otherwise, the steps are all
-#' length 1.
-#'
+#' dimension and length based on it.  This can be done either by
+#' permuting the entries in path or by taking steps from the initial
+#' point of path.  Exact behaviour is controlled by
+#' randomizationParams. 
+#' 
 #' @param path - This is an mxn dimensional matrix. Each row is
 #'     considered a point.
 #' @param from - The starting place along the path which will be
@@ -372,52 +375,150 @@ pathToSphericalData = function(path,from,to,d,statistic)
 #'     nrow(path).
 #' @param d - The dimension under consideration.  This defaults to
 #'     ncol(path)
-#' @param preserveLengths - If this is set to TRUE, the steps of the
-#'     random paths have the same euclidean length as those of the
-#'     give path.  Otherwise they hav length 1.
+#' @param randomizationParams - A character vector controling the
+#'     randomization method used.  It's first entry must be either
+#'     'byPermutation' or 'bySteps'  See the vignette for further
+#'     details. 
 #' @param N - The number of random paths required.
 #' @return This function returns a list of random paths.  Each path is
 #'     a matrix.  Note that each random path begins at the origin.
 #' @export
 #' @examples
-#' randomPaths = generateRandomPaths(crookedPath,from=6,N=10)
+#' randomizationParams = c('byPermutation','permuteWithinColumns')
+#' randomPaths = generateRandomPaths(crookedPath,from=6,to=nrow(crookedPath),
+#'               d=ncol(crookedPath),randomizationParams=randomizationParams,N=10)
 generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
-                               preserveLengths=TRUE,N)
+                               randomizationParams,N)
 {
     ## TRACE
     if(trace)
         print('in generateRandomPaths')
 
+    stopifnot(randomizationParams[1] %in% c('byPermutation','bySteps'))
+
     ## ###################################################
     ## Subset to the data under consideration:
     path = path[from:to,1:d]
-    n = nrow(path)
 
+    if(randomizationParams[1] == 'byPermutation')
+        return(generateRandomPathsByPermutation(path,
+                                               randomizationParams,
+                                               N))
+
+    if(randomizationParams[1] == 'bySteps')
+        return(generateRandomPathsBySteps(path,
+                                         randomizationParams,
+                                         N))    
+    
+}
+
+
+## ###################################################
+#' Produce randomized paths by permutation
+#'
+#' This function produces randomized paths from a given path via
+#' permutation of its entries.  This can be done either by random
+#' permutation within each column thereby preserving the range of
+#' values within each column or by random permutation of all entries
+#' in the matrix.
+#'
+#' @param path - An n x d matrix.
+#' @param randomizationParams - A character vector used to control the
+#'     behavior of the function.
+#' @param N - The number of paths required.
+#' @return This function returns a list of random paths.
+generateRandomPathsByPermutation =
+    function(path,randomizationParams,N)
+{
+    randomPathList = list()
+    n = nrow(path)
+    d = ncol(path)
+
+    ## ###################################################
+    ## This handles the case where we wish to permute within each column:
+    if(randomizationParams[2] == 'permuteWithinColumns')
+    {
+        for(i in seq_len(N))
+        {
+            randomPath = path
+            for(j in seq_len(d))
+            {
+                perm = sample(n,n)
+                randomPath[,j] = randomPath[perm,j]
+            }
+            randomPathList[[i]] = randomPath   
+        }
+        return(randomPathList)
+    }
+
+    ## ###################################################
+    ## This handles the case where we wish to permute at random:
+    if(randomizationParams[2] == 'permuteAsMatrix')
+    {
+        M = n * d
+        a = as.numeric(path)
+        for(i in seq_len(N))
+        {
+            b = as.numeric(path)
+            perm = sample(M,M)
+            b = b[perm]
+            randomPathList[[i]] = matrix(b,nrow=n)
+        }
+        return(randomPathList)
+    }              
+}
+
+## ###################################################
+#' Produce randomized paths by steps
+#'
+#' This function produces randomized paths from a given path by taking
+#' steps in space. This can be done either requiring that these steps
+#' have the same Euclidean length as those of the original path or
+#' allowing them to all have unit length.  It can also be done
+#' requiring the path to stay in the non-negative orthant or allowing
+#' arbitrary values.
+#'
+#' @param path - An n x d matrix.
+#' @param randomizationParams - A character vector used to control the
+#'     behavior of the function.
+#' @param N - The number of paths required.
+#' @return This function returns a list of random paths.
+generateRandomPathsBySteps = function(path,randomizationParams,N)
+{
+    n = nrow(path)
+    d = ncol(path)
+    
     ## ###################################################
     ## Find the length of the steps if required:
     stepLengths = rep(1,n-1)
-    if(preserveLengths)
+    if('preserveLengths' %in% randomizationParams)
         stepLengths = getStepLengths(path)
     
     
     ## ###################################################
     ## Generate the random paths:
-    returnAsList = list()
+    randomPathList = list()
     for(i in seq_len(N))
     {
         randomPath = matrix(0,nrow=n,ncol=d)
+        randomPath[1,] = path[1,]
+        
         for(j in seq_len(n-1))
             randomPath[j+1,] = randomPath[j,] +
                 stepLengths[j] * generateRandomUnitVector(d)
+
+        if('nonNegative' %in% randomizationParams)
+        {
+            idx = randomPath < 0
+            randomPath[idx] = - randomPath[idx]
+        }
         
-        if(N == 1)
-            return(randomPath)
-        
-        returnAsList[[i]] = randomPath
+        randomPathList[[i]] = randomPath
     }
     
-    return(returnAsList)
+    return(randomPathList)
 }
+
 
 ## ###################################################
 #' Find the step lengths:

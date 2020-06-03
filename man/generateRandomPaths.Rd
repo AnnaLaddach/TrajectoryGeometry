@@ -9,7 +9,7 @@ generateRandomPaths(
   from = 1,
   to = nrow(path),
   d = ncol(path),
-  preserveLengths = TRUE,
+  randomizationParams,
   N
 )
 }
@@ -26,9 +26,10 @@ nrow(path).}
 \item{d}{- The dimension under consideration.  This defaults to
 ncol(path)}
 
-\item{preserveLengths}{- If this is set to TRUE, the steps of the
-random paths have the same euclidean length as those of the
-give path.  Otherwise they hav length 1.}
+\item{randomizationParams}{- A character vector controling the
+randomization method used.  It's first entry must be either
+'byPermutation' or 'bySteps'  See the vignette for further
+details.}
 
 \item{N}{- The number of random paths required.}
 }
@@ -38,12 +39,13 @@ This function returns a list of random paths.  Each path is
 }
 \description{
 This function takes a path and produces N random paths of the same
-dimension and length based on it. The steps along the random paths
-are based on uniform sampling of the unit sphere.  If 
-preserveLengths is set to TRUE, the random paths of steps of the
-same length as the original path.  Otherwise, the steps are all
-length 1.
+dimension and length based on it.  This can be done either by
+permuting the entries in path or by taking steps from the initial
+point of path.  Exact behaviour is controlled by
+randomizationParams.
 }
 \examples{
-randomPaths = generateRandomPaths(crookedPath,from=6,N=10)
+randomizationParams = c('byPermutation','permuteWithinColumns')
+randomPaths = generateRandomPaths(crookedPath,from=6,to=nrow(crookedPath),
+              d=ncol(crookedPath),randomizationParams=randomizationParams,N=10)
 }

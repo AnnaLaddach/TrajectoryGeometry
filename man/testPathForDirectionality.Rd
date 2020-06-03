@@ -9,8 +9,8 @@ testPathForDirectionality(
   from = 1,
   to = nrow(path),
   d = ncol(path),
+  randomizationParams,
   statistic,
-  preserveLengths = TRUE,
   N
 )
 }
@@ -27,11 +27,10 @@ nrow(path).}
 \item{d}{- The dimension under consideration.  This defaults to
 ncol(path)}
 
-\item{statistic}{- Allowable values are 'median', 'mean' or 'max'}
+\item{randomizationParams}{- A character vector which is used to
+control the production of randomized paths for comparison.}
 
-\item{preserveLengths}{- If this is set to TRUE, the length of the
-steps in the randomized paths will match those of the given
-path.}
+\item{statistic}{- Allowable values are 'median', 'mean' or 'max'}
 
 \item{N}{- The number of random paths to generated for statistical
 comparison to the given path.}
@@ -46,6 +45,11 @@ choice of statistical measure and computes a statistical significance
 for the directionality of that path.
 }
 \examples{
-p = testPathForDirectionality(path=straightPath,statistic='median',N=100)
-q = testPathForDirectionality(path=crookedPath,from=6,statistic='median',N=100)
+randomizationParams = c('byPermutation','permuteWithinColumns')
+p = testPathForDirectionality(path=straightPath,
+                              randomizationParams=randomizationParams,
+                              statistic='median',N=100)
+q = testPathForDirectionality(path=crookedPath,from=6,
+                              randomizationParams=randomizationParams,
+                              statistic='median',N=100)
 }
