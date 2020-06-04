@@ -381,7 +381,7 @@ pathToSphericalData = function(path,from,to,d,statistic)
 #'     details. 
 #' @param N - The number of random paths required.
 #' @return This function returns a list of random paths.  Each path is
-#'     a matrix.  Note that each random path begins at the origin.
+#'     a matrix.
 #' @export
 #' @examples
 #' randomizationParams = c('byPermutation','permuteWithinColumns')
