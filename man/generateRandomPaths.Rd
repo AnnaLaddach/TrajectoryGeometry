@@ -35,7 +35,7 @@ details.}
 }
 \value{
 This function returns a list of random paths.  Each path is
-    a matrix.  Note that each random path begins at the origin.
+    a matrix.
 }
 \description{
 This function takes a path and produces N random paths of the same

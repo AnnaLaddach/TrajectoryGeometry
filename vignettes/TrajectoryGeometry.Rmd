@@ -151,20 +151,40 @@ the entries in $latex X$.
 	 randomizationParams = c('byPermutation','permuteWithinColumns')
 	 ```
 
-## Does a path confined to a direction consistently move in that
-   direction?
-
+## Does a path confined to a direction consistently move in that direction?
+   
 The answer here is no.  Consider a path which starts out at the origin
 and the heads out along the x-axis.  Perhaps is gets a little ways out
 and then takes to wandering back and forth.  As long as it never quite
 gets back to the origin, the methods we have described will show this
 path as highly directional.  Accordingly if you have determined that
 your path has strong directionality using these methods, it is
-appropriate to check for progression in that direction.  WRITE A
-FUNCTION FOR THIS AND INCLUDE AN EXAMPLE HERE.
-
+appropriate to check for progression in that direction. This can be
+done with the function pathProgression() 
+```{r message=FALSE}
+   progress = pathProgression(straightPath,direction=straightPathCenter)
+   progress = pathProgression(crookedPath,from=6,direction=crookedPathCenter)
+``` 
 ## Stability
 
-DISCUSS BEHAVIOUR IN THE REGION NEAR THE ORIGIN
+A related issue which can also be checked using pathProgression() is
+the instability of behavior in the neighborhood of the starting point
+of a path.  Consider a path which starts at a point $latex P_0$ and
+after oscillating small distances in the neighborhood of $latex P_0$
+proceeds in a highly directional manner towards a point $latex P_k$.
+We would like to see this as a highly directional path.  However, the
+oscillations around $latex P_0$, no matter how small, can in
+projection occupy large portions of the sphere.  Accordingly
+testPathForDirectionality() may be bamboozled out of detecting
+directionality.  A prophylaxis against this is the following: 
+```{r message=FALSE} 
+direction = oscillation[nrow(straightPath),] - oscillation[1,] 
+progress = pathProgression(oscillation,direction=direction) 
+``` 
+This will allow you to detect a portion of the path which does not
+depart from the neighborhood of its starting point. You can then use
+the from parameter of testPathForDirectionality() to eliminate these
+oscillations from consideration.  Note that we did not need to
+normalize direction as that is done within pathProgression().
 
 

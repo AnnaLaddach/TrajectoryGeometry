@@ -607,6 +607,45 @@ generateRandomUnitVector = function(d)
     return(x / Norm(x))
 }
 
+## ###################################################
+#' Measure a path's progression
+#'
+#' This function measures the progress of a path in a specified
+#' direction.  This direction will typically be the center of its
+#' projection onto the sphere as revealed using your favorite
+#' statistic.
+#'
+#' @param path - An n x d matrix
+#' @param from - The point along the path to be taken as the starting
+#'     point.  This defaults to 1.
+#' @param to - The point along the path to be used as the end point.
+#'     This defaults to nrow(path).
+#' @param d - The dimension to be used.  This defaults to ncol(path).
+#' @param direction - A non-zero numeric whose length is the the
+#'     dimension.
+#' @return This returns a numeric given the signed distance projection
+#'     of the path along the line through its starting point in the
+#'     given direction.
+#' @export
+#' @examples
+#' progress =
+#'     pathProgression(straightPath,direction=straightPathCenter)
+#' progress =
+#'     pathProgression(crookedPath,from=6,direction=crookedPathCenter)
+pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
+                           direction)
+{
+    path = path[from:to,1:d]
+    direction = direction / Norm(direction)
+    distance = numeric(nrow(path)-1)
+    for(i in 2:nrow(path))
+    {
+        delta = path[i,] - path[1,]
+        distance[i-1] = dot(delta,direction)
+    }
+    return(distance)
+}
+
 
 ## ##########################################################################
 ## ##########################################################################

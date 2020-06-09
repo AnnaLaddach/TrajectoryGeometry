@@ -115,3 +115,19 @@
 #' }
 #' @source Synthetic data
 "crookedPathRadius"
+
+## ###################################################
+#' Oscillation
+#'
+#' This a path which prepends small oscillations to straight path.
+#' Its purpose is to illustrate instability of spherical projection
+#' near the beginning of a path.
+#'
+#' @format A matrix
+#' \describe{
+#' This a path which prepends small oscillations to straight path.
+#' Its purpose is to illustrate instability of spherical projection
+#' near the beginning of a path.
+#' }
+#' @source Synthetic data
+"oscillation"
