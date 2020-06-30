@@ -648,9 +648,68 @@ pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
 
 
 ## ##########################################################################
-## ##########################################################################
-## Code for extracting paths for single cell data:
+#' Sample a path from single cell data.
+#'
+#' This function takes vector of pseudotime values, and a matrix of attribute values (cell x attribute).
+#' It also optionally takes the number of pseudotime windows to sample a single cell from. This defaults to 10.
+#' The function returns a matrix of sampled attribute values which form the coordinates of the
+#' sampled path. The matrix of attribute values should consist of numeric values
+#' relevant to a pseudotime trajectory i.e. gene expression values or PCA projections.
+#' The vector of pseudotime values should be named according to cell names. 
+#' Simarly the row names of the matrix of attribute values should be cell names.
+#' Row names for the returned matrix of the sampled path give the window number a cell was sampled from.
+#'
+#' @param attributes - An n x d (cell x attribute) matrix of numeric attributes for single cell data. Rownames should be cell names.
+#' @param pseudotime - A named numeric vector of pseudotime values for cells. 
+#' @param nWindows - The number of windows pseudotime should be split into to sample cells from. Defaults to 10.
+#' @return sampledPath - A path consisting of a matrix of attributes of sampled cells. The rownames refer to the pseudotime windows
+#'  each cell was sampled from.
 
+samplePath = function(attributes, pseudotime, nWindows = 10){
+
+    ## ###################################################
+    ## Set parameters for path.
+    start = min(pseudotime)	
+    end = max(pseudotime)
+    pathLength = end - start
+    windowSize = pathLength/nWindows
+
+    sampledPath = matrix(, nrow = 0, ncol = ncol(attributes))
+
+    ## Vector to save window number as pseudotime windows with no cells will be skipped.
+    windowNumber = c()
+
+    for (i in 1:nWindows){
+	cells = names(pseudotime[pseudotime >= (i-1) * step + start & pseudotime < i * step + start])
+	windowAttributes =  attributes[cells,]
+	
+	## ###################################################
+	## Case when only one cell falls within a pseudotime window.
+	## Turn windowAttributes into a matrix.
+	if (is.null(dim(windowAttributes))){
+      	    windowAttributes = t(matrix(windowAttributes))
+    	}
+	 
+	## ###################################################
+	## Case when no cells fall within a pseudotime window.
+    	if (nrow(windowAttributes) == 0){
+      	    next
+    	}
+	
+	## ###################################################
+	## Randomly sample cell from pseudotime window.
+	chosenIndex = sample(1:nrow(windowAttributes), 1)
+    	chosenAttributes = windowAttributes[chosenIndex,]
+	
+	sampledAttributes = rbind(sampledPath, chosenAttributes)
+	
+	## Save window number.
+	windowNumber = c(windowNumber, i)
+    }	
+    
+    rownames(sampledPath) = windowNumber 
+    return(sampledPath)
+}
 
 
 
