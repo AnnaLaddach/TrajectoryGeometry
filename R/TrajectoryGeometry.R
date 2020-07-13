@@ -664,6 +664,7 @@ pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
 #' @param nWindows - The number of windows pseudotime should be split into to sample cells from. Defaults to 10.
 #' @return sampledPath - A path consisting of a matrix of attributes of sampled cells. The rownames refer to the pseudotime windows
 #'  each cell was sampled from.
+#' @export
 
 samplePath = function(attributes, pseudotime, nWindows = 10){
 
@@ -680,33 +681,33 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
     windowNumber = c()
 
     for (i in 1:nWindows){
-	cells = names(pseudotime[pseudotime >= (i-1) * step + start & pseudotime < i * step + start])
-	windowAttributes =  attributes[cells,]
-	
-	## ###################################################
-	## Case when only one cell falls within a pseudotime window.
-	## Turn windowAttributes into a matrix.
-	if (is.null(dim(windowAttributes))){
-      	    windowAttributes = t(matrix(windowAttributes))
-    	}
-	 
-	## ###################################################
-	## Case when no cells fall within a pseudotime window.
+  	  cells = names(pseudotime[pseudotime >= (i-1) * windowSize + start & pseudotime < i * windowSize + start])
+  	  windowAttributes =  attributes[cells,]
+  	
+  	  ## ###################################################
+    	## Case when only one cell falls within a pseudotime window.
+    	## Turn windowAttributes into a matrix.
+    	if (is.null(dim(windowAttributes))){
+          	    windowAttributes = t(matrix(windowAttributes))
+        	}
+    	 
+    	## ###################################################
+    	## Case when no cells fall within a pseudotime window.
     	if (nrow(windowAttributes) == 0){
       	    next
     	}
-	
-	## ###################################################
-	## Randomly sample cell from pseudotime window.
-	chosenIndex = sample(1:nrow(windowAttributes), 1)
-    	chosenAttributes = windowAttributes[chosenIndex,]
-	
-	sampledAttributes = rbind(sampledPath, chosenAttributes)
-	
-	## Save window number.
-	windowNumber = c(windowNumber, i)
-    }	
-    
+    	
+    	## ###################################################
+    	## Randomly sample cell from pseudotime window.
+    	chosenIndex = sample(1:nrow(windowAttributes), 1)
+      chosenAttributes = windowAttributes[chosenIndex,]
+    	
+    	sampledPath = rbind(sampledPath, chosenAttributes)
+    	
+    	## Save window number.
+    	windowNumber = c(windowNumber, i)
+      }	
+      
     rownames(sampledPath) = windowNumber 
     return(sampledPath)
 }
