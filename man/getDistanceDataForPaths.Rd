@@ -22,3 +22,8 @@ is an n x d matrix.  In use, it is assumed that these
 will be the randomized paths.  It is therefore assumed
 that they are already of the correct dimensions.
 }
+\examples{
+paths =
+    generateRandomPaths(path=straightPath,randomizationParam='bySteps',N=5)
+distance = getDistanceDataForPaths(paths=paths,statistic='max')
+}

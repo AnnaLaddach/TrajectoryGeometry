@@ -15,7 +15,10 @@ the the form of a 3 x 3 matrix in which the first vector is
 parallel to v
 }
 \description{
-Given a vector, this normalizes it and then uses it as
+Given a vector in R3, this normalizes it and then uses it as
 the first basis vector in an orthonormal basis.  We'll use
 this to find circles around points on the sphere.
+}
+\examples{
+anOrthonormalBasis = orthonormalBasis(c(1,1,1))
 }

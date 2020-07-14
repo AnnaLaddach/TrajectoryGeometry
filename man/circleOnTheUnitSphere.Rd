@@ -19,10 +19,10 @@ This returns an approximation to the the circle as a N+1 x
     3 matrix
 }
 \description{
-Find a circle on the unit sphere
+Find a circle on the unit 2-sphere
 }
 \details{
-Given a point on the unit sphere and a radius given
+Given a point on the unit 2-sphere and a radius given
 as a spherical distance, this finds the circle.
 
 It's not clear to me this should be exported, but it's

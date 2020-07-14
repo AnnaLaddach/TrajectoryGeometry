@@ -36,8 +36,14 @@ control the production of randomized paths for comparison.}
 comparison to the given path.}
 }
 \value{
-This returns a p-value for the directionality of the given
-    path.
+This returns a list giving whose entries are:
+  pValue - the p-value for the path and statistic in question;
+  sphericalData - a list containing the projections of the path to
+    the sphere, the center of that sphere and the statistic for
+    distance to that center;
+  randomDistances - the corresponding distances for randomly chosen;
+    paths;
+  randomizationParams - the choice of randomization parameters
 }
 \description{
 This is the core function of this package.  It takes a path, and a

@@ -16,3 +16,6 @@ A unit vector in dimension d.
 This function generates a random unit vector in
 in dimension d.
 }
+\examples{
+randomUnitVector = generateRandomUnitVector(5)
+}

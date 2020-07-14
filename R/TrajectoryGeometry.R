@@ -1,23 +1,4 @@
 
-## ## ##########################################################################
-#' A dummy function with no other purpose than to have somewhere to put
-#' all the imports.
-#'
-#' There really ought to be a better way to put all the importFrom comments
-#' in one place.
-#' @return Gornisht!
-#' @importFrom pracma Norm
-#' @importFrom pracma dot
-#' @importFrom pracma cross
-#' @importFrom rgl open3d
-#' @importFrom rgl spheres3d
-#' @importFrom rgl lines3d
-#' @importFrom rgl points3d
-dummyPlaceholder = function()
-{
-    
-}
-
 ## ##########################################################################
 ## Yow! A global variable!
 trace = FALSE
@@ -46,9 +27,17 @@ trace = FALSE
 #'     control the production of randomized paths for comparison.
 #' @param N - The number of random paths to generated for statistical
 #'     comparison to the given path.
-#' @return This returns a p-value for the directionality of the given
-#'     path.
+#' @return This returns a list giving whose entries are:
+#'   pValue - the p-value for the path and statistic in question;
+#'   sphericalData - a list containing the projections of the path to
+#'     the sphere, the center of that sphere and the statistic for
+#'     distance to that center;
+#'   randomDistances - the corresponding distances for randomly chosen;
+#'     paths;
+#'   randomizationParams - the choice of randomization parameters
 #' @export
+#' @importFrom rgl open3d spheres3d lines3d points3d
+#' @importFrom pracma Norm dot cross
 #' @examples
 #' randomizationParams = c('byPermutation','permuteWithinColumns')
 #' p = testPathForDirectionality(path=straightPath,
@@ -86,9 +75,15 @@ testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
     ## ###################################################
     ## Return the p-value:
     idx = distances <= sphericalData$distance 
-    pValue = sum(idx) / N
-    
-    return(pValue)
+    pValue = max(1,sum(idx)) / N
+
+    answer = list()
+    answer$pValue = pValue
+    answer$sphericalData = sphericalData
+    answer$randomDistances = distances
+    answer$randomizationParams = randomizationParams
+
+    return(answer)
 }
 
 
@@ -535,6 +530,9 @@ generateRandomPathsBySteps = function(path,randomizationParams,N)
 #'     ncol(path)
 #' @return This function returns the length of each step in a path.
 #' @export
+#' @examples
+#' stepLengths = getStepLengths(path=crookedPath)
+#' stepLengths = getStepLengths(path=crookedPath,from=4)
 getStepLengths = function(path,from=1,to=nrow(path),d=ncol(path))
 {
     ## TRACE
@@ -567,6 +565,10 @@ getStepLengths = function(path,from=1,to=nrow(path),d=ncol(path))
 #' @param statistic - Allowable values are 'median', 'mean' or 'max'.
 #' @return This returns a vector of n distances.
 #' @export
+#' @examples
+#' paths =
+#'     generateRandomPaths(path=straightPath,randomizationParam='bySteps',N=5)
+#' distance = getDistanceDataForPaths(paths=paths,statistic='max')
 getDistanceDataForPaths = function(paths,statistic)
 {
     ## TRACE
@@ -597,6 +599,8 @@ getDistanceDataForPaths = function(paths,statistic)
 #' @param d - The dimension.
 #' @return A unit vector in dimension d.
 #' @export
+#' @examples
+#' randomUnitVector = generateRandomUnitVector(5)
 generateRandomUnitVector = function(d)
 {
     ## TRACE
@@ -665,7 +669,6 @@ pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
 #' @return sampledPath - A path consisting of a matrix of attributes of sampled cells. The rownames refer to the pseudotime windows
 #'  each cell was sampled from.
 #' @export
-
 samplePath = function(attributes, pseudotime, nWindows = 10){
 
     ## ###################################################
@@ -721,7 +724,7 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 ## ###################################################
 #' Find an orthonormal basis in dimension 3
 #'
-#' Given a vector, this normalizes it and then uses it as
+#' Given a vector in R3, this normalizes it and then uses it as
 #' the first basis vector in an orthonormal basis.  We'll use
 #' this to find circles around points on the sphere.
 #'
@@ -730,6 +733,8 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 #' the the form of a 3 x 3 matrix in which the first vector is
 #' parallel to v
 #' @export
+#' @examples
+#' anOrthonormalBasis = orthonormalBasis(c(1,1,1))
 orthonormalBasis = function(x)
 {
     ## TRACE
@@ -765,9 +770,9 @@ orthonormalBasis = function(x)
 ## ###################################################
 #' Circle on the unit sphere
 #'
-#' Find a circle on the unit sphere
+#' Find a circle on the unit 2-sphere
 #'
-#' Given a point on the unit sphere and a radius given
+#' Given a point on the unit 2-sphere and a radius given
 #' as a spherical distance, this finds the circle.
 #'
 #' It's not clear to me this should be exported, but it's
