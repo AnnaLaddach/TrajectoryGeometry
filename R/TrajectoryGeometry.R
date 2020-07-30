@@ -716,6 +716,54 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 }
 
 
+## ##########################################################################
+#' Analyse a single cell trajectory.
+#'
+#' This function analyses a single cell trajectory by sampling multiple paths and comparing each path to random paths.
+#' This function takes vector of pseudotime values, and a matrix of attribute values (cell x attribute).
+#' It also optionally takes the number of pseudotime windows to sample a single cell from. This defaults to 10.
+#' The function returns a list of Answers for each comparison of a sampled path to a random path
+#'
+#' @param attributes - An n x d (cell x attribute) matrix of numeric attributes for single cell data. Rownames should be cell names.
+#' @param pseudotime - A named numeric vector of pseudotime values for cells. 
+#' @param nWindows - The number of windows pseudotime should be split into to sample cells from. Defaults to 10.
+#' @param d - The dimension under consideration.  This defaults to
+#'     ncol(path)
+#' @param statistic - Allowable values are 'median', 'mean' or 'max'
+#' @param randomizationParams - A character vector which is used to
+#'     control the production of randomized paths for comparison.
+#' @param N - The number of random paths to generated for statistical
+#'     comparison to the given path.
+#' @return This returns a list, where each entry is itself a list containing information comparing a sampled path
+#'   to random paths. These entries consist of:
+#'   pValue - the p-value for the path and statistic in question;
+#'   sphericalData - a list containing the projections of the path to
+#'     the sphere, the center of that sphere and the statistic for
+#'     distance to that center;
+#'   randomDistances - the corresponding distances for randomly chosen;
+#'     paths;
+#'   randomizationParams - the choice of randomization parameters
+#' @export
+analyseSingleCellTrajectory = function(attributes, pseudotime, randomizationParams, statistic, nSamples = 1000, nWindows = 10, d = ncol(attributes), N = 1000){
+  
+  ## ###################################################
+  ## List to contain results:
+  answers = list()
+  
+  ## ###################################################
+  ## Sample paths and test each one for directionality
+  for (i in 1:nSamples){
+    path = samplePath(attributes, pseudotime, nWindows = nWindows)
+    answers[[i]] = testPathForDirectionality(path, randomizationParams = randomizationParams, statistic = statistic, N = N, d = d)
+    if (i %% 10 == 0){
+      print(paste(i, "sampled paths analysed"))
+    }
+  }
+  return(answers)
+}
+
+
+
 
 ## ##########################################################################
 ## ##########################################################################
@@ -870,6 +918,9 @@ plotPathProjectionCenterAndCircle = function(path,
                                              center,
                                              radius,
                                              color,
+                                             circleColor="white",
+                                             pathPointSize = 8,
+                                             projectionPointSize = 8,
                                              scale=1.5,
                                              newFigure=TRUE)
 {
@@ -879,8 +930,6 @@ plotPathProjectionCenterAndCircle = function(path,
     
     ## ###################################################
     ## Constants.  Maybe they should become parameters?
-    pathPointSize = 8
-    projectionPointSize = 8
     centerSize = 15
     pathLineWidth = 3
     circleLineWidth = 3
@@ -893,13 +942,13 @@ plotPathProjectionCenterAndCircle = function(path,
     ## Translate the path to begin at the origin and scale:
     N = nrow(path)
     distances = numeric(N)
+    offset = path[1,]
     for(i in seq_len(N))
     {
-        path[i,] = path[i,] - path[1,]
-        distances[i] = Norm(path[i])
+        path[i,] = path[i,] - offset
+        distances[i] = Norm(path[i,])
     }
     path = (scale / max(distances)) * path
-    
     
     ## ###################################################
     ## Are we starting a new figure?
@@ -930,6 +979,92 @@ plotPathProjectionCenterAndCircle = function(path,
     ## ###################################################
     ## Plot the circle:
     circle = circleOnTheUnitSphere(center,radius)
-    lines3d(circle,lwd=circleLineWidth,color=color)
+    lines3d(circle,lwd=circleLineWidth,color=circleColor)
 
 }
+
+
+
+## ###################################################
+#' Visualise Trajectory Stats 
+#'
+#' This function creates boxplots for comparisons of metrics for sampled
+#' paths to random paths. It can also create plots for comparing two sets of
+#' sampled paths by providing the answers2 argument.
+#' 
+#' @param answers - the result of analyseSingleCellTrajectory
+#' @param metric - either pvalue or distance
+#' @param distanceMetric - if there are multiple distances available for each 
+#' sampled trajectory choose to plot the mean or median distance.
+#' @param answers2 either an empty list or the result of analyseSingleCellTrajectory
+#' @return a list containing:
+#'  stats - output of wilcox test
+#'  values - dataframe containing plotted data in long format
+#'  plot - ggplot object 
+#' @importFrom ggplot2 ggplot geom_violin geom_boxplot
+#' @export
+visualiseTrajectoryStats = function(answers,
+                          metric,
+                          distanceMetric = "Mean",
+                          answers2 = list())
+  {
+  
+  ## ###################################################
+  ## Set up dataframe which will be populated with data to plot in long format
+  values = data.frame(type = character(), value = numeric())
+  
+  ## ###################################################
+  ## Code for comparing 2 trajectories
+  if (length(answers2) > 0){
+    for (i in 1:length(answers)){
+      
+      ## ###################################################
+      ## Populate values data frame with distance data
+      if (metric == "distance"){
+        values = rbind(values, data.frame(type = "Trajectory 1", value = answers[[i]]$sphericalData$distance))
+        values = rbind(values, data.frame(type = "Trajectory 2", value = answers2[[i]]$sphericalData$distance))
+      }
+      
+      ## ###################################################
+      ## Populate values data frame with pValue data
+      if (metric == "pValue"){
+        values = rbind(values, data.frame(type = "Trajectory 1", value = answers[[i]]$pValue))
+        values = rbind(values, data.frame(type = "Trajectory 2", value = answers2[[i]]$pValue))
+      } 
+    }
+    
+    ## ###################################################
+    ## use unpaired wilcox test to compare values for 2 trajectories
+    stats = wilcox.test(values[values$type == "Trajectory 1",]$value, values[values$type == "Trajectory 2",]$value)
+  }
+  
+  ## ###################################################
+  ## Code for sampled pathways to random pathways
+  if (length(answers2) == 0){
+    
+    ## here we can only compare distance metrics
+    if (metric != "distance"){
+      print("Metric must be distance to compare sampled to random trajectories")
+    }
+    for (i in 1:length(answers)){
+      values = rbind(values, data.frame(type = "Sampled", value = answers[[i]]$sphericalData$distance))
+      values = rbind(values, data.frame(type = "Random", value = mean(answers[[i]]$randomDistances)))
+    }
+    
+    ## ###################################################
+    ## use paired wilcox test to compare values sampled and random pathways, as random trajectories are 
+    ## parametised based on the sampled pathways
+    stats = wilcox.test(values[values$type == "Sampled",]$value,values[values$type == "Random",]$value, paired = T)
+  }
+  
+  ## ###################################################
+  ## Create violin plot with overlaid box plot
+  p = ggplot(values, aes(x=type, y=value)) + 
+    geom_violin() + geom_boxplot(width=0.1)
+  print(p) # should the default be to print this???
+  results = list(stats = stats,values = values, plot=p)
+  return(list(stats = stats,values = values, plot=p))
+}
+
+
+

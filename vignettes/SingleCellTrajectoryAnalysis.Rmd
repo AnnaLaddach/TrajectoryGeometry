@@ -21,6 +21,24 @@ knitr::opts_chunk$set(
 
 The TrajectoryGeometry package can be used to explore the directionality of pseudotime trajectories inferred from single cell data. In this vignette we explore trajectories which describe the development of mature neurons and glial cells from bipotential progenitor cells. We focus on analysing two trajectories, one from bipotential projenitor to adult neuron, and one from bipotential progenitor to adult glial cell.
 
+## Preparation
+
+We load packages required for this vignette, set colours for plots, and set a random seed to ensure reproducability.
+```{r}
+#load packages
+library(TrajectoryGeometry)
+library(RColorBrewer)
+library(dplyr)
+library(ggplot2)
+
+#set up colors
+colors = colorRampPalette(brewer.pal(11,'Spectral')[-6])(100)
+
+#set random seed
+set.seed(42)
+```
+
+
 ## Loading the data
 
 First we load a matrix of PCA projections derived from normalised gene expression values for each cell. Any other features which describe the cells could also be used (i.e. normalised expression) values. The columns are the PCs and the rows are the cells. Rownames should be the names of the cells.  
@@ -28,14 +46,14 @@ First we load a matrix of PCA projections derived from normalised gene expressio
 data("singleCellMatrix", package = "TrajectoryGeometry")
 ```
 
-Next we load vectors of pseudotime values for both trajectories. These have been inferred using the SlingShot package. The vectors are named according to cell name. N.B. where cells are not inferred to take part in a trajectory these are given an NA value. A number of projenitor cells are assigned to both trajectories according to their "bipotential" nature. 
+Next we load vectors of pseudotime values for both trajectories. These have been inferred using the SlingShot package. The vectors are named according to cell name. N.B. where cells are not inferred to take part in a trajectory these are given an NA value. A number of projenitor cells are assigned to both trajectories in agreement with their "bipotential" nature. 
 
 ```{r}
 data("neuralPseudoTime", package = "TrajectoryGeometry")
 data("glialPseudoTime", package = "TrajectoryGeometry")
 ```
 
-We will filter pseudotime trajectories and the singleCellMatrix to remove cells which do not take part in trajectories.
+We will filter pseudotime trajectories and the singleCellMatrix to remove cells which do not take part in trajectories. Additionally, we will normalise pseudotime to range from 0 to 100 for each trajectory.
 
 ```{r}
 #filter matrices
@@ -45,6 +63,10 @@ glialAttributes = singleCellMatrix[!is.na(glialPseudoTime),]
 #filter pseudotime values
 neuralPseudoTime = neuralPseudoTime[!is.na(neuralPseudoTime)]
 glialPseudoTime = glialPseudoTime[!is.na(glialPseudoTime)]
+
+#normalise pseudotime values to 100
+neuralPseudoTimeNormalised = neuralPseudoTime  %>% {100*((. - min(.))/(max(.) - min(.)))}
+glialPseudoTimeNormalised = glialPseudoTime %>% {100*((. - min(.))/(max(.) - min(.)))}
 ```
 
 
@@ -53,37 +75,111 @@ glialPseudoTime = glialPseudoTime[!is.na(glialPseudoTime)]
 As many cells have been assigned to each trajectory, with unequal and uneven coverage of each trajectory, first we will sample a path through each trajectory. We will split the trajectory into 10 equal pseudotime windows and sample a single cell from each one. 
 
 ```{r}
-neuralPath = samplePath(neuralAttributes, neuralPseudoTime)
-glialPath = samplePath(glialAttributes, glialPseudoTime)
+neuralPath = samplePath(neuralAttributes, neuralPseudoTimeNormalised)
+glialPath = samplePath(glialAttributes, glialPseudoTimeNormalised)
 ```
 
-## Projecting path onto sphere
 
-Next we project the sampled paths onto a sphere and retrieve spherical data for each path.
+## Projecting path onto sphere and testing for directionality
+We will test both sampled paths for directionality and obtain data regarding their spherical projections.
+
 ```{r}
-neuralSphericalData = getSphericalData(neuralPath[,1:3], "mean") 
-glialSphericalData = getSphericalData(glialPath[,1:3], "mean") 
+neuralAnswerPermutation = testPathForDirectionality(neuralPath[,1:3],randomizationParams = c('byPermutation','permuteWithinColumns'),statistic = "mean", N = 1000)
+glialAnswerPermutation = testPathForDirectionality(glialPath[,1:3],randomizationParams = c('byPermutation','permuteWithinColumns'),statistic = "mean", N = 1000)
+
+neuralAnswerSteps = testPathForDirectionality(neuralPath[,1:3],randomizationParams = c('bySteps','preserveLengths'),statistic = "mean", N = 1000)
+glialAnswerSteps = testPathForDirectionality(glialPath[,1:3],randomizationParams = c('bySteps','preserveLengths'),statistic = "mean", N = 1000)
+
+cat(paste("Mean distance of projected neural pathway points from circle center:", neuralAnswerPermutation$sphericalData$distance))
+cat(paste("\nP value for glial pathway:", glialAnswerPermutation$pValue))
+cat(paste("\nMean distance of projected glial pathway points from circle center:", glialAnswerPermutation$sphericalData$distance))
+
+cat("\n\nPermutation results")
+cat(paste("\nP value for neural pathway:", neuralAnswerPermutation$pValue))
+cat(paste("\nP value for glial pathway:", glialAnswerPermutation$pValue))
+
+cat("\n\nRandomisation by step results")
+cat(paste("\nP value for neural pathway:", neuralAnswerSteps$pValue))
+cat(paste("\nP value for glial pathway:", glialAnswerSteps$pValue))
 ```
 
-We can visualise this.
+It is clear that the glial path shows significant directionality when compared to random paths obtained by permutation, and almost acheives significance when compared to paths created by taking random steps. In comparison the neural path does not show significant directionality in comparison to random paths. Additionally, projected points on the glial path the glial path show a smaller mean distance from the circle center than those for the neural path do. This suggests the glial path maintains a more consistent direction than the neural path.  
 
+Lets visualise the paths and their projections.
+
+The neural path:
 ```{r}
 plotPathProjectionCenterAndCircle(path=neuralPath[,1:3],
-                                  projection=neuralSphericalData$projections,
-                                  center=neuralSphericalData$center,
-                                  radius=neuralSphericalData$distance,
-                                  color='red',
+                                  projection=neuralAnswerPermutation$sphericalData$projections,
+                                  center=neuralAnswerPermutation$sphericalData$center,
+                                  radius=neuralAnswerPermutation$sphericalData$distance,
+                                  color=colors[cut(1:10,breaks=100)],
+                                  circleColor = "white",
+                                  pathPointSize = 20,
+                                  projectionPointSize = 20,
                                   newFigure=TRUE)
 ```
 
+The glial path:
 ```{r}
 plotPathProjectionCenterAndCircle(path=glialPath[,1:3],
-                                  projection=glialSphericalData$projections,
-                                  center=glialSphericalData$center,
-                                  radius=glialSphericalData$distance,
-                                  color='red',
+                                  projection=glialAnswerPermutation$sphericalData$projections,
+                                  center=glialAnswerPermutation$sphericalData$center,
+                                  radius=glialAnswerPermutation$sphericalData$distance,
+                                  color=colors[cut(1:10,breaks=100)],
+                                  circleColor = "white",
+                                  pathPointSize = 20,
+                                  projectionPointSize = 20,
                                   newFigure=TRUE)
 ```
 
 
+Here we have just analysed one possible path sampled from the trajectory. Lets analyse many. We will obtain 10 sampled paths for each trajectory and compare each to 1000 random paths. We only look at 10 sampled paths here in the interest of time, however it would be advised to analyse a higher number. The commented out code will take approx 1 hour to run. If we do not have time to run this we can load the results in order to continue with the vignette.
+
+```{r}
+# neuralAnswers = analyseSingleCellTrajectory(neuralAttributes, neuralPseudoTimeNormalised, nSamples = 10, randomizationParams = c('byPermutation','permuteWithinColumns'),statistic = "mean", N = 1000)
+# 
+# glialAnswers = analyseSingleCellTrajectory(glialAttributes, glialPseudoTimeNormalised, nSamples = 10, randomizationParams = c('byPermutation','permuteWithinColumns'),statistic = "mean", N = 1000)
+
+data("neuralAnswers.rda", package = "TrajectoryGeometry")
+data("glialAnswers.rda", package = "TrajectoryGeometry")
+```
+
+Lets visualise the results and extract statistics. A paired Wilcox test is performed between sampled and random paths.
+```{r}
+neuralResultDistance = visualiseTrajectoryStats(neuralAnswers,"distance")
+glialResultDistance = visualiseTrajectoryStats(glialAnswers,"distance")
+
+
+cat(paste("Neural p value (comparison of distance metric):", neuralResultDistance$stats$p.value)) #should I make the wilcox test single tailed?
+cat(paste("\nGlial p value (comparison of distance metric):", glialResultDistance$stats$p.value)) 
+```
+
+Although both neural and glial trajectories show significant directionality in terms of their distance metric in comparison to random paths, the glial pathway has a lower pValue. Additionally the distributions for sampled and random pathways are more clearly separated for the glial pathway.
+
+We can also directly compare distances for the neural and glial pathways. Here statistics are calculated using unpaired Wilcox tests.
+```{r}
+distanceComparison = visualiseTrajectoryStats(neuralAnswers, "distance", answers2 = glialAnswers)
+
+cat(paste("Comparison of neural and glial trajectories (distance metric), p value:", distanceComparison$stats$p.value)) 
+```
+
+The glial trajectory clearly has significantly more directionality than the neural trajectory.
+
+We can also compare the p-values for both trajectories: 
+```{r}
+pValueComparison = visualiseTrajectoryStats(neuralAnswers, "pValue", answers2 = glialAnswers)
+
+cat(paste("Comparison of neural and glial trajectories (p value), p value:", distanceComparison$stats$p.value)) 
+
+cat(paste("\n\nNumber of sampled neural pathways with p value < 0.05 in comparison to random pathways:",sum(pValueComparison$values$value[pValueComparison$values$type == "Trajectory 1"] < 0.05)))
+
+cat(paste("\n\nNumber of sampled glial pathways with p value < 0.05 in comparison to random pathways:",sum(pValueComparison$values$value[pValueComparison$values$type == "Trajectory 2"] < 0.05)))
+```
+
+It can clearly be seen that the majority of sampled glial paths have very low p-values in comparison to random paths, whereas the sampled neural paths do not have significant pvalues in comparison to the random paths. None of the neural pathways have p-values lower than 0.05, whereas 9/10 of the glial pathways do.
+
+From this we can clearly see that the glial trajectory shows more consistent directionality than the neuronal trajectory.
+
+It should be noted that in this vignette we have analysed the first 3 dimensions. However an arbitrary number of dimensions can be analysed, only visualisation on the sphere is limited to 3 dimensions.
 

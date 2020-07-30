@@ -12,6 +12,9 @@ plotPathProjectionCenterAndCircle(
   center,
   radius,
   color,
+  circleColor = "white",
+  pathPointSize = 8,
+  projectionPointSize = 8,
   scale = 1.5,
   newFigure = TRUE
 )
