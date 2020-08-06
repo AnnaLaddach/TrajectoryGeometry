@@ -152,6 +152,7 @@ projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 #' @param normalize - If this is set to TRUE, the function will start
 #'     by normalizing the input points.
 #' @return This returns a point in dimension d given as a vector.
+#' @importFrom stats median optim
 #' @export
 #' @examples
 #' projection = projectPathToSphere(straightPath)
@@ -308,7 +309,8 @@ getSphericalData = function(path,statistic)
 #'     to those projections and the name of the statistic used.
 #' @export
 #' @examples
-#' sphericalData = pathToSphericalData(straightPath,from=1,to=nrow(straightPath),d=3,statistic='median')
+#' sphericalData = pathToSphericalData(straightPath,from=1,to=nrow(straightPath),
+#'                                     d=3,statistic='median')
 pathToSphericalData = function(path,from,to,d,statistic)
 {
     ## TRACE
@@ -598,6 +600,7 @@ getDistanceDataForPaths = function(paths,statistic)
 #'
 #' @param d - The dimension.
 #' @return A unit vector in dimension d.
+#' @importFrom stats rnorm
 #' @export
 #' @examples
 #' randomUnitVector = generateRandomUnitVector(5)
@@ -720,20 +723,21 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 #' Analyse a single cell trajectory.
 #'
 #' This function analyses a single cell trajectory by sampling multiple paths and comparing each path to random paths.
-#' This function takes vector of pseudotime values, and a matrix of attribute values (cell x attribute).
+#' It takes vector of pseudotime values, and a matrix of attribute values (cell x attribute).
 #' It also optionally takes the number of pseudotime windows to sample a single cell from. This defaults to 10.
 #' The function returns a list of Answers for each comparison of a sampled path to a random path
 #'
 #' @param attributes - An n x d (cell x attribute) matrix of numeric attributes for single cell data. Rownames should be cell names.
 #' @param pseudotime - A named numeric vector of pseudotime values for cells. 
-#' @param nWindows - The number of windows pseudotime should be split into to sample cells from. Defaults to 10.
-#' @param d - The dimension under consideration.  This defaults to
-#'     ncol(path)
-#' @param statistic - Allowable values are 'median', 'mean' or 'max'
 #' @param randomizationParams - A character vector which is used to
 #'     control the production of randomized paths for comparison.
+#' @param statistic - Allowable values are 'median', 'mean' or 'max'.
+#' @param nSamples - The number of sampled paths to generate (defaults to 1000).
+#' @param nWindows - The number of windows pseudotime should be split into to sample cells from (defaults to 10).
+#' @param d - The dimension under consideration.  This defaults to
+#'     ncol(attributes).
 #' @param N - The number of random paths to generated for statistical
-#'     comparison to the given path.
+#'     comparison to the given path (defaults to 1000).
 #' @return This returns a list, where each entry is itself a list containing information comparing a sampled path
 #'   to random paths. These entries consist of:
 #'   pValue - the p-value for the path and statistic in question;
@@ -755,7 +759,7 @@ analyseSingleCellTrajectory = function(attributes, pseudotime, randomizationPara
   for (i in 1:nSamples){
     path = samplePath(attributes, pseudotime, nWindows = nWindows)
     answers[[i]] = testPathForDirectionality(path, randomizationParams = randomizationParams, statistic = statistic, N = N, d = d)
-    if (i %% 10 == 0){
+    if (i %% 100 == 0){
       print(paste(i, "sampled paths analysed"))
     }
   }
@@ -894,6 +898,12 @@ circleOnTheUnitSphere = function(center,radius,N=36)
 #' @param radius - The radius of the circle.
 #' @param color - The color to use for this path and its associated
 #'     data.
+#' @param circleColor - Sets the colour of the circle.
+#'     Defaults to white.
+#' @param pathPointSize - Sets the size of points which represent the 
+#'     path. Defaults to 8.
+#' @param projectionPointSize - Sets the size of points which represent the 
+#'     projected path. Defaults to 8.
 #' @param scale - The path will be start (its actual start) at 0 and
 #'     will be scaled so that its most distant point will be at this
 #'     distance from the origin.  This is to keep it comparable in
@@ -988,25 +998,27 @@ plotPathProjectionCenterAndCircle = function(path,
 ## ###################################################
 #' Visualise Trajectory Stats 
 #'
-#' This function creates boxplots for comparisons of metrics for sampled
-#' paths to random paths. It can also create plots for comparing two sets of
-#' sampled paths by providing the answers2 argument.
+#' This function creates boxplots and extracts statistics for comparisons of metrics 
+#' for sampled paths to random paths. It can also create plots for comparing two sets
+#' of sampled paths by providing the traj2Data argument.
 #' 
-#' @param answers - the result of analyseSingleCellTrajectory
+#' @param traj1Data - the result of analyseSingleCellTrajectory
 #' @param metric - either pvalue or distance
-#' @param distanceMetric - if there are multiple distances available for each 
-#' sampled trajectory choose to plot the mean or median distance.
-#' @param answers2 either an empty list or the result of analyseSingleCellTrajectory
+#' @param averageFunc - if there are multiple distances available for each 
+#' sampled trajectory, provide a function to calculate the average (defaults to mean).
+#' @param traj2Data either an empty list or the result of analyseSingleCellTrajectory
 #' @return a list containing:
-#'  stats - output of wilcox test
+#'  stats - output of wilcox test (paired if comparing sampled to random paths,
+#'  unpaired if comparing sampled paths for two different trajectories)
 #'  values - dataframe containing plotted data in long format
 #'  plot - ggplot object 
-#' @importFrom ggplot2 ggplot geom_violin geom_boxplot
+#' @importFrom ggplot2 ggplot geom_violin geom_boxplot labs aes
+#' @importFrom stats wilcox.test
 #' @export
-visualiseTrajectoryStats = function(answers,
+visualiseTrajectoryStats = function(traj1Data,
                           metric,
-                          distanceMetric = "Mean",
-                          answers2 = list())
+                          averageFunc = mean,
+                          traj2Data = list())
   {
   
   ## ###################################################
@@ -1015,21 +1027,21 @@ visualiseTrajectoryStats = function(answers,
   
   ## ###################################################
   ## Code for comparing 2 trajectories
-  if (length(answers2) > 0){
-    for (i in 1:length(answers)){
+  if (length(traj2Data) > 0){
+    for (i in 1:length(traj1Data)){
       
       ## ###################################################
       ## Populate values data frame with distance data
       if (metric == "distance"){
-        values = rbind(values, data.frame(type = "Trajectory 1", value = answers[[i]]$sphericalData$distance))
-        values = rbind(values, data.frame(type = "Trajectory 2", value = answers2[[i]]$sphericalData$distance))
+        values = rbind(values, data.frame(type = "Trajectory 1", value = traj1Data[[i]]$sphericalData$distance))
+        values = rbind(values, data.frame(type = "Trajectory 2", value = traj2Data[[i]]$sphericalData$distance))
       }
       
       ## ###################################################
       ## Populate values data frame with pValue data
       if (metric == "pValue"){
-        values = rbind(values, data.frame(type = "Trajectory 1", value = answers[[i]]$pValue))
-        values = rbind(values, data.frame(type = "Trajectory 2", value = answers2[[i]]$pValue))
+        values = rbind(values, data.frame(type = "Trajectory 1", value = traj1Data[[i]]$pValue))
+        values = rbind(values, data.frame(type = "Trajectory 2", value = traj2Data[[i]]$pValue))
       } 
     }
     
@@ -1039,16 +1051,16 @@ visualiseTrajectoryStats = function(answers,
   }
   
   ## ###################################################
-  ## Code for sampled pathways to random pathways
-  if (length(answers2) == 0){
+  ## Code for comparing sampled pathways to random pathways
+  if (length(traj2Data) == 0){
     
     ## here we can only compare distance metrics
     if (metric != "distance"){
       print("Metric must be distance to compare sampled to random trajectories")
     }
-    for (i in 1:length(answers)){
-      values = rbind(values, data.frame(type = "Sampled", value = answers[[i]]$sphericalData$distance))
-      values = rbind(values, data.frame(type = "Random", value = mean(answers[[i]]$randomDistances)))
+    for (i in 1:length(traj1Data)){
+      values = rbind(values, data.frame(type = "Sampled", value = traj1Data[[i]]$sphericalData$distance))
+      values = rbind(values, data.frame(type = "Random", value = averageFunc(traj1Data[[i]]$randomDistances)))
     }
     
     ## ###################################################
@@ -1060,8 +1072,8 @@ visualiseTrajectoryStats = function(answers,
   ## ###################################################
   ## Create violin plot with overlaid box plot
   p = ggplot(values, aes(x=type, y=value)) + 
-    geom_violin() + geom_boxplot(width=0.1)
-  print(p) # should the default be to print this???
+    geom_violin() + geom_boxplot(width=0.1) + labs(y = metric, x = "")
+  #print(p) # should the default be to print this???
   results = list(stats = stats,values = values, plot=p)
   return(list(stats = stats,values = values, plot=p))
 }

@@ -38,6 +38,15 @@ path.}
 \item{color}{- The color to use for this path and its associated
 data.}
 
+\item{circleColor}{- Sets the colour of the circle.
+Defaults to white.}
+
+\item{pathPointSize}{- Sets the size of points which represent the 
+path. Defaults to 8.}
+
+\item{projectionPointSize}{- Sets the size of points which represent the 
+projected path. Defaults to 8.}
+
 \item{scale}{- The path will be start (its actual start) at 0 and
 will be scaled so that its most distant point will be at this
 distance from the origin.  This is to keep it comparable in
