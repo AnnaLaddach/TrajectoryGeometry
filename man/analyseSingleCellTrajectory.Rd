@@ -25,6 +25,8 @@ control the production of randomized paths for comparison.}
 
 \item{statistic}{- Allowable values are 'median', 'mean' or 'max'}
 
+\item{nSamples}{- The number sample paths to test}
+
 \item{nWindows}{- The number of windows pseudotime should be split into to sample cells from. Defaults to 10.}
 
 \item{d}{- The dimension under consideration.  This defaults to

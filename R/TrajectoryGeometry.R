@@ -308,7 +308,8 @@ getSphericalData = function(path,statistic)
 #'     to those projections and the name of the statistic used.
 #' @export
 #' @examples
-#' sphericalData = pathToSphericalData(straightPath,from=1,to=nrow(straightPath),d=3,statistic='median')
+#' sphericalData = pathToSphericalData(straightPath,from=1,
+#'                                     to=nrow(straightPath),d=3,statistic='median')
 pathToSphericalData = function(path,from,to,d,statistic)
 {
     ## TRACE
@@ -730,6 +731,7 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 #' @param d - The dimension under consideration.  This defaults to
 #'     ncol(path)
 #' @param statistic - Allowable values are 'median', 'mean' or 'max'
+#' @param nSamples - The number sample paths to test
 #' @param randomizationParams - A character vector which is used to
 #'     control the production of randomized paths for comparison.
 #' @param N - The number of random paths to generated for statistical
@@ -894,6 +896,11 @@ circleOnTheUnitSphere = function(center,radius,N=36)
 #' @param radius - The radius of the circle.
 #' @param color - The color to use for this path and its associated
 #'     data.
+#' @param circleColor - The color to plot the circle, defaults to white.
+#' @param pathPointSize - The size to plot the data points along the
+#'     path.  Defaults to 8.
+#' @param projectionPointSize - The size to plot the projections onto
+#'     the sphere.  Defaults to 8.
 #' @param scale - The path will be start (its actual start) at 0 and
 #'     will be scaled so that its most distant point will be at this
 #'     distance from the origin.  This is to keep it comparable in
@@ -1001,8 +1008,8 @@ plotPathProjectionCenterAndCircle = function(path,
 #'  stats - output of wilcox test
 #'  values - dataframe containing plotted data in long format
 #'  plot - ggplot object 
-#' @importFrom ggplot2 ggplot geom_violin geom_boxplot
 #' @export
+#' @importFrom ggplot2 ggplot geom_violin geom_boxplot
 visualiseTrajectoryStats = function(answers,
                           metric,
                           distanceMetric = "Mean",

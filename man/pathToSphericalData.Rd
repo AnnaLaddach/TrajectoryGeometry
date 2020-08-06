@@ -34,5 +34,6 @@ the spherical distance from the center to the points of the
 projection and the name of the statistic used.
 }
 \examples{
-sphericalData = pathToSphericalData(straightPath,from=1,to=nrow(straightPath),d=3,statistic='median')
+sphericalData = pathToSphericalData(straightPath,from=1,
+                                    to=nrow(straightPath),d=3,statistic='median')
 }

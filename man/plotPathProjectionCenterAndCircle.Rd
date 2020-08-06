@@ -38,6 +38,14 @@ path.}
 \item{color}{- The color to use for this path and its associated
 data.}
 
+\item{circleColor}{- The color to plot the circle, defaults to white.}
+
+\item{pathPointSize}{- The size to plot the data points along the
+path.  Defaults to 8.}
+
+\item{projectionPointSize}{- The size to plot the projections onto
+the sphere.  Defaults to 8.}
+
 \item{scale}{- The path will be start (its actual start) at 0 and
 will be scaled so that its most distant point will be at this
 distance from the origin.  This is to keep it comparable in
