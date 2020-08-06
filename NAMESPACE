@@ -17,17 +17,11 @@ export(projectPathToSphere)
 export(samplePath)
 export(testPathForDirectionality)
 export(visualiseTrajectoryStats)
-<<<<<<< HEAD
-importFrom(ggplot2,geom_boxplot)
-importFrom(ggplot2,geom_violin)
-importFrom(ggplot2,ggplot)
-=======
 importFrom(ggplot2,aes)
 importFrom(ggplot2,geom_boxplot)
 importFrom(ggplot2,geom_violin)
 importFrom(ggplot2,ggplot)
 importFrom(ggplot2,labs)
->>>>>>> 5bb44a0a3ceacb805fb4919d8775cc2d168b81c9
 importFrom(pracma,Norm)
 importFrom(pracma,cross)
 importFrom(pracma,dot)

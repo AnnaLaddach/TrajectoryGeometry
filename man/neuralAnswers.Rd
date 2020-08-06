@@ -4,11 +4,13 @@
 \name{neuralAnswers}
 \alias{neuralAnswers}
 \title{neuralAnswers}
-\format{A list
+\format{
+A list
 \describe{
 Results of running analyseSingleCellTrajectory() on 
 a neurogenic trajectory.
-}}
+}
+}
 \source{
 Single cell data
 }

@@ -309,13 +309,8 @@ getSphericalData = function(path,statistic)
 #'     to those projections and the name of the statistic used.
 #' @export
 #' @examples
-<<<<<<< HEAD
-#' sphericalData = pathToSphericalData(straightPath,from=1,
-#'                                     to=nrow(straightPath),d=3,statistic='median')
-=======
 #' sphericalData = pathToSphericalData(straightPath,from=1,to=nrow(straightPath),
 #'                                     d=3,statistic='median')
->>>>>>> 5bb44a0a3ceacb805fb4919d8775cc2d168b81c9
 pathToSphericalData = function(path,from,to,d,statistic)
 {
     ## TRACE
@@ -734,14 +729,6 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 #'
 #' @param attributes - An n x d (cell x attribute) matrix of numeric attributes for single cell data. Rownames should be cell names.
 #' @param pseudotime - A named numeric vector of pseudotime values for cells. 
-<<<<<<< HEAD
-#' @param nWindows - The number of windows pseudotime should be split into to sample cells from. Defaults to 10.
-#' @param d - The dimension under consideration.  This defaults to
-#'     ncol(path)
-#' @param statistic - Allowable values are 'median', 'mean' or 'max'
-#' @param nSamples - The number sample paths to test
-=======
->>>>>>> 5bb44a0a3ceacb805fb4919d8775cc2d168b81c9
 #' @param randomizationParams - A character vector which is used to
 #'     control the production of randomized paths for comparison.
 #' @param statistic - Allowable values are 'median', 'mean' or 'max'.
@@ -911,20 +898,12 @@ circleOnTheUnitSphere = function(center,radius,N=36)
 #' @param radius - The radius of the circle.
 #' @param color - The color to use for this path and its associated
 #'     data.
-<<<<<<< HEAD
-#' @param circleColor - The color to plot the circle, defaults to white.
-#' @param pathPointSize - The size to plot the data points along the
-#'     path.  Defaults to 8.
-#' @param projectionPointSize - The size to plot the projections onto
-#'     the sphere.  Defaults to 8.
-=======
 #' @param circleColor - Sets the colour of the circle.
 #'     Defaults to white.
 #' @param pathPointSize - Sets the size of points which represent the 
 #'     path. Defaults to 8.
 #' @param projectionPointSize - Sets the size of points which represent the 
 #'     projected path. Defaults to 8.
->>>>>>> 5bb44a0a3ceacb805fb4919d8775cc2d168b81c9
 #' @param scale - The path will be start (its actual start) at 0 and
 #'     will be scaled so that its most distant point will be at this
 #'     distance from the origin.  This is to keep it comparable in
@@ -1033,16 +1012,10 @@ plotPathProjectionCenterAndCircle = function(path,
 #'  unpaired if comparing sampled paths for two different trajectories)
 #'  values - dataframe containing plotted data in long format
 #'  plot - ggplot object 
-<<<<<<< HEAD
-#' @export
-#' @importFrom ggplot2 ggplot geom_violin geom_boxplot
-visualiseTrajectoryStats = function(answers,
-=======
 #' @importFrom ggplot2 ggplot geom_violin geom_boxplot labs aes
 #' @importFrom stats wilcox.test
 #' @export
 visualiseTrajectoryStats = function(traj1Data,
->>>>>>> 5bb44a0a3ceacb805fb4919d8775cc2d168b81c9
                           metric,
                           averageFunc = mean,
                           traj2Data = list())
