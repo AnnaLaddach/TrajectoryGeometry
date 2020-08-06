@@ -1,0 +1,33 @@
+Package: TrajectoryGeometry
+Title: This Package Discovers Directionality in Time and Pseudo-times Series of Gene Expression Patterns
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Anna",
+           family = "Laddach",
+           role = c("aut", "cre"),
+           email = "anna.laddach@crick.ac.uk",
+           comment = c(ORCID = "0000-0001-5552-6534"))
+    person(given = "Michael",
+           family = "Shapiro",
+           role = c("aut", "cre"),
+           email = "michael.shapiro@crick.ac.uk",
+           comment = c(ORCID = "0000-0002-2769-9320"))
+Description: Given a time series or pseudo-times series of gene expression data, we might wish to know: Do the changes in gene expression in these data exhibit directionality?  Are there turning points in this directionality.  Do different subsets of the data move in different directions?  This package uses spherical geometry to probe these sorts of questions.  In particular, if we are looking at (say) the first n dimensions of the PCA of gene expression, directionality can be detected as the clustering of points on the (n-1)-dimensional sphere.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Imports: pracma,
+	 rgl,
+	 ggplot2
+Depends: 
+    R (>= 2.10)
+Suggests: 
+    dplyr,
+    knitr,
+    RColorBrewer,
+    rmarkdown
+VignetteBuilder: knitr
+biocViews:
+	BiologicalQuestion,
+	StatisticalMethod

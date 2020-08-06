@@ -23,17 +23,23 @@ analyseSingleCellTrajectory(
 \item{randomizationParams}{- A character vector which is used to
 control the production of randomized paths for comparison.}
 
-\item{statistic}{- Allowable values are 'median', 'mean' or 'max'}
+\item{statistic}{- Allowable values are 'median', 'mean' or 'max'.}
 
+<<<<<<< HEAD
 \item{nSamples}{- The number sample paths to test}
 
 \item{nWindows}{- The number of windows pseudotime should be split into to sample cells from. Defaults to 10.}
+=======
+\item{nSamples}{- The number of sampled paths to generate (defaults to 1000).}
+
+\item{nWindows}{- The number of windows pseudotime should be split into to sample cells from (defaults to 10).}
+>>>>>>> 5bb44a0a3ceacb805fb4919d8775cc2d168b81c9
 
 \item{d}{- The dimension under consideration.  This defaults to
-ncol(path)}
+ncol(attributes).}
 
 \item{N}{- The number of random paths to generated for statistical
-comparison to the given path.}
+comparison to the given path (defaults to 1000).}
 }
 \value{
 This returns a list, where each entry is itself a list containing information comparing a sampled path
@@ -48,7 +54,7 @@ This returns a list, where each entry is itself a list containing information co
 }
 \description{
 This function analyses a single cell trajectory by sampling multiple paths and comparing each path to random paths.
-This function takes vector of pseudotime values, and a matrix of attribute values (cell x attribute).
+It takes vector of pseudotime values, and a matrix of attribute values (cell x attribute).
 It also optionally takes the number of pseudotime windows to sample a single cell from. This defaults to 10.
 The function returns a list of Answers for each comparison of a sampled path to a random path
 }

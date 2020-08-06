@@ -5,30 +5,31 @@
 \title{Visualise Trajectory Stats}
 \usage{
 visualiseTrajectoryStats(
-  answers,
+  traj1Data,
   metric,
-  distanceMetric = "Mean",
-  answers2 = list()
+  averageFunc = mean,
+  traj2Data = list()
 )
 }
 \arguments{
-\item{answers}{- the result of analyseSingleCellTrajectory}
+\item{traj1Data}{- the result of analyseSingleCellTrajectory}
 
 \item{metric}{- either pvalue or distance}
 
-\item{distanceMetric}{- if there are multiple distances available for each 
-sampled trajectory choose to plot the mean or median distance.}
+\item{averageFunc}{- if there are multiple distances available for each 
+sampled trajectory, provide a function to calculate the average (defaults to mean).}
 
-\item{answers2}{either an empty list or the result of analyseSingleCellTrajectory}
+\item{traj2Data}{either an empty list or the result of analyseSingleCellTrajectory}
 }
 \value{
 a list containing:
- stats - output of wilcox test
+ stats - output of wilcox test (paired if comparing sampled to random paths,
+ unpaired if comparing sampled paths for two different trajectories)
  values - dataframe containing plotted data in long format
  plot - ggplot object
 }
 \description{
-This function creates boxplots for comparisons of metrics for sampled
-paths to random paths. It can also create plots for comparing two sets of
-sampled paths by providing the answers2 argument.
+This function creates boxplots and extracts statistics for comparisons of metrics 
+for sampled paths to random paths. It can also create plots for comparing two sets
+of sampled paths by providing the traj2Data argument.
 }

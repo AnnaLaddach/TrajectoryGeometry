@@ -131,3 +131,75 @@
 #' }
 #' @source Synthetic data
 "oscillation"
+
+## ###################################################
+#' singleCellMatrix
+#'
+#' PCA projections derived from normalised gene expression values for 
+#' single cells. The columns are the PCs and the rows are the cells.
+#'
+#' @format A matrix
+#' \describe{
+#' PCA projections derived from normalised gene expression values for 
+#' single cells. The columns are the PCs and the rows are the cells.
+#' }
+#' @source Single cell data
+"singleCellMatrix"
+
+## ###################################################
+#' glialPseudoTime
+#'
+#' A vector of pseudotime values for a gliogenic trajectory.
+#' Pseudotime values have been inferred using the SlingShot 
+#' package. The vector is named according to cell ID.
+#' 
+#' @format A vector
+#' \describe{
+#' A vector of pseudotime values for a gliogenic trajectory.
+#' Pseudotime values have been inferred using the SlingShot 
+#' package. The vector is named according to cell ID.
+#' }
+#' @source Single cell data
+"glialPseudoTime"
+
+## ###################################################
+#' neuralPseudoTime
+#'
+#' A vector of pseudotime values for a neurogenic trajectory.
+#' Pseudotime values have been inferred using the SlingShot 
+#' package. The vector is named according to cell ID.
+#' 
+#' @format A vector
+#' \describe{
+#' A vector of pseudotime values for a neurogenic trajectory.
+#' Pseudotime values have been inferred using the SlingShot 
+#' package. The vector is named according to cell ID.
+#' }
+#' @source Single cell data
+"neuralPseudoTime"
+
+## ###################################################
+#' glialAnswers
+#'
+#' Results of running analyseSingleCellTrajectory() on 
+#' a gliogenic trajectory.
+#' @format A list
+#' \describe{
+#' Results of running analyseSingleCellTrajectory() on 
+#' a gliogenic trajectory.
+#' }
+#' @source Single cell data
+"glialAnswers"
+
+## ###################################################
+#' neuralAnswers
+#'
+#' Results of running analyseSingleCellTrajectory() on 
+#' a neurogenic trajectory.
+#' @format A list
+#' \describe{
+#' Results of running analyseSingleCellTrajectory() on 
+#' a neurogenic trajectory.
+#' }
+#' @source Single cell data
+"neuralAnswers"
