@@ -1,9 +1,5 @@
 
 ## ##########################################################################
-## Yow! A global variable!
-trace = FALSE
-
-## ##########################################################################
 ## ##########################################################################
 ## Code for testing directionality in paths:
 
@@ -49,10 +45,6 @@ trace = FALSE
 testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
                                      randomizationParams,statistic,N)
 {
-    ## TRACE
-    if(trace)
-        print('in testPathForDirectionality')
-    
     ## ###################################################
     ## Subset to the data under consideration:
     ## path = path[from:to,1:d]
@@ -110,10 +102,6 @@ testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
 #' projection2 = projectPathToSphere(crookedPath,from=6)
 projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 {
-    ## TRACE
-    if(trace)
-        print('in projectPathToSphere')
-    
     ## ###################################################
     ## Subset to the data under consideration:
     path = path[from:to,1:d]
@@ -159,10 +147,6 @@ projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 #' center = findSphereClusterCenter(projection,'mean')
 findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 {
-    ## TRACE
-    if(trace)
-        print('in findSphereClusterCenter')
-    
     n = nrow(points)
     
     ## ###################################################
@@ -231,10 +215,6 @@ findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 #' distances = findSphericalDistance(straightPathCenter,straightPathProjection)
 findSphericalDistance = function(center,points,normalize=FALSE)
 {
-    ## TRACE
-    if(trace)
-        print('in findSphericalDistance')
-    
     n = nrow(points)
     
     ## ###################################################
@@ -274,10 +254,6 @@ findSphericalDistance = function(center,points,normalize=FALSE)
 #' sphericalData = getSphericalData(straightPath,'max')
 getSphericalData = function(path,statistic)
 {
-    ## TRACE
-    if(trace)
-        print('in getSphericalData')
-    
     from = 1
     to = nrow(path)
     d = ncol(path)
@@ -313,10 +289,6 @@ getSphericalData = function(path,statistic)
 #'                                     d=3,statistic='median')
 pathToSphericalData = function(path,from,to,d,statistic)
 {
-    ## TRACE
-    if(trace)
-        print('in pathToSphericalData')
-    
     returnValues = list()
     ## ###################################################
     ## Subset to the data under consideration:
@@ -387,11 +359,11 @@ pathToSphericalData = function(path,from,to,d,statistic)
 generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
                                randomizationParams,N)
 {
-    ## TRACE
-    if(trace)
-        print('in generateRandomPaths')
-
-    stopifnot(randomizationParams[1] %in% c('byPermutation','bySteps'))
+    if(! randomizationParams[1] %in% c('byPermutation','bySteps'))
+    {
+        msg = "randomizationParams[1] must be either 'byPermutation'or 'bySteps'"
+        stop(msg)
+    }
 
     ## ###################################################
     ## Subset to the data under consideration:
@@ -537,10 +509,6 @@ generateRandomPathsBySteps = function(path,randomizationParams,N)
 #' stepLengths = getStepLengths(path=crookedPath,from=4)
 getStepLengths = function(path,from=1,to=nrow(path),d=ncol(path))
 {
-    ## TRACE
-    if(trace)
-        print('in getStepLengths')
-    
     ## ###################################################
     ## Subset to the data under consideration:
     path = path[from:to,1:d]
@@ -573,10 +541,6 @@ getStepLengths = function(path,from=1,to=nrow(path),d=ncol(path))
 #' distance = getDistanceDataForPaths(paths=paths,statistic='max')
 getDistanceDataForPaths = function(paths,statistic)
 {
-    ## TRACE
-    if(trace)
-        print('in getDistanceDataForPaths')
-    
     n = nrow(paths[[1]])
     N = length(paths)
     distances = numeric(N)
@@ -606,10 +570,6 @@ getDistanceDataForPaths = function(paths,statistic)
 #' randomUnitVector = generateRandomUnitVector(5)
 generateRandomUnitVector = function(d)
 {
-    ## TRACE
-    if(trace)
-        print('in generateRandomUnitVector')
-    
     x = rnorm(d)
     return(x / Norm(x))
 }
@@ -789,10 +749,6 @@ analyseSingleCellTrajectory = function(attributes, pseudotime, randomizationPara
 #' anOrthonormalBasis = orthonormalBasis(c(1,1,1))
 orthonormalBasis = function(x)
 {
-    ## TRACE
-    if(trace)
-        print('in orthonormalBasis')
-    
     x = x / Norm(x)
     B = matrix(0,nrow=3,ncol=3)
     
@@ -843,10 +799,6 @@ orthonormalBasis = function(x)
 #' circle = circleOnTheUnitSphere(pole,radius)
 circleOnTheUnitSphere = function(center,radius,N=36)
 {
-    ## TRACE
-    if(trace)
-        print('in circleOnTheUnitSphere')
-    
     ## ###################################################
     ## For sanity:
     center = center / Norm(center)
@@ -934,10 +886,6 @@ plotPathProjectionCenterAndCircle = function(path,
                                              scale=1.5,
                                              newFigure=TRUE)
 {
-    ## TRACE
-    if(trace)
-        print('in plotPathProjectionCenterAndCircle')
-    
     ## ###################################################
     ## Constants.  Maybe they should become parameters?
     centerSize = 15
