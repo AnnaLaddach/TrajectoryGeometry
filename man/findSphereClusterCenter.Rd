@@ -11,8 +11,7 @@ findSphereClusterCenter(points, statistic, normalize = FALSE)
 x d matrix.}
 
 \item{statistic}{- The statistic to be minimized.  Allowable values
-are 'median','mean' or 'max'. Need to decide how to handle 
-values which are not allowed.}
+are 'median','mean' or 'max'.}
 
 \item{normalize}{- If this is set to TRUE, the function will start
 by normalizing the input points.}

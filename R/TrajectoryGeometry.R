@@ -45,6 +45,9 @@
 testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
                                      randomizationParams,statistic,N)
 {
+    testPathForDirectionalityTest(path,from,to,d,
+                                  randomizationParams,statistic,N)
+    
     ## ###################################################
     ## Subset to the data under consideration:
     ## path = path[from:to,1:d]
@@ -102,6 +105,8 @@ testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
 #' projection2 = projectPathToSphere(crookedPath,from=6)
 projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 {
+    projectPathToSphereTest(path,from,to,d)
+    
     ## ###################################################
     ## Subset to the data under consideration:
     path = path[from:to,1:d]
@@ -135,8 +140,7 @@ projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 #' @param points - A set of n points on the (d-1) sphere given as an n
 #'     x d matrix.
 #' @param statistic - The statistic to be minimized.  Allowable values
-#'     are 'median','mean' or 'max'. Need to decide how to handle 
-#'     values which are not allowed.
+#'     are 'median','mean' or 'max'. 
 #' @param normalize - If this is set to TRUE, the function will start
 #'     by normalizing the input points.
 #' @return This returns a point in dimension d given as a vector.
@@ -147,6 +151,8 @@ projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 #' center = findSphereClusterCenter(projection,'mean')
 findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 {
+    findSphereClusterCenterTest(points,statistic,normalize)
+    
     n = nrow(points)
     
     ## ###################################################
@@ -215,6 +221,8 @@ findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 #' distances = findSphericalDistance(straightPathCenter,straightPathProjection)
 findSphericalDistance = function(center,points,normalize=FALSE)
 {
+    findSphericalDistanceTest(center,points,normalize)
+    
     n = nrow(points)
     
     ## ###################################################
@@ -254,6 +262,8 @@ findSphericalDistance = function(center,points,normalize=FALSE)
 #' sphericalData = getSphericalData(straightPath,'max')
 getSphericalData = function(path,statistic)
 {
+    getSphericalDataTest(path,statistic)
+    
     from = 1
     to = nrow(path)
     d = ncol(path)
@@ -289,6 +299,8 @@ getSphericalData = function(path,statistic)
 #'                                     d=3,statistic='median')
 pathToSphericalData = function(path,from,to,d,statistic)
 {
+    pathToSphericalDataTest(path,from,to,d,statistic)
+    
     returnValues = list()
     ## ###################################################
     ## Subset to the data under consideration:
@@ -359,6 +371,8 @@ pathToSphericalData = function(path,from,to,d,statistic)
 generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
                                randomizationParams,N)
 {
+    generateRandomPathsTest(path,from,to,d,randomizationParams,N)
+    
     if(! randomizationParams[1] %in% c('byPermutation','bySteps'))
     {
         msg = "randomizationParams[1] must be either 'byPermutation'or 'bySteps'"
@@ -509,6 +523,8 @@ generateRandomPathsBySteps = function(path,randomizationParams,N)
 #' stepLengths = getStepLengths(path=crookedPath,from=4)
 getStepLengths = function(path,from=1,to=nrow(path),d=ncol(path))
 {
+    getStepLengthsTest(path,from,to,d)
+    
     ## ###################################################
     ## Subset to the data under consideration:
     path = path[from:to,1:d]
@@ -541,6 +557,8 @@ getStepLengths = function(path,from=1,to=nrow(path),d=ncol(path))
 #' distance = getDistanceDataForPaths(paths=paths,statistic='max')
 getDistanceDataForPaths = function(paths,statistic)
 {
+    getDistanceDataForPathsTest(paths,statistic)
+    
     n = nrow(paths[[1]])
     N = length(paths)
     distances = numeric(N)
@@ -570,6 +588,8 @@ getDistanceDataForPaths = function(paths,statistic)
 #' randomUnitVector = generateRandomUnitVector(5)
 generateRandomUnitVector = function(d)
 {
+    generateRandomUnitVectorTest(d)
+    
     x = rnorm(d)
     return(x / Norm(x))
 }
@@ -602,6 +622,8 @@ generateRandomUnitVector = function(d)
 pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
                            direction)
 {
+    pathProgressionTest(path,from,to,d,direction)
+    
     path = path[from:to,1:d]
     direction = direction / Norm(direction)
     distance = numeric(nrow(path)-1)
@@ -749,6 +771,8 @@ analyseSingleCellTrajectory = function(attributes, pseudotime, randomizationPara
 #' anOrthonormalBasis = orthonormalBasis(c(1,1,1))
 orthonormalBasis = function(x)
 {
+    orthonormalBasisTest(x)
+        
     x = x / Norm(x)
     B = matrix(0,nrow=3,ncol=3)
     
@@ -799,6 +823,8 @@ orthonormalBasis = function(x)
 #' circle = circleOnTheUnitSphere(pole,radius)
 circleOnTheUnitSphere = function(center,radius,N=36)
 {
+    circleOnTheUnitSphereTest(center,radius,N)
+    
     ## ###################################################
     ## For sanity:
     center = center / Norm(center)
