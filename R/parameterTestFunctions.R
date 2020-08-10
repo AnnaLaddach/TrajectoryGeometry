@@ -381,7 +381,7 @@ plotPathProjectionCenterAndCircleTest = function(path,
     if(! ncol(projection) == 3)
         stop('plotPathProjectionCenterAndCircle expects nrow(projection) == 3')
 
-    if(! (class(center) == numeric &
+    if(! (class(center) == 'numeric' &
           length(center) == 3))
         stop('plotPathProjectionCenterAndCircle expects center to be numeric of length 3')
 
