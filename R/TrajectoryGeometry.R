@@ -912,6 +912,11 @@ plotPathProjectionCenterAndCircle = function(path,
                                              scale=1.5,
                                              newFigure=TRUE)
 {
+    plotPathProjectionCenterAndCircleTest(path,from,to,projection,
+                                          center,radius,color,circleColor,
+                                          pathPointSize,projectionPointSize,
+                                          scale,newFigure)
+    
     ## ###################################################
     ## Constants.  Maybe they should become parameters?
     centerSize = 15

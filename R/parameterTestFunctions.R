@@ -319,3 +319,88 @@ circleOnTheUnitSphereTest  = function(center,radius,N)
     if(N <3)
         stop('circleOnTheUnitSphere expects N to be an integer >= 3')
 }
+
+## ###################################################
+#' This tests the inputs to plotPathProjectionCenterAndCircle
+#'
+#' @param path - A path of dimension 3 in the form of an N x 3 matrix.
+#' @param from - The starting place of the section under
+#'     consideration.  This is used for marking the relevant
+#'     portion.
+#' @param to - Likewise.  
+#' @param projection - The projection of the relevant portion of the
+#'     path.
+#' @param center - The center of the projection points.
+#' @param radius - The radius of the circle.
+#' @param color - The color to use for this path and its associated
+#'     data.
+#' @param circleColor - Sets the colour of the circle.
+#' @param pathPointSize - Sets the size of points which represent the 
+#'     path. 
+#' @param projectionPointSize - Sets the size of points which represent the 
+#'     projected path. 
+#' @param scale - The path will be start (its actual start) at 0 and
+#'     will be scaled so that its most distant point will be at this
+#'     distance from the origin.  This is to keep it comparable in
+#'     size to the sphere. 
+#' @param newFigure - When plotting a single figure or the first of
+#'     multiple figures, this should be set to TRUE which is its
+#'     default.  Otherwise, set this to FALSE in order to add
+#'     additional paths to the same figure.
+plotPathProjectionCenterAndCircleTest = function(path,
+                                                 from,
+                                                 to,
+                                                 projection,
+                                                 center,
+                                                 radius,
+                                                 color,
+                                                 circleColor,
+                                                 pathPointSize,
+                                                 projectionPointSize,
+                                                 scale,
+                                                 newFigure)
+{
+    if(! class(path) == 'matrix')
+        stop('plotPathProjectionCenterAndCircle expects path to be a matrix')
+
+    if(! ncol(path) == 3)
+        stop('plotPathProjectionCenterAndCircle expects nrow(path) == 3')
+    
+    if(from >= nrow(path))
+        stop('plotPathProjectionCenterAndCircle expects from to be < nrow(path)')
+    
+    if(to > nrow(path))
+        stop('plotPathProjectionCenterAndCircle expects to to be <= nrow(path)')
+    
+    if(from >= to)
+        stop('plotPathProjectionCenterAndCircle expects from < to')
+    
+    if(! class(projection) == 'matrix')
+        stop('plotPathProjectionCenterAndCircle expects projection to be a matrix')
+
+    if(! ncol(projection) == 3)
+        stop('plotPathProjectionCenterAndCircle expects nrow(projection) == 3')
+
+    if(! (class(center) == numeric &
+          length(center) == 3))
+        stop('plotPathProjectionCenterAndCircle expects center to be numeric of length 3')
+
+    if(! (is.numeric(radius) &
+          length(radius) == 1 &
+          radius > 0))
+        stop('plotPathProjectionCenterAndCircle expects radius to be a positive scalar')
+    
+    if(! (is.numeric(pathPointSize) &
+          length(pathPointSize) == 1 &
+          pathPointSize > 0))
+        stop('plotPathProjectionCenterAndCircle expects pathPointSize to be a positive scalar')
+
+    if(! (is.numeric(projectionPointSize) &
+          length(projectionPointSize) == 1 &
+          projectionPointSize > 0))
+        stop(paste('plotPathProjectionCenterAndCircle expects',
+                   'projectionPointSize to be a positive scalar'))   
+       
+    if(! is.logical(newFigure))
+        stop('plotPathProjectionCenterAndCircle expects newFigure to be a logical')
+}
