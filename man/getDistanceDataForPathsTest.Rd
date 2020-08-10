@@ -7,7 +7,7 @@
 getDistanceDataForPathsTest(paths, statistic)
 }
 \arguments{
-\item{paths}{- A list of paths.  Each of these is an n x d matrix.}
+\item{paths}{- A list of paths.  Each of these is an n x d matrix. ***Really a list?}
 
 \item{statistic}{- Allowable values are 'median', 'mean' or 'max'.}
 }

@@ -4,14 +4,12 @@
 \name{neuralPseudoTime}
 \alias{neuralPseudoTime}
 \title{neuralPseudoTime}
-\format{
-A vector
+\format{A vector
 \describe{
 A vector of pseudotime values for a neurogenic trajectory.
 Pseudotime values have been inferred using the SlingShot 
 package. The vector is named according to cell ID.
-}
-}
+}}
 \source{
 Single cell data
 }

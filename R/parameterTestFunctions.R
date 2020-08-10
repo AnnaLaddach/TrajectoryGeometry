@@ -73,7 +73,7 @@ projectPathToSphereTest = function(path,from,to,d)
 }
 
 ## ###################################################
-#' This tests the inputs to findSpherClusterCenter
+#' This tests the inputs to findSphereClusterCenter
 #'
 #' @param points - A set of n points on the (d-1) sphere given as an n
 #'     x d matrix.
@@ -83,7 +83,7 @@ projectPathToSphereTest = function(path,from,to,d)
 #'     by normalizing the input points.
 findSphereClusterCenterTest = function(points,statistic,normalize)
 {
-    if(! class(point) == 'matrix')
+    if(! class(points) == 'matrix')
         stop('findSphereClusterCenter expects points to be a matrix')
     
     if(! statistic %in% c('median','mean','max'))
@@ -236,12 +236,17 @@ getStepLengthsTest = function(path,from,to,d)
 ## ###################################################
 #' This tests the inputs for getDistanceDataForPaths
 #'
-#' @param paths - A list of paths.  Each of these is an n x d matrix.
+#' @param paths - A list of paths.  Each of these is an n x d matrix. ***Really a list?
 #' @param statistic - Allowable values are 'median', 'mean' or 'max'.
 getDistanceDataForPathsTest = function(paths,statistic)
-{
-    if(! class(path) == 'matrix')
-        stop('getDistanceDataForPaths expects path to be a matrix')
+{   
+    if(! class(paths) == 'list')
+        stop('getDistanceDataForPaths expects paths to be a list')
+  
+    for (path in paths){
+      if(! class(path) == 'matrix')
+        stop('getDistanceDataForPaths expects each path to be a matrix')
+    }
 
     if(! statistic %in% c('median','mean','max'))
         stop(paste("getDistanceDataForPaths expects statistic to be",
@@ -294,7 +299,7 @@ pathProgressionTest = function(path,from,to,d,direction)
 #' This tests the input to orthoNormalBasis
 #'
 #' @param x - A numerical vector of length 3
-orthoNormalBasisTest = function(x)
+orthonormalBasisTest = function(x)
 {
     if(! (class(x) == 'numeric' &
           length(x) == 3))

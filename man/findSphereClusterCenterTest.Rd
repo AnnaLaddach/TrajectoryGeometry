@@ -2,7 +2,7 @@
 % Please edit documentation in R/parameterTestFunctions.R
 \name{findSphereClusterCenterTest}
 \alias{findSphereClusterCenterTest}
-\title{This tests the inputs to findSpherClusterCenter}
+\title{This tests the inputs to findSphereClusterCenter}
 \usage{
 findSphereClusterCenterTest(points, statistic, normalize)
 }
@@ -17,5 +17,5 @@ are 'median','mean' or 'max'.}
 by normalizing the input points.}
 }
 \description{
-This tests the inputs to findSpherClusterCenter
+This tests the inputs to findSphereClusterCenter
 }

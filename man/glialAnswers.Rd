@@ -4,13 +4,11 @@
 \name{glialAnswers}
 \alias{glialAnswers}
 \title{glialAnswers}
-\format{
-A list
+\format{A list
 \describe{
 Results of running analyseSingleCellTrajectory() on 
 a gliogenic trajectory.
-}
-}
+}}
 \source{
 Single cell data
 }
