@@ -117,6 +117,10 @@ plotPathProjectionCenterAndCircle(path=neuralPath[,1:3],
                                   newFigure=TRUE)
 ```
 
+Screenshot of the resulting figure:
+
+![Neural path plot](neuralPathPlot.png)
+
 The glial path:
 ```{r}
 plotPathProjectionCenterAndCircle(path=glialPath[,1:3],
@@ -129,6 +133,10 @@ plotPathProjectionCenterAndCircle(path=glialPath[,1:3],
                                   projectionPointSize = 20,
                                   newFigure=TRUE)
 ```
+
+Screenshot of the resulting figure:
+
+![Glia path plot](gliaPathPlot.png)
 
 
 ## Sampling multiple paths

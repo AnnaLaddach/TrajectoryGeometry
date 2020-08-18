@@ -4,10 +4,12 @@
 \name{crookedPath}
 \alias{crookedPath}
 \title{Crooked path}
-\format{A 14 x 3 matrix
+\format{
+A 14 x 3 matrix
 \describe{
 This path changes direction after the 5th point.
-}}
+}
+}
 \source{
 Synthetic data
 }

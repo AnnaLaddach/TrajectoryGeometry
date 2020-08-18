@@ -4,11 +4,13 @@
 \name{crookedPathProjection}
 \alias{crookedPathProjection}
 \title{Crooked path projection}
-\format{An 8 x 3 matrix
+\format{
+An 8 x 3 matrix
 \describe{
 The projection of crookedPath[7:14,] onto the unit sphere as seen
     from crookedPath[6,] .
-}}
+}
+}
 \source{
 Synthetic data
 }

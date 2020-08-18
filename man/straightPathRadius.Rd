@@ -4,11 +4,13 @@
 \name{straightPathRadius}
 \alias{straightPathRadius}
 \title{Straight path radius}
-\format{Numeric
+\format{
+Numeric
 \describe{
 The mean spherical distance from the points of the projection of
 straightPath to the point minimizing this mean distance.
-}}
+}
+}
 \source{
 Synthetic data
 }
