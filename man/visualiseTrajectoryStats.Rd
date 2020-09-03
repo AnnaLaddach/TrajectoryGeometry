@@ -7,17 +7,17 @@
 visualiseTrajectoryStats(
   traj1Data,
   metric,
-  averageFunc = mean,
+  average = "mean",
   traj2Data = list()
 )
 }
 \arguments{
 \item{traj1Data}{- the result of analyseSingleCellTrajectory}
 
-\item{metric}{- either pvalue or distance}
+\item{metric}{- either "pValue" or "distance"}
 
-\item{averageFunc}{- if there are multiple distances available for each 
-sampled trajectory, provide a function to calculate the average (defaults to mean).}
+\item{average}{- if there are multiple distances available for each 
+sampled trajectory, calculate the average using "mean" or "median" (defaults to "mean").}
 
 \item{traj2Data}{either an empty list or the result of analyseSingleCellTrajectory}
 }
@@ -32,4 +32,9 @@ a list containing:
 This function creates boxplots and extracts statistics for comparisons of metrics 
 for sampled paths to random paths. It can also create plots for comparing two sets
 of sampled paths by providing the traj2Data argument.
+}
+\examples{
+cholResultDistance = visualiseTrajectoryStats(cholAnswers, "distance")
+hepResultDistance = visualiseTrajectoryStats(hepAnswers, "distance")
+distanceComparison = visualiseTrajectoryStats(cholAnswers, "distance", traj2Data = hepAnswers)
 }

@@ -147,59 +147,140 @@
 "singleCellMatrix"
 
 ## ###################################################
-#' glialPseudoTime
+#' hepAttributes
 #'
-#' A vector of pseudotime values for a gliogenic trajectory.
+#' PCA projections derived from normalised gene expression values for 
+#' single cells, and filtered for cells which feature in a trajectory 
+#' from hepatoblast to hepatocyte. The columns are the PCs and the 
+#' rows are the cells.
+#'
+#' @format A matrix
+#' \describe{
+#' PCA projections derived from normalised gene expression values for 
+#' single cells, and filtered for cells which feature in a trajectory 
+#' from hepatoblast to hepatocyte. The columns are the PCs and the 
+#' rows are the cells.
+#' }
+#' @source Single cell data
+"hepAttributes"
+
+## ###################################################
+#' cholAttributes
+#'
+#' PCA projections derived from normalised gene expression values for 
+#' single cells, and filtered for cells which feature in a trajectory 
+#' from hepatoblast to cholangiocyte. The columns are the PCs and the 
+#' rows are the cells.
+#'
+#' @format A matrix
+#' \describe{
+#' PCA projections derived from normalised gene expression values for 
+#' single cells, and filtered for cells which feature in a trajectory 
+#' from hepatoblast to cholangiocyte. The columns are the PCs and the 
+#' rows are the cells.
+#' }
+#' @source Single cell data
+"cholAttributes"
+
+## ###################################################
+#' hepPseudoTime
+#'
+#' A vector of pseudotime values for a trajectory describing the
+#' development of hepatocytes from hepatoblasts.
 #' Pseudotime values have been inferred using the SlingShot 
 #' package. The vector is named according to cell ID.
 #' 
 #' @format A vector
 #' \describe{
-#' A vector of pseudotime values for a gliogenic trajectory.
+#' A vector of pseudotime values for a trajectory describing the
+#' development of hepatocytes from hepatoblasts.
 #' Pseudotime values have been inferred using the SlingShot 
 #' package. The vector is named according to cell ID.
 #' }
 #' @source Single cell data
-"glialPseudoTime"
+"hepPseudoTime"
 
 ## ###################################################
-#' neuralPseudoTime
+#' cholPseudoTime
 #'
-#' A vector of pseudotime values for a neurogenic trajectory.
+#' A vector of pseudotime values for a trajectory describing the
+#' development of cholangiocytes from hepatoblasts.
 #' Pseudotime values have been inferred using the SlingShot 
 #' package. The vector is named according to cell ID.
 #' 
 #' @format A vector
 #' \describe{
-#' A vector of pseudotime values for a neurogenic trajectory.
+#' A vector of pseudotime values for a trajectory describing the
+#' development of cholangiocytes from hepatoblasts.
 #' Pseudotime values have been inferred using the SlingShot 
 #' package. The vector is named according to cell ID.
 #' }
 #' @source Single cell data
-"neuralPseudoTime"
+"cholPseudoTime"
 
 ## ###################################################
-#' glialAnswers
+#' hepPseudoTimeNormalised
+#'
+#' A vector of pseudotime values, normalised to range from 
+#' 0 to 100, for a trajectory describing the
+#' development of hepatocytes from hepatoblasts.
+#' Pseudotime values have been inferred using the SlingShot 
+#' package. The vector is named according to cell ID.
+#' 
+#' @format A vector
+#' \describe{
+#' A vector of pseudotime values for a trajectory describing the
+#' development of hepatocytes from hepatoblasts.
+#' Pseudotime values have been inferred using the SlingShot 
+#' package. The vector is named according to cell ID.
+#' }
+#' @source Single cell data
+"hepPseudoTimeNormalised"
+
+## ###################################################
+#' cholPseudoTimeNormalised
+#'
+#' A vector of pseudotime values, normalised to range from 
+#' 0 to 100, for a trajectory describing the
+#' development of cholangiocytes from hepatoblasts.
+#' Pseudotime values have been inferred using the SlingShot 
+#' package. The vector is named according to cell ID.
+#' 
+#' @format A vector
+#' \describe{
+#' A vector of pseudotime values, normalised to range from 
+#' 0 to 100, for a trajectory describing the
+#' development of cholangiocytes from hepatoblasts.
+#' Pseudotime values have been inferred using the SlingShot 
+#' package. The vector is named according to cell ID.
+#' }
+#' @source Single cell data
+"cholPseudoTimeNormalised"
+
+## ###################################################
+#' hepAnswers
+#'
+#' Results of running analyseSingleCellTrajectory() on a trajectory describing the
+#' development of hepatocytes from hepatoblasts.
+#' @format A list
+#' \describe{
+#' Results of running analyseSingleCellTrajectory() on a trajectory describing the
+#' development of hepatocytes from hepatoblasts.
+#' }
+#' @source Single cell data
+"hepAnswers"
+
+## ###################################################
+#' cholAnswers
 #'
 #' Results of running analyseSingleCellTrajectory() on 
-#' a gliogenic trajectory.
+#' a trajectory describing the
+#' development of cholangiocytes from hepatoblasts.
 #' @format A list
 #' \describe{
 #' Results of running analyseSingleCellTrajectory() on 
-#' a gliogenic trajectory.
+#' a trajectory describing the
+#' development of cholangiocytes from hepatoblasts.
 #' }
 #' @source Single cell data
-"glialAnswers"
-
-## ###################################################
-#' neuralAnswers
-#'
-#' Results of running analyseSingleCellTrajectory() on 
-#' a neurogenic trajectory.
-#' @format A list
-#' \describe{
-#' Results of running analyseSingleCellTrajectory() on 
-#' a neurogenic trajectory.
-#' }
-#' @source Single cell data
-"neuralAnswers"
+"cholAnswers"

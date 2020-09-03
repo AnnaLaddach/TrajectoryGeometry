@@ -4,12 +4,10 @@
 \name{straightPath}
 \alias{straightPath}
 \title{Straight path}
-\format{
-A 14 x 3 matrix
+\format{A 14 x 3 matrix
 \describe{
 The path is roughly in the (1,0,0) direction.
-}
-}
+}}
 \source{
 Synthetic data
 }

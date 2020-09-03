@@ -4,13 +4,11 @@
 \name{crookedPathRadius}
 \alias{crookedPathRadius}
 \title{Crooked path radius}
-\format{
-Numeric
+\format{Numeric
 \describe{
 The mean spherical distance from the points of the projection of
 crookedPath to the point minimizing this mean distance.
-}
-}
+}}
 \source{
 Synthetic data
 }

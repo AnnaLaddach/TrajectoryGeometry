@@ -295,6 +295,82 @@ pathProgressionTest = function(path,from,to,d,direction)
                    'the points of path to have the same dimension'))
 }
 
+## ##########################################################################
+#' This tests the inputs for samplePath.
+#'
+#' @param attributes - An n x d (cell x attribute) matrix of numeric attributes for single cell data. Rownames should be cell names.
+#' @param pseudotime - A named numeric vector of pseudotime values for cells. 
+#' @param nWindows - The number of windows pseudotime should be split into to sample cells from. Defaults to 10.
+samplePathTest = function(attributes, pseudotime, nWindows)
+{
+  if(! class(attributes) == 'matrix')
+    stop('samplePath expects attributes to be a matrix')
+  
+  if(! class(pseudotime) == 'numeric')
+    stop('samplePath expects pseudotime to be a numeric vector')
+  
+  if(! length(pseudotime) == nrow(attributes))
+    stop('samplePath expects the length of pseudotime to match the number of rows of attributes')
+  
+  if(! sum(names(pseudotime) == rownames(attributes)) == length(pseudotime))
+    stop('samplePath expects the names of pseudotime to match the row names of attributes')
+
+  if(! class(nWindows) == 'numeric'| ! length(nWindows) == 1 | nWindows < 1)
+    stop('samplePath expects nWindows to be a positive integer')
+}
+
+## ##########################################################################
+#' This tests the input to analyseSingleCellTrajectory.
+#'
+#' @param attributes - An n x d (cell x attribute) matrix of numeric attributes for single cell data. Rownames should be cell names.
+#' @param pseudotime - A named numeric vector of pseudotime values for cells. 
+#' @param randomizationParams - A character vector which is used to
+#'     control the production of randomized paths for comparison.
+#' @param statistic - Allowable values are 'median', 'mean' or 'max'.
+#' @param nSamples - The number of sampled paths to generate (defaults to 1000).
+#' @param nWindows - The number of windows pseudotime should be split into to sample cells from (defaults to 10).
+#' @param d - The dimension under consideration.  This defaults to
+#'     ncol(attributes).
+#' @param N - The number of random paths to generated for statistical
+#'     comparison to the given path (defaults to 1000).
+analyseSingleCellTrajectoryTest = function(attributes, pseudotime, randomizationParams, statistic, nSamples, nWindows, d, N)
+{
+  if(! class(attributes) == 'matrix')
+    stop('analyseSingleCellTrajectory expects attributes to be a matrix')
+
+  if(! class(pseudotime) == 'numeric')
+    stop('analyseSingleCellTrajectory expects pseudotime to be a numeric vector')
+  
+  if(! length(pseudotime) == nrow(attributes))
+    stop('analyseSingleCellTrajectory expects the length of pseudotime to match the number of rows of attributes')
+  
+  if(! sum(names(pseudotime) == rownames(attributes)) == length(pseudotime))
+    stop('analyseSingleCellTrajectory expects the names of pseudotime to match the row names of attributes')
+  
+  if(! randomizationParams[1] %in% c('byPermutation','bySteps'))
+    stop(paste("analyseSingleCellTrajectory expectsrandomizationParams[1]",
+               "to be either 'byPermutation'or 'bySteps'.  See vignette."))
+
+  if(! statistic %in% c('median','mean','max'))
+    stop(paste("analyseSingleCellTrajectory expects statistic to be",
+               "one of 'median', 'mean' or 'max'. See vignette."))
+
+  if(! class(nSamples) == 'numeric'| ! length(nSamples) == 1 | nSamples < 1)
+    stop('analyseSingleCellTrajectory expects nSamples to be a positive integer')
+
+  if(! class(nWindows) == 'numeric'| ! length(nWindows) == 1 | nWindows < 1)
+    stop('analyseSingleCellTrajectory expects nWindows to be a positive integer')
+
+  if((! class(d) == 'integer' & ! class(d) == 'numeric') | d < 1 | length(d) > 1)
+    stop('analyseSingleCellTrajectory expects d to be a positive integer')
+
+  if(d > ncol(attributes))
+    stop('analyseSingleCellTrajectory expects d to be <= ncol(path)')
+
+  if((! class(N) == 'integer' & ! class(N) == 'numeric') | N < 1 | length(N) > 1)
+    stop('analyseSingleCellTrajectory expects N to be a positive integer')
+}
+
 ## ###################################################
 #' This tests the input to orthoNormalBasis
 #'
@@ -408,4 +484,40 @@ plotPathProjectionCenterAndCircleTest = function(path,
        
     if(! is.logical(newFigure))
         stop('plotPathProjectionCenterAndCircle expects newFigure to be a logical')
+}
+
+## ###################################################
+#' This tests the input to visualiseTrajectoryStats 
+#'
+#' @param traj1Data - the result of analyseSingleCellTrajectory
+#' @param metric - either "pValue" or "distance"
+#' @param average - if there are multiple distances available for each 
+#' sampled trajectory, calculate the average using mean or median (defaults to mean).
+#' @param traj2Data either an empty list or the result of analyseSingleCellTrajectory
+
+visualiseTrajectoryStatsTest = function(traj1Data,
+                                        metric,
+                                        average,
+                                        traj2Data){
+  if(! class(traj1Data) == 'list')
+    stop('visualiseTrajectoryStats expects traj1Data to be a list')
+  
+  if(! sum(names(traj1Data[[1]])  == c("pValue","sphericalData","randomDistances","randomizationParams")) == 4)
+    stop('visualiseTrajectoryStats expects traj1Data to be the output of analyseSingleCellTrajectory')
+  
+  if(! class(traj2Data) == 'list')
+    stop('visualiseTrajectoryStats expects traj2Data to be a list')  
+  
+  if(length(traj2Data) > 0){
+    if(! sum(names(traj2Data[[1]])  == c("pValue","sphericalData","randomDistances","randomizationParams")) == 4)
+       (stop('visualiseTrajectoryStats expects traj2Data to be the output of analyseSingleCellTrajectory'))
+  }
+  
+  if(! average %in% c('median','mean'))
+    stop(paste("visualiseTrajectoryStats expects average to be",
+               "'median' or 'mean'."))
+  
+  if(! metric %in% c('pValue','distance'))
+    stop(paste("visualiseTrajectoryStats expects metric to be",
+               "'pValue' or 'distance'."))
 }

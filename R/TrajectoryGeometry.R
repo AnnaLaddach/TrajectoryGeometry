@@ -654,7 +654,12 @@ pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
 #' @return sampledPath - A path consisting of a matrix of attributes of sampled cells. The rownames refer to the pseudotime windows
 #'  each cell was sampled from.
 #' @export
+#' @examples
+#' samplePath(cholAttributes, cholPseudoTimeNormalised)
+#' samplePath(hepAttributes, hepPseudoTimeNormalised)
 samplePath = function(attributes, pseudotime, nWindows = 10){
+  
+    samplePathTest(attributes, pseudotime, nWindows)
 
     ## ###################################################
     ## Set parameters for path.
@@ -730,7 +735,33 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 #'     paths;
 #'   randomizationParams - the choice of randomization parameters
 #' @export
-analyseSingleCellTrajectory = function(attributes, pseudotime, randomizationParams, statistic, nSamples = 1000, nWindows = 10, d = ncol(attributes), N = 1000){
+#' @examples
+#' cholAnswers = analyseSingleCellTrajectory(cholAttributes[,1:3], 
+#'                                          cholPseudoTimeNormalised,
+#'                                          nSamples = 1000, 
+#'                                          randomizationParams = c('byPermutation',
+#'                                                          'permuteWithinColumns'), 
+#'                                          statistic = "mean", 
+#'                                          N = 1)
+#' hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3], 
+#'                                          hepPseudoTimeNormalised, nSamples = 1000, 
+#'                                          randomizationParams = c('byPermutation',
+#'                                                          'permuteWithinColumns'), 
+#'                                          statistic = "mean", 
+#'                                          N = 1)
+analyseSingleCellTrajectory = function(attributes, 
+                                       pseudotime, 
+                                       randomizationParams, 
+                                       statistic, 
+                                       nSamples = 1000, 
+                                       nWindows = 10, 
+                                       d = ncol(attributes), 
+                                       N = 1000)
+  {
+  
+  analyseSingleCellTrajectoryTest(attributes, pseudotime, 
+                                  randomizationParams, statistic, 
+                                  nSamples, nWindows, d, N)
   
   ## ###################################################
   ## List to contain results:
@@ -740,7 +771,8 @@ analyseSingleCellTrajectory = function(attributes, pseudotime, randomizationPara
   ## Sample paths and test each one for directionality
   for (i in 1:nSamples){
     path = samplePath(attributes, pseudotime, nWindows = nWindows)
-    answers[[i]] = testPathForDirectionality(path, randomizationParams = randomizationParams, statistic = statistic, N = N, d = d)
+    answers[[i]] = testPathForDirectionality(path, randomizationParams = randomizationParams, 
+                                             statistic = statistic, N = N, d = d)
     if (i %% 100 == 0){
       print(paste(i, "sampled paths analysed"))
     }
@@ -982,9 +1014,9 @@ plotPathProjectionCenterAndCircle = function(path,
 #' of sampled paths by providing the traj2Data argument.
 #' 
 #' @param traj1Data - the result of analyseSingleCellTrajectory
-#' @param metric - either pvalue or distance
-#' @param averageFunc - if there are multiple distances available for each 
-#' sampled trajectory, provide a function to calculate the average (defaults to mean).
+#' @param metric - either "pValue" or "distance"
+#' @param average - if there are multiple distances available for each 
+#' sampled trajectory, calculate the average using "mean" or "median" (defaults to "mean").
 #' @param traj2Data either an empty list or the result of analyseSingleCellTrajectory
 #' @return a list containing:
 #'  stats - output of wilcox test (paired if comparing sampled to random paths,
@@ -994,11 +1026,27 @@ plotPathProjectionCenterAndCircle = function(path,
 #' @importFrom ggplot2 ggplot geom_violin geom_boxplot labs aes
 #' @importFrom stats wilcox.test
 #' @export
+#' @examples 
+#' cholResultDistance = visualiseTrajectoryStats(cholAnswers, "distance")
+#' hepResultDistance = visualiseTrajectoryStats(hepAnswers, "distance")
+#' distanceComparison = visualiseTrajectoryStats(cholAnswers, "distance", traj2Data = hepAnswers)
 visualiseTrajectoryStats = function(traj1Data,
                           metric,
-                          averageFunc = mean,
+                          average = "mean",
                           traj2Data = list())
   {
+  
+  visualiseTrajectoryStatsTest(traj1Data, metric, average, traj2Data)
+  
+  ## ###################################################
+  ## Set averageFunc as actual function
+  if (average == "mean"){
+    averageFunc = mean
+  }
+  
+  if (average == "median"){
+    averageFunc = median
+  }
   
   ## ###################################################
   ## Set up dataframe which will be populated with data to plot in long format
@@ -1012,40 +1060,48 @@ visualiseTrajectoryStats = function(traj1Data,
       ## ###################################################
       ## Populate values data frame with distance data
       if (metric == "distance"){
-        values = rbind(values, data.frame(type = "Trajectory 1", value = traj1Data[[i]]$sphericalData$distance))
-        values = rbind(values, data.frame(type = "Trajectory 2", value = traj2Data[[i]]$sphericalData$distance))
+        values = rbind(values, data.frame(type = "Trajectory 1", 
+                                          value = traj1Data[[i]]$sphericalData$distance))
+        values = rbind(values, data.frame(type = "Trajectory 2", 
+                                          value = traj2Data[[i]]$sphericalData$distance))
       }
       
       ## ###################################################
       ## Populate values data frame with pValue data
       if (metric == "pValue"){
-        values = rbind(values, data.frame(type = "Trajectory 1", value = traj1Data[[i]]$pValue))
-        values = rbind(values, data.frame(type = "Trajectory 2", value = traj2Data[[i]]$pValue))
+        values = rbind(values, data.frame(type = "Trajectory 1",
+                                          value = traj1Data[[i]]$pValue))
+        values = rbind(values, data.frame(type = "Trajectory 2", 
+                                          value = traj2Data[[i]]$pValue))
       } 
     }
     
     ## ###################################################
-    ## use unpaired wilcox test to compare values for 2 trajectories
-    stats = wilcox.test(values[values$type == "Trajectory 1",]$value, values[values$type == "Trajectory 2",]$value)
+    ## Use unpaired wilcox test to compare values for 2 trajectories
+    stats = wilcox.test(values[values$type == "Trajectory 1",]$value, 
+                        values[values$type == "Trajectory 2",]$value)
   }
   
   ## ###################################################
   ## Code for comparing sampled pathways to random pathways
   if (length(traj2Data) == 0){
     
-    ## here we can only compare distance metrics
+    ## Here we can only compare distance metrics
     if (metric != "distance"){
       print("Metric must be distance to compare sampled to random trajectories")
     }
     for (i in 1:length(traj1Data)){
-      values = rbind(values, data.frame(type = "Sampled", value = traj1Data[[i]]$sphericalData$distance))
-      values = rbind(values, data.frame(type = "Random", value = averageFunc(traj1Data[[i]]$randomDistances)))
+      values = rbind(values, data.frame(type = "Sampled", 
+                                        value = traj1Data[[i]]$sphericalData$distance))
+      values = rbind(values, data.frame(type = "Random", 
+                                        value = averageFunc(traj1Data[[i]]$randomDistances)))
     }
     
     ## ###################################################
-    ## use paired wilcox test to compare values sampled and random pathways, as random trajectories are 
-    ## parametised based on the sampled pathways
-    stats = wilcox.test(values[values$type == "Sampled",]$value,values[values$type == "Random",]$value, paired = T)
+    ## Use paired wilcox test to compare values sampled and random pathways, 
+    ## as random trajectories are parametised based on the sampled pathways
+    stats = wilcox.test(values[values$type == "Sampled",]$value,
+                        values[values$type == "Random",]$value, paired = T)
   }
   
   ## ###################################################

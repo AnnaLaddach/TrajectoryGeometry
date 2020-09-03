@@ -27,3 +27,7 @@ The vector of pseudotime values should be named according to cell names.
 Simarly the row names of the matrix of attribute values should be cell names.
 Row names for the returned matrix of the sampled path give the window number a cell was sampled from.
 }
+\examples{
+samplePath(cholAttributes, cholPseudoTimeNormalised)
+samplePath(hepAttributes, hepPseudoTimeNormalised)
+}
