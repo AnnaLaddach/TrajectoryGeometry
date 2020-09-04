@@ -4,11 +4,13 @@
 \name{hepAnswers}
 \alias{hepAnswers}
 \title{hepAnswers}
-\format{A list
+\format{
+A list
 \describe{
 Results of running analyseSingleCellTrajectory() on a trajectory describing the
 development of hepatocytes from hepatoblasts.
-}}
+}
+}
 \source{
 Single cell data
 }

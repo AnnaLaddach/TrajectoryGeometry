@@ -4,11 +4,13 @@
 \name{singleCellMatrix}
 \alias{singleCellMatrix}
 \title{singleCellMatrix}
-\format{A matrix
+\format{
+A matrix
 \describe{
 PCA projections derived from normalised gene expression values for 
 single cells. The columns are the PCs and the rows are the cells.
-}}
+}
+}
 \source{
 Single cell data
 }

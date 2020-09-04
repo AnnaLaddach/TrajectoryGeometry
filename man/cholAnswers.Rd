@@ -4,12 +4,14 @@
 \name{cholAnswers}
 \alias{cholAnswers}
 \title{cholAnswers}
-\format{A list
+\format{
+A list
 \describe{
 Results of running analyseSingleCellTrajectory() on 
 a trajectory describing the
 development of cholangiocytes from hepatoblasts.
-}}
+}
+}
 \source{
 Single cell data
 }

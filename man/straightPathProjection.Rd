@@ -4,11 +4,13 @@
 \name{straightPathProjection}
 \alias{straightPathProjection}
 \title{Straight path projection}
-\format{A 13 x 3 matrix
+\format{
+A 13 x 3 matrix
 \describe{
 The projection of straightPath[2:14,] onto the unit sphere as seen
     from straightPath[1,] .
-}}
+}
+}
 \source{
 Synthetic data
 }
