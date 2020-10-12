@@ -284,3 +284,18 @@
 #' }
 #' @source Single cell data
 "cholAnswers"
+
+## ###################################################
+#' cholBranchPointResults
+#'
+#' Results of running analyseBranchPoint() on 
+#' a trajectory describing the
+#' development of cholangiocytes from hepatoblasts.
+#' @format A list
+#' \describe{
+#' Results of running analyseBranchPoint() on 
+#' a trajectory describing the
+#' development of cholangiocytes from hepatoblasts.
+#' }
+#' @source Single cell data
+"cholBranchPointResults"

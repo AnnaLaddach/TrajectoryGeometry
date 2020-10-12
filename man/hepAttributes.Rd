@@ -4,15 +4,13 @@
 \name{hepAttributes}
 \alias{hepAttributes}
 \title{hepAttributes}
-\format{
-A matrix
+\format{A matrix
 \describe{
 PCA projections derived from normalised gene expression values for 
 single cells, and filtered for cells which feature in a trajectory 
 from hepatoblast to hepatocyte. The columns are the PCs and the 
 rows are the cells.
-}
-}
+}}
 \source{
 Single cell data
 }

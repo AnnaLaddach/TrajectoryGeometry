@@ -55,13 +55,13 @@ The function returns a list of Answers for each comparison of a sampled path to 
 \examples{
 cholAnswers = analyseSingleCellTrajectory(cholAttributes[,1:3], 
                                          cholPseudoTimeNormalised,
-                                         nSamples = 1000, 
+                                         nSamples = 10, 
                                          randomizationParams = c('byPermutation',
                                                          'permuteWithinColumns'), 
                                          statistic = "mean", 
                                          N = 1)
 hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3], 
-                                         hepPseudoTimeNormalised, nSamples = 1000, 
+                                         hepPseudoTimeNormalised, nSamples = 10, 
                                          randomizationParams = c('byPermutation',
                                                          'permuteWithinColumns'), 
                                          statistic = "mean", 

@@ -4,13 +4,11 @@
 \name{straightPathCenter}
 \alias{straightPathCenter}
 \title{Straight path center}
-\format{
-A vector of length 3
+\format{A vector of length 3
 \describe{
 A unit vector of length 3 minimizing distance to the points of the
     projection of straightPath.
-}
-}
+}}
 \source{
 Synthetic data.
 }

@@ -4,13 +4,11 @@
 \name{crookedPathCenter}
 \alias{crookedPathCenter}
 \title{Crooked path center}
-\format{
-A vector of length 3
+\format{A vector of length 3
 \describe{ A unit vector of length 3
     minimizing mean spherical distance to the points of the
     projection of crookedPath.
-}
-}
+}}
 \source{
 Synthetic data.
 }

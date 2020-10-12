@@ -46,11 +46,9 @@ set.seed(42)
 
 ## The data
 
-The data consists of a singleCellMatrix,   which contains PCA projections derived from normalised gene expression values for each cell. Any other features which describe the cells could also be used (i.e. normalised expression) values. The columns are the PCs and the rows are the cells. Rownames should be the names of the cells.  
-
+The data consists of a singleCellMatrix, which contains PCA projections derived from normalised gene expression values for each cell. Any other features which describe the cells could also be used (i.e. normalised expression) values. The columns are the PCs and the rows are the cells. Rownames should be the names of the cells.  
 
 There are also vectors of pseudotime values for both trajectories. These have been inferred using the Slingshot package (Street et al., 2018). The vectors are named according to cell ID. N.B. where cells are not inferred to take part in a trajectory these are given an NA value. A number of projenitor cells are assigned to both trajectories in agreement with their "bipotential" nature. 
-
 
 We will filter pseudotime trajectories and the singleCellMatrix to remove cells which do not take part in trajectories. Additionally, we will normalise pseudotime to range from 0 to 100 for each trajectory.
 
@@ -160,7 +158,7 @@ hepResultDistance = visualiseTrajectoryStats(hepAnswers, "distance")
 cholResultDistance$plot
 hepResultDistance$plot
 
-cat(paste("Cholangiocyte p value (comparison of distance metric):", cholResultDistance$stats$p.value)) #should I make the wilcox test single tailed?
+cat(paste("Cholangiocyte p value (comparison of distance metric):", cholResultDistance$stats$p.value))
 
 cat(paste("\nHepatocyte p value (comparison of distance metric):", hepResultDistance$stats$p.value)) 
 ```
@@ -179,8 +177,80 @@ cat(paste("Comparison of cholangiocyte and hepatocyte trajectories (distance met
 
 From this we can clearly see that the hepatocyte trajectory shows more consistent directionality than the cholangiocyte trajectory.
 
-It should be noted that in this vignette we have analysed the first 3 dimensions. However, an arbitrary number of dimensions can be analysed, only visualisation on the sphere is limited to 3 dimensions.
+## Branch point analysis
 
+We can hypothesise that the cholangiocyte trajectory will maintain a more consistent directionality from the branch point onwards.
+First let's try to identify the approximate pseudotime value of the branch point. We can do this by calculating the minimum distances between the two trajectories for each point along the cholangiocyte trajectory. The distances between the two trajectories should be very small before the branch point and increase as the trajectories diverge after the branch point.
+
+```{r}
+distances = distanceBetweenTrajectories(cholAttributes, cholPseudoTime,
+                            hepAttributes)
+
+plot(distances$pseudotime, distances$distance, xlab = "cholangiocyte pseudotime", ylab = "minimum distance")
+```
+
+
+It seems clear that the cholangiocyte trajectory has branched off by pseudotime 40.
+
+Lets analyse the trajectory geometry starting from successive points from 0 to 50.
+In the interests of time we will only sample 100 paths for each point in pseudotime. Generally it would be recommended to sample a larger number of paths (e.g. 1000).
+
+```{r}
+cholBranchPointResults = analyseBranchPoint(cholAttributes[,1:3], 
+                                          cholPseudoTime,
+                                          randomizationParams = c('byPermutation',
+                                                          'permuteWithinColumns'), 
+                                          statistic = "mean",
+                                          start = 0,
+                                          stop = 50,
+                                          step = 5,
+                                          nSamples = 100, 
+                                          N = 1)
+```
+
+Let's extract statistics and visualise the results.
+```{r}
+cholBranchPointStats = visualiseBranchPointStats(cholBranchPointResults)
+print(cholBranchPointStats$distancePlot)
+print(cholBranchPointStats$pValuePlot)
+```
+
+We can clearly see that the mean distance decreases as we approach the branch point, whereas the -log10(p-value), despite some fluctuation, increases as we approach the branch point. This suggests that the cholangiocyte trajectory maintains more consistent directionality after the branch point.
+
+Let's investigate whether the same thing hapens to the hepatocyte trajectory. First let's estimate where the hapatocyte branch point is.
+
+```{r}
+distances = distanceBetweenTrajectories(hepAttributes, hepPseudoTime,
+                            cholAttributes)
+
+plot(distances$pseudotime, distances$distance, xlab = "hepatocyte pseudotime", ylab = "minimum distance")
+```
+It looks like the hepatocyte trajectory branches off around pseudotime 20.
+
+Again we anlyse the trajectory geometry starting from successively later points.
+```{r}
+hepBranchPointResults = analyseBranchPoint(hepAttributes[,1:3], 
+                                          hepPseudoTime,
+                                          randomizationParams = c('byPermutation',
+                                                          'permuteWithinColumns'), 
+                                          statistic = "mean",
+                                          start = 0,
+                                          stop = 50,
+                                          step = 5,
+                                          nSamples = 100, 
+                                          N = 1)
+```
+Let's extract statistics and visualise results.
+
+```{r}
+hepBranchPointStats = visualiseBranchPointStats(hepBranchPointResults)
+print(hepBranchPointStats$distancePlot)
+print(hepBranchPointStats$pValuePlot)
+```
+
+We see no consistent decrease as we approach the branch point, in fact the mean distance appears to increase as we approach the branch point. A decrease is seen in the mean distance after the branch point, this could potentially be attributed to increased noise around the branch point. 
+
+It should be noted that in this vignette we have analysed the first 3 dimensions. However, an arbitrary number of dimensions can be analysed, only visualisation on the sphere is limited to 3 dimensions.
 
 ## References
 

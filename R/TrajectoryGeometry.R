@@ -697,6 +697,7 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
     	
     	sampledPath = rbind(sampledPath, chosenAttributes)
     	
+    	## ###################################################
     	## Save window number.
     	windowNumber = c(windowNumber, i)
       }	
@@ -738,13 +739,13 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 #' @examples
 #' cholAnswers = analyseSingleCellTrajectory(cholAttributes[,1:3], 
 #'                                          cholPseudoTimeNormalised,
-#'                                          nSamples = 1000, 
+#'                                          nSamples = 10, 
 #'                                          randomizationParams = c('byPermutation',
 #'                                                          'permuteWithinColumns'), 
 #'                                          statistic = "mean", 
 #'                                          N = 1)
 #' hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3], 
-#'                                          hepPseudoTimeNormalised, nSamples = 1000, 
+#'                                          hepPseudoTimeNormalised, nSamples = 10, 
 #'                                          randomizationParams = c('byPermutation',
 #'                                                          'permuteWithinColumns'), 
 #'                                          statistic = "mean", 
@@ -781,6 +782,144 @@ analyseSingleCellTrajectory = function(attributes,
 }
 
 
+## ##########################################################################
+#' Analyse branch point.
+#'
+#' This function takes a single cell trajectory and analyses it starting from successively later points in pseudotime,
+#' with the rationale that a more consistent directionality will be followed after the branch point.
+#' 
+#' @param attributes - An n x d (cell x attribute) matrix of numeric attributes for single cell data. Rownames should be cell names.
+#' @param pseudotime - A named numeric vector of pseudotime values for cells. 
+#' @param randomizationParams - A character vector which is used to
+#'     control the production of randomized paths for comparison.
+#' @param statistic - Allowable values are 'median', 'mean' or 'max'.
+#' @param start - The first pseudotime value (as a percentage of the trajectory) from which to analyse the trajectory from. 
+#'     Defaults to 25\% of the way through the trajectory.
+#' @param stop - The last pseudotime value (as a percentage of the trajectory) from which to analyse the trajectory from. 
+#'     Defaults to 75\% of the way through the trajectory.
+#' @param step - The size of the step to take between successively later starting points in pseudotime. 
+#'               Defaults to 5\% of the trajectory length.
+#' @param nSamples - The number of sampled paths to generate (defaults to 1000).
+#' @param nWindows - The number of windows pseudotime should be split into to sample cells from (defaults to 10).
+#' @param d - The dimension under consideration.  This defaults to
+#'     ncol(attributes).
+#' @param N - The number of random paths to generated for statistical
+#'     comparison to the given path (defaults to 1000).
+#' @return This returns a list of results for analyseSingleCellTrajectory, named by trajectory starting point.
+#'    Each result from analyseSingleCellTrajectory is a list which contains an entry for each sampled path.
+#'    Each  of these entries is a list containing information comparing the sampled path in question
+#'    to random paths. The entries consist of:
+#'    pValue - the p-value for the path and statistic in question;
+#'    sphericalData - a list containing the projections of the path to
+#'     the sphere, the center of that sphere and the statistic for
+#'     distance to that center;
+#'    randomDistances - the corresponding distances for randomly chosen;
+#'     paths;
+#'    randomizationParams - the choice of randomization parameters
+#' @export
+#' @examples
+#' cholBranchPointResults = analyseBranchPoint(cholAttributes[,1:3], 
+#'                          cholPseudoTime[!is.na(cholPseudoTime)],
+#'                          randomizationParams = c('byPermutation',
+#'                                          'permuteWithinColumns'), 
+#'                          statistic = "mean",
+#'                          start = 0,
+#'                          stop = 50,
+#'                          step = 5,
+#'                          nSamples = 100, 
+#'                          N = 1)
+analyseBranchPoint = function(attributes, 
+                              pseudotime, 
+                              randomizationParams, 
+                              statistic,
+                              start = (max(pseudotime) - min(pseudotime))*0.25,
+                              stop = (max(pseudotime) - min(pseudotime))*0.75,
+                              step = (max(pseudotime) - min(pseudotime))*0.05,
+                              nSamples = 1000, 
+                              nWindows = 10, 
+                              d = ncol(attributes), 
+                              N = 1)
+{
+
+  
+  analyseBranchPointTest(attributes, pseudotime, randomizationParams, 
+                                statistic, start, stop, step,
+                                nSamples, nWindows, d, N)
+  
+  ## ###################################################
+  ## normalise pseudotime to range between 0 and 100
+  #pseudotime = (pseudotime - min(pseudotime))/(max(pseudotime) - min(pseudotime))*100 
+
+  ## ###################################################
+  ## list to contain results
+  results = list()
+  
+  ## ###################################################
+  ## iterate through successively later starting points
+  for (i in seq(start, stop, step)){
+    print(paste0("analysing trajectory from ", i, " onwards"))
+    pseudotime_selected = pseudotime[pseudotime >= i]
+    pseudotime_selected = (pseudotime_selected - min(pseudotime_selected))/(max(pseudotime_selected) - min(pseudotime_selected))*100 
+    attributes_selected = attributes[names(pseudotime_selected),]
+    results[[as.character(i)]] = analyseSingleCellTrajectory(attributes_selected, pseudotime_selected, 
+                                               randomizationParams, 
+                                               statistic, nSamples, 
+                                               nWindows, d, N)
+  }
+  
+  return(results)
+} 
+
+
+## ##########################################################################
+#' Get distances between trajectories.
+#'
+#' This function compares two single cell trajectories (representative of different lineages within the same dataset),
+#' and finds the minimum euclidean distance between the first and the second trajectory at each point in pseudotime.
+#' Please note, attributes can either be values for single cells, or attributes which have been smoothed over pseudotime.
+#' Likewise the pseudotime values should be for single cells, or for smoothed attributes over pseudotime
+#' @param attributes1 - An n x d (cell x attribute) matrix of numeric attributes for the first single cell trajectory.
+#' @param pseudotime1 - A named numeric vector of pseudotime values for the first single cell trajectory, 
+#'    names should match rownames of atrributes1. 
+#' @param attributes2 - An n x d (cell x attribute) matrix of numeric attributes for the sencond single cell trajectory.
+#' @return results - a dataframe containing pseudotime values (for the first trajectory), 
+#'     and distances (the minimimum euclidian distance between the two trajectories at that point in pseudotime).
+#' @export 
+#' @examples
+#' distances = distanceBetweenTrajectories(cholAttributes, 
+#'                                         cholPseudoTime[!is.na(cholPseudoTime)], 
+#'                                         hepAttributes)
+distanceBetweenTrajectories = function(attributes1,
+                              pseudotime1,
+                              attributes2)
+{
+  
+  distanceBetweenTrajectoriesTest(attributes1, pseudotime1, attributes2)
+    
+  ## ###################################################
+  ## dataframe to store distances  
+  results = data.frame(pseudotime = numeric(), distances =  numeric())
+  
+  ## ###################################################
+  ## iterate through points for first trajectory
+  for (name in names(pseudotime1)){
+    distances = c()
+
+    ## ###################################################
+    ## iterate through points in second trajectory and calculate euclidean distance to
+    ## point in first trajectory
+    for (i in 1:nrow(attributes2)){
+      distances = c(distances, Norm(attributes1[name,] - attributes2[i,]))
+    }
+    
+    ## ###################################################
+    ## store the minimum distance
+    results = rbind(results, data.frame(pseudotime = pseudotime1[[name]], distance = min(distances)))
+  }
+  
+  results = results[order(results$pseudotime),]
+  return(results)
+}
 
 
 ## ##########################################################################
@@ -1009,7 +1148,7 @@ plotPathProjectionCenterAndCircle = function(path,
 ## ###################################################
 #' Visualise Trajectory Stats 
 #'
-#' This function creates boxplots and extracts statistics for comparisons of metrics 
+#' This function creates plots and extracts statistics for comparisons of metrics 
 #' for sampled paths to random paths. It can also create plots for comparing two sets
 #' of sampled paths by providing the traj2Data argument.
 #' 
@@ -1113,5 +1252,73 @@ visualiseTrajectoryStats = function(traj1Data,
   return(list(stats = stats,values = values, plot=p))
 }
 
+## ###################################################
+#' Visualise Branch Point Stats 
+#'
+#' This function creates plots and extracts statistics for analysing branch 
+#' points. It returns plots and underlying data for visualising distance metrics and
+#' -log10 transformed pvalues (comparison to random trajectories) for trajectories with 
+#' different starting points.
+#' 
+#' @param branchPointData - the result of analyseBranchPoint
+#' @param average - if there are multiple distances available for each 
+#' sampled trajectory, calculate the average using "mean" or "median" (defaults to "mean").
+#' @return a list containing:
+#'  branchPointValues - dataframe containing data underlying distance plot in long format
+#'  pValues- dataframe containing data underlying p-value plot in long format
+#'  distancePlot - ggplot object, violin plots of distance metric for sampled paths 
+#'                 for different trajectory different starting points
+#'  pValue - ggplot object, line plot of -log10 transformed p-valuesfor comparing sampled paths
+#'           to random paths for different trajectory starting points
+#' @importFrom ggplot2 ggplot geom_violin geom_boxplot geom_line geom_point labs aes xlab ylab
+#' @export
+#' @examples 
+#' cholBranchPointStats = visualiseBranchPointStats(cholBranchPointResults)
+visualiseBranchPointStats = function(branchPointData,
+                                    average = "mean")
+{
 
+  visualiseBranchPointStatsTest(branchPointData, average)
 
+  ## ###################################################
+  ## Set up dataframe which will be populated with data to plot in long format
+  branchPointValues = data.frame(type = character(), value = numeric(), trajectoryStart = numeric())
+
+  ## ###################################################
+  ## Set up dataframe to store pvalues
+  pValues = data.frame(trajectoryStart = numeric(),pValue = numeric())
+
+  ## ###################################################
+  ## Iterate through branch points
+  for (name in names(branchPointData)){
+    trajectoryStart = as.numeric(name)
+    results = visualiseTrajectoryStats(branchPointData[[name]], "distance", average = average)
+    values = results$values
+    values$trajectoryStart = trajectoryStart
+    branchPointValues = rbind(branchPointValues, values)
+    pValue = results$stats$p.value
+    pValues = rbind(pValues, data.frame(pValue = pValue, trajectoryStart = trajectoryStart))
+  }
+
+  ## ###################################################
+  ## calculate -log10(pValue)
+  pValues$logPValue = -log10(pValues$pValue)
+
+  ## ###################################################
+  ## create violin plot of distances
+  branchPointValues$trajectoryStart = as.factor(branchPointValues$trajectoryStart)
+  distancePlot = ggplot(branchPointValues[branchPointValues$type != "Random",], aes(x=trajectoryStart, y=value)) +
+    geom_violin() + geom_boxplot(width=0.1) + xlab('trajectory start') + ylab('mean distance')
+
+  ## ###################################################
+  ## create line plot of -log10 transformed p-values
+  pValuePlot = ggplot(pValues, aes(x=trajectoryStart, y=logPValue, group=1)) + geom_line( size = 1.5)  +
+    geom_point(size = 3) + xlab('Trajectory start') + ylab('-log10(p-value)')
+
+  return(list(branchPointValues = branchPointValues, pValues = pValues,
+              distancePlot = distancePlot, pValuePlot = pValuePlot))
+}
+  
+  
+  
+  

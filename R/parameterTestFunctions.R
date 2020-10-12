@@ -371,6 +371,105 @@ analyseSingleCellTrajectoryTest = function(attributes, pseudotime, randomization
     stop('analyseSingleCellTrajectory expects N to be a positive integer')
 }
 
+## ##########################################################################
+#' This tests the input to analyseBranchPoint.
+#'
+#' @param attributes - An n x d (cell x attribute) matrix of numeric attributes for single cell data. Rownames should be cell names.
+#' @param pseudotime - A named numeric vector of pseudotime values for cells. 
+#' @param randomizationParams - A character vector which is used to
+#'     control the production of randomized paths for comparison.
+#' @param statistic - Allowable values are 'median', 'mean' or 'max'.
+#' @param start - The first pseudotime value (as a percentage of the trajectory) from which to analyse the trajectory from. 
+#'     Defaults to 25\% of the way through the trajectory.
+#' @param stop - The last pseudotime value (as a percentage of the trajectory) from which to analyse the trajectory from. 
+#'     Defaults to 75\% of the way through the trajectory.
+#' @param step - The size of the step to take between successively later starting points in pseudotime. 
+#'     Defaults to 5\% of the trajectory length.
+#' @param nSamples - The number of sampled paths to generate (defaults to 1000).
+#' @param nWindows - The number of windows pseudotime should be split into to sample cells from (defaults to 10).
+#' @param d - The dimension under consideration.  This defaults to
+#'     ncol(attributes).
+#' @param N - The number of random paths to generated for statistical
+#'     comparison to the given path (defaults to 1000).
+analyseBranchPointTest = function(attributes, pseudotime, randomizationParams, statistic,
+                                  start, stop, step, nSamples, nWindows, d, N)
+{
+  if(! class(attributes) == 'matrix')
+    stop('analyseBranchPoint expects attributes to be a matrix')
+  
+  if(! class(pseudotime) == 'numeric')
+    stop('analyseBranchPoint expects pseudotime to be a numeric vector')
+  
+  if(! length(pseudotime) == nrow(attributes))
+    stop('analyseBranchPoint expects the length of pseudotime to match the number of rows of attributes')
+  
+  if(! sum(names(pseudotime) == rownames(attributes)) == length(pseudotime))
+    stop('analyseBranchPoint expects the names of pseudotime to match the row names of attributes')
+  
+  if(! randomizationParams[1] %in% c('byPermutation','bySteps'))
+    stop(paste("analyseBranchPoint expectsrandomizationParams[1]",
+               "to be either 'byPermutation'or 'bySteps'.  See vignette."))
+  
+  if(! statistic %in% c('median','mean','max'))
+    stop(paste("analyseBranchPoint expects statistic to be",
+               "one of 'median', 'mean' or 'max'. See vignette."))
+  
+  if((! class(start) == 'integer' & ! class(start) == 'numeric') | start < 0 | start > 100 | length(start) > 1)
+    stop('analyseBranchPoint expects start to be a positive number between 0 and 100')
+  
+  if((! class(stop) == 'integer' & ! class(stop) == 'numeric') | stop < 0 | stop > 100 | stop <= start | length(stop) > 1)
+    stop('analyseBranchPoint expects stop to be a positive number between start and 100')
+
+  if((! class(step) == 'integer' & ! class(step) == 'numeric') | step <= 0 | step > stop - start | length(step) > 1)
+    stop('analyseBranchPoint expects step to be a positive number less than stop - start')
+  
+  if(! class(nSamples) == 'numeric'| ! length(nSamples) == 1 | nSamples < 1)
+    stop('analyseBranchPoint expects nSamples to be a positive integer')
+  
+  if(! class(nWindows) == 'numeric'| ! length(nWindows) == 1 | nWindows < 1)
+    stop('analyseBranchPoint expects nWindows to be a positive integer')
+  
+  if((! class(d) == 'integer' & ! class(d) == 'numeric') | d < 1 | length(d) > 1)
+    stop('analyseBranchPoint expects d to be a positive integer')
+  
+  if(d > ncol(attributes))
+    stop('analyseBranchPoint expects d to be <= ncol(path)')
+  
+  if((! class(N) == 'integer' & ! class(N) == 'numeric') | N < 1 | length(N) > 1)
+    stop('analyseBranchPoint expects N to be a positive integer')
+}
+
+## ##########################################################################
+#' This tests the imput to distanceBetweenTrajectories
+#'
+#' @param attributes1 - An n x d (cell x attribute) matrix of numeric attributes for the first single cell trajectory.
+#' @param pseudotime1 - A named numeric vector of pseudotime values for the first single cell trajectory, 
+#'    names should match rownames of atrributes1. 
+#' @param attributes2 - An n x d (cell x attribute) matrix of numeric attributes for the sencond single cell trajectory.
+distanceBetweenTrajectoriesTest = function(attributes1,
+                                       pseudotime1,
+                                       attributes2)
+{
+  if(! class(attributes1) == 'matrix')
+    stop('distanceBetweenTrajectories expects attributes1 to be a matrix')
+  
+  if(! class(pseudotime1) == 'numeric')
+    stop('distanceBetweenTrajectories expects pseudotime1 to be a numeric vector')
+  
+  if(! length(pseudotime1) == nrow(attributes1))
+    stop('distanceBetweenTrajectories expects the length of pseudotime1 to match the number of rows of attributes1')
+  
+  if(! sum(names(pseudotime1) == rownames(attributes1)) == length(pseudotime1))
+    stop('distanceBetweenTrajectories expects the names of pseudotime1 to match the row names of attributes1')
+  
+  if(! class(attributes2) == 'matrix')
+    stop('distanceBetweenTrajectories expects attributes2 to be a matrix')
+
+  if(! ncol(attributes1) == ncol(attributes2))
+    stop('distanceBetweenTrajectories expects attributes1 and attributes2 to have the same number of columns')
+}
+
+
 ## ###################################################
 #' This tests the input to orthoNormalBasis
 #'
@@ -519,5 +618,25 @@ visualiseTrajectoryStatsTest = function(traj1Data,
   
   if(! metric %in% c('pValue','distance'))
     stop(paste("visualiseTrajectoryStats expects metric to be",
-               "'pValue' or 'distance'."))
+               "'pValue' or 'distance'"))
+}
+
+## ###################################################
+#' This tests the input to visualiseBranchPointStats 
+#'
+#' @param branchPointData - the result of analyseBranchPoint
+#' @param average - if there are multiple distances available for each 
+
+visualiseBranchPointStatsTest = function(branchPointData,
+                                        average){
+  if(! class(branchPointData) == 'list')
+    stop('visualiseBranchPointStats expects branchPointData to be a list')
+  
+  if(! sum(names(branchPointData[[names(branchPointData)[[1]]]][[1]])  == c("pValue","sphericalData","randomDistances","randomizationParams")) == 4)
+    stop('visualiseBranchPointStats expects branchPointData to be the output of analyseBranchPoint')
+
+  
+  if(! average %in% c('median','mean'))
+    stop(paste("visualiseTrajectoryStats expects average to be",
+               "'median' or 'mean'"))
 }

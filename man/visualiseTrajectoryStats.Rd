@@ -29,7 +29,7 @@ a list containing:
  plot - ggplot object
 }
 \description{
-This function creates boxplots and extracts statistics for comparisons of metrics 
+This function creates plots and extracts statistics for comparisons of metrics 
 for sampled paths to random paths. It can also create plots for comparing two sets
 of sampled paths by providing the traj2Data argument.
 }
