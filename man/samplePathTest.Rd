@@ -13,6 +13,9 @@ samplePathTest(attributes, pseudotime, nWindows)
 
 \item{nWindows}{- The number of windows pseudotime should be split into to sample cells from. Defaults to 10.}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the inputs for samplePath.
 }

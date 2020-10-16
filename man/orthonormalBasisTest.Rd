@@ -9,6 +9,9 @@ orthonormalBasisTest(x)
 \arguments{
 \item{x}{- A numerical vector of length 3}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the input to orthoNormalBasis
 }

@@ -17,6 +17,9 @@ treated as the center of the sphere.}
 
 \item{d}{- The dimension under consideration.}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the inputs to getStepLengths
 }

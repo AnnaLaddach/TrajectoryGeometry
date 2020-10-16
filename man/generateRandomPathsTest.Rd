@@ -24,6 +24,9 @@ details.}
 
 \item{N}{- The number of random paths required.}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the inputs to generateRandomPaths
 }

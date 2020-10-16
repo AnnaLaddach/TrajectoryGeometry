@@ -11,6 +11,9 @@ visualiseBranchPointStatsTest(branchPointData, average)
 
 \item{average}{- if there are multiple distances available for each}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the input to visualiseBranchPointStats
 }

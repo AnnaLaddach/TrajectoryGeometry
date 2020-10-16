@@ -35,6 +35,9 @@ ncol(attributes).}
 \item{N}{- The number of random paths to generated for statistical
 comparison to the given path (defaults to 1000).}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the input to analyseSingleCellTrajectory.
 }

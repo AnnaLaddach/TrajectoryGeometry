@@ -16,6 +16,9 @@ are 'median','mean' or 'max'.}
 \item{normalize}{- If this is set to TRUE, the function will start
 by normalizing the input points.}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the inputs to findSphereClusterCenter
 }

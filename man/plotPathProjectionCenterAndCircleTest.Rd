@@ -56,6 +56,9 @@ multiple figures, this should be set to TRUE which is its
 default.  Otherwise, set this to FALSE in order to add
 additional paths to the same figure.}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the inputs to plotPathProjectionCenterAndCircle
 }

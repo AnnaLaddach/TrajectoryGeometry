@@ -19,6 +19,9 @@ point.}
 \item{direction}{- A non-zero numeric whose length is the the
 dimension.}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the inputs for pathProgression
 }

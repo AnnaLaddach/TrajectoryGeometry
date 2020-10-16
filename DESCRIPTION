@@ -1,6 +1,6 @@
 Package: TrajectoryGeometry
 Title: This Package Discovers Directionality in Time and Pseudo-times Series of Gene Expression Patterns
-Version: 0.0.0.9002
+Version: 1.1.1
 Authors@R: 
     person(given = "Anna",
            family = "Laddach",
@@ -19,9 +19,10 @@ LazyData: true
 RoxygenNote: 7.1.1
 Imports: pracma,
 	 rgl,
-	 ggplot2
+	 ggplot2,
+	 stats
 Depends: 
-    R (>= 2.10)
+    R (>= 4.0)
 Suggests: 
     dplyr,
     knitr,

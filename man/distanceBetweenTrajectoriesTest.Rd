@@ -14,6 +14,9 @@ names should match rownames of atrributes1.}
 
 \item{attributes2}{- An n x d (cell x attribute) matrix of numeric attributes for the sencond single cell trajectory.}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the imput to distanceBetweenTrajectories
 }

@@ -33,6 +33,9 @@ control the production of randomized paths for comparison.}
 \item{N}{- The number of random paths to generated for statistical
 comparison to the given path.}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 Test the inputs to testPathForDirectionality
 }

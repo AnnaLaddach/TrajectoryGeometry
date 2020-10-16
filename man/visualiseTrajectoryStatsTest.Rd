@@ -16,6 +16,9 @@ sampled trajectory, calculate the average using mean or median (defaults to mean
 
 \item{traj2Data}{either an empty list or the result of analyseSingleCellTrajectory}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the input to visualiseTrajectoryStats
 }

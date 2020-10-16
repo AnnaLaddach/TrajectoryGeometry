@@ -4,13 +4,15 @@
 \name{cholPseudoTime}
 \alias{cholPseudoTime}
 \title{cholPseudoTime}
-\format{A vector
+\format{
+A vector
 \describe{
 A vector of pseudotime values for a trajectory describing the
 development of cholangiocytes from hepatoblasts.
 Pseudotime values have been inferred using the SlingShot 
 package. The vector is named according to cell ID.
-}}
+}
+}
 \source{
 Single cell data
 }

@@ -4,13 +4,15 @@
 \name{cholAttributes}
 \alias{cholAttributes}
 \title{cholAttributes}
-\format{A matrix
+\format{
+A matrix
 \describe{
 PCA projections derived from normalised gene expression values for 
 single cells, and filtered for cells which feature in a trajectory 
 from hepatoblast to cholangiocyte. The columns are the PCs and the 
 rows are the cells.
-}}
+}
+}
 \source{
 Single cell data
 }

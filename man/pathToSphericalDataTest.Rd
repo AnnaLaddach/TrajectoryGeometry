@@ -19,6 +19,9 @@ treated as the center of the sphere.}
 
 \item{statistic}{- One of 'median', 'mean' or 'max'}
 }
+\value{
+A successful test returns 0, otherwise execution halts.
+}
 \description{
 This tests the inputs to pathToSphericalData
 }
