@@ -50,7 +50,7 @@ testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
     
     ## ###################################################
     ## Subset to the data under consideration:
-    ## path = path[from:to,1:d]
+    path = path[from:to,seq_len(d)]
     
     ## ###################################################
     ## Get the spherical data:
@@ -71,13 +71,13 @@ testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
     ## Return the p-value:
     idx = distances <= sphericalData$distance 
     pValue = max(1,sum(idx)) / N
-
+    
     answer = list()
     answer$pValue = pValue
     answer$sphericalData = sphericalData
     answer$randomDistances = distances
     answer$randomizationParams = randomizationParams
-
+    
     return(answer)
 }
 
@@ -109,7 +109,7 @@ projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
     
     ## ###################################################
     ## Subset to the data under consideration:
-    path = path[from:to,1:d]
+    path = path[from:to,seq_len(d)]
     n = nrow(path)
     
     ## ###################################################
@@ -156,33 +156,33 @@ findSphereClusterCenter = function(points,statistic,normalize=FALSE)
     n = nrow(points)
     
     ## ###################################################
-    # Normalize if necessary:
+                                        # Normalize if necessary:
     if(normalize)
     {
         for(i in seq_len(n))
             points[i,] = points[i,] / Norm(points[i,])
     }
-
+    
     ## ###################################################
     ## Function to be minimised
     minFunction = function(x){
-      norm = Norm(x)
-      unitVector = x/norm
-      if (norm < 0.1){
-        return(100)
-      } 
-      distances = findSphericalDistance(unitVector,points)
-      if (statistic == "max"){
-        return(max(distances))
-      }
-      
-      if (statistic == "median"){
-        return(median(distances))
-      }
-      
-      if (statistic == "mean"){
-        return(mean(distances))
-      }
+        norm = Norm(x)
+        unitVector = x/norm
+        if (norm < 0.1){
+            return(100)
+        } 
+        distances = findSphericalDistance(unitVector,points)
+        if (statistic == "max"){
+            return(max(distances))
+        }
+        
+        if (statistic == "median"){
+            return(median(distances))
+        }
+        
+        if (statistic == "mean"){
+            return(mean(distances))
+        }
     }
     ## ###################################################
     ## Choose a possible center as a start for minimisation
@@ -267,7 +267,7 @@ getSphericalData = function(path,statistic)
     from = 1
     to = nrow(path)
     d = ncol(path)
-
+    
     return(pathToSphericalData(path,from,to,d,statistic))
 }
 
@@ -304,7 +304,7 @@ pathToSphericalData = function(path,from,to,d,statistic)
     returnValues = list()
     ## ###################################################
     ## Subset to the data under consideration:
-    path = path[from:to,1:d]
+    path = path[from:to,seq_len(d)]
     n = nrow(path)
     
     ## ###################################################
@@ -378,20 +378,20 @@ generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
         msg = "randomizationParams[1] must be either 'byPermutation'or 'bySteps'"
         stop(msg)
     }
-
+    
     ## ###################################################
     ## Subset to the data under consideration:
-    path = path[from:to,1:d]
-
+    path = path[from:to,seq_len(d)]
+    
     if(randomizationParams[1] == 'byPermutation')
         return(generateRandomPathsByPermutation(path,
-                                               randomizationParams,
-                                               N))
-
+                                                randomizationParams,
+                                                N))
+    
     if(randomizationParams[1] == 'bySteps')
         return(generateRandomPathsBySteps(path,
-                                         randomizationParams,
-                                         N))    
+                                          randomizationParams,
+                                          N))    
     
 }
 
@@ -416,7 +416,7 @@ generateRandomPathsByPermutation =
     randomPathList = list()
     n = nrow(path)
     d = ncol(path)
-
+    
     ## ###################################################
     ## This handles the case where we wish to permute within each column:
     if(randomizationParams[2] == 'permuteWithinColumns')
@@ -433,7 +433,7 @@ generateRandomPathsByPermutation =
         }
         return(randomPathList)
     }
-
+    
     ## ###################################################
     ## This handles the case where we wish to permute at random:
     if(randomizationParams[2] == 'permuteAsMatrix')
@@ -489,7 +489,7 @@ generateRandomPathsBySteps = function(path,randomizationParams,N)
         for(j in seq_len(n-1))
             randomPath[j+1,] = randomPath[j,] +
                 stepLengths[j] * generateRandomUnitVector(d)
-
+        
         if('nonNegative' %in% randomizationParams)
         {
             idx = randomPath < 0
@@ -527,7 +527,7 @@ getStepLengths = function(path,from=1,to=nrow(path),d=ncol(path))
     
     ## ###################################################
     ## Subset to the data under consideration:
-    path = path[from:to,1:d]
+    path = path[from:to,seq_len(d)]
     n = nrow(path)
     
     stepLengths = numeric(n-1)
@@ -624,7 +624,7 @@ pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
 {
     pathProgressionTest(path,from,to,d,direction)
     
-    path = path[from:to,1:d]
+    path = path[from:to,seq_len(d)]
     direction = direction / Norm(direction)
     distance = numeric(nrow(path)-1)
     for(i in 2:nrow(path))
@@ -658,32 +658,32 @@ pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
 #' samplePath(cholAttributes, cholPseudoTimeNormalised)
 #' samplePath(hepAttributes, hepPseudoTimeNormalised)
 samplePath = function(attributes, pseudotime, nWindows = 10){
-  
+    
     samplePathTest(attributes, pseudotime, nWindows)
-
+    
     ## ###################################################
     ## Set parameters for path.
     start = min(pseudotime)	
     end = max(pseudotime)
     pathLength = end - start
     windowSize = pathLength/nWindows
-
+    
     sampledPath = matrix(, nrow = 0, ncol = ncol(attributes))
-
+    
     ## Vector to save window number as pseudotime windows with no cells will be skipped.
     windowNumber = c()
-
-    for (i in 1:nWindows){
-  	  cells = names(pseudotime[pseudotime >= (i-1) * windowSize + start & pseudotime < i * windowSize + start])
-  	  windowAttributes =  attributes[cells,]
+    
+    for (i in seq_len(nWindows)){
+        cells = names(pseudotime[pseudotime >= (i-1) * windowSize + start & pseudotime < i * windowSize + start])
+        windowAttributes =  attributes[cells,]
   	
-  	  ## ###################################################
+        ## ###################################################
     	## Case when only one cell falls within a pseudotime window.
     	## Turn windowAttributes into a matrix.
     	if (is.null(dim(windowAttributes))){
-          	    windowAttributes = t(matrix(windowAttributes))
-        	}
-    	 
+            windowAttributes = t(matrix(windowAttributes))
+        }
+        
     	## ###################################################
     	## Case when no cells fall within a pseudotime window.
     	if (nrow(windowAttributes) == 0){
@@ -692,16 +692,16 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
     	
     	## ###################################################
     	## Randomly sample cell from pseudotime window.
-    	chosenIndex = sample(1:nrow(windowAttributes), 1)
-      chosenAttributes = windowAttributes[chosenIndex,]
+    	chosenIndex = sample(seq_len(nrow(windowAttributes)), 1)
+        chosenAttributes = windowAttributes[chosenIndex,]
     	
     	sampledPath = rbind(sampledPath, chosenAttributes)
     	
     	## ###################################################
     	## Save window number.
     	windowNumber = c(windowNumber, i)
-      }	
-      
+    }	
+    
     rownames(sampledPath) = windowNumber 
     return(sampledPath)
 }
@@ -737,14 +737,14 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 #'   randomizationParams - the choice of randomization parameters
 #' @export
 #' @examples
-#' cholAnswers = analyseSingleCellTrajectory(cholAttributes[,1:3], 
+#' cholAnswers = analyseSingleCellTrajectory(cholAttributes[,seq_len(3)], 
 #'                                          cholPseudoTimeNormalised,
 #'                                          nSamples = 10, 
 #'                                          randomizationParams = c('byPermutation',
 #'                                                          'permuteWithinColumns'), 
 #'                                          statistic = "mean", 
 #'                                          N = 1)
-#' hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3], 
+#' hepAnswers = analyseSingleCellTrajectory(hepAttributes[,seq_len(3)], 
 #'                                          hepPseudoTimeNormalised, nSamples = 10, 
 #'                                          randomizationParams = c('byPermutation',
 #'                                                          'permuteWithinColumns'), 
@@ -758,27 +758,27 @@ analyseSingleCellTrajectory = function(attributes,
                                        nWindows = 10, 
                                        d = ncol(attributes), 
                                        N = 1000)
-  {
-  
-  analyseSingleCellTrajectoryTest(attributes, pseudotime, 
-                                  randomizationParams, statistic, 
-                                  nSamples, nWindows, d, N)
-  
-  ## ###################################################
-  ## List to contain results:
-  answers = list()
-  
-  ## ###################################################
-  ## Sample paths and test each one for directionality
-  for (i in 1:nSamples){
-    path = samplePath(attributes, pseudotime, nWindows = nWindows)
-    answers[[i]] = testPathForDirectionality(path, randomizationParams = randomizationParams, 
-                                             statistic = statistic, N = N, d = d)
-    if (i %% 100 == 0){
-      print(paste(i, "sampled paths analysed"))
+{
+    
+    analyseSingleCellTrajectoryTest(attributes, pseudotime, 
+                                    randomizationParams, statistic, 
+                                    nSamples, nWindows, d, N)
+    
+    ## ###################################################
+    ## List to contain results:
+    answers = list()
+    
+    ## ###################################################
+    ## Sample paths and test each one for directionality
+    for (i in seq_len(nSamples)){
+        path = samplePath(attributes, pseudotime, nWindows = nWindows)
+        answers[[i]] = testPathForDirectionality(path, randomizationParams = randomizationParams, 
+                                                 statistic = statistic, N = N, d = d)
+        if (i %% 100 == 0){
+            print(paste(i, "sampled paths analysed"))
+        }
     }
-  }
-  return(answers)
+    return(answers)
 }
 
 
@@ -818,7 +818,7 @@ analyseSingleCellTrajectory = function(attributes,
 #'    randomizationParams - the choice of randomization parameters
 #' @export
 #' @examples
-#' cholBranchPointResults = analyseBranchPoint(cholAttributes[,1:3], 
+#' cholBranchPointResults = analyseBranchPoint(cholAttributes[,seq_len(3)], 
 #'                          cholPseudoTime[!is.na(cholPseudoTime)],
 #'                          randomizationParams = c('byPermutation',
 #'                                          'permuteWithinColumns'), 
@@ -840,34 +840,34 @@ analyseBranchPoint = function(attributes,
                               d = ncol(attributes), 
                               N = 1)
 {
-
-  
-  analyseBranchPointTest(attributes, pseudotime, randomizationParams, 
-                                statistic, start, stop, step,
-                                nSamples, nWindows, d, N)
-  
-  ## ###################################################
-  ## normalise pseudotime to range between 0 and 100
-  #pseudotime = (pseudotime - min(pseudotime))/(max(pseudotime) - min(pseudotime))*100 
-
-  ## ###################################################
-  ## list to contain results
-  results = list()
-  
-  ## ###################################################
-  ## iterate through successively later starting points
-  for (i in seq(start, stop, step)){
-    print(paste0("analysing trajectory from ", i, " onwards"))
-    pseudotime_selected = pseudotime[pseudotime >= i]
-    pseudotime_selected = (pseudotime_selected - min(pseudotime_selected))/(max(pseudotime_selected) - min(pseudotime_selected))*100 
-    attributes_selected = attributes[names(pseudotime_selected),]
-    results[[as.character(i)]] = analyseSingleCellTrajectory(attributes_selected, pseudotime_selected, 
-                                               randomizationParams, 
-                                               statistic, nSamples, 
-                                               nWindows, d, N)
-  }
-  
-  return(results)
+    
+    
+    analyseBranchPointTest(attributes, pseudotime, randomizationParams, 
+                           statistic, start, stop, step,
+                           nSamples, nWindows, d, N)
+    
+    ## ###################################################
+    ## normalise pseudotime to range between 0 and 100
+                                        #pseudotime = (pseudotime - min(pseudotime))/(max(pseudotime) - min(pseudotime))*100 
+    
+    ## ###################################################
+    ## list to contain results
+    results = list()
+    
+    ## ###################################################
+    ## iterate through successively later starting points
+    for (i in seq(start, stop, step)){
+        print(paste0("analysing trajectory from ", i, " onwards"))
+        pseudotime_selected = pseudotime[pseudotime >= i]
+        pseudotime_selected = (pseudotime_selected - min(pseudotime_selected))/(max(pseudotime_selected) - min(pseudotime_selected))*100 
+        attributes_selected = attributes[names(pseudotime_selected),]
+        results[[as.character(i)]] = analyseSingleCellTrajectory(attributes_selected, pseudotime_selected, 
+                                                                 randomizationParams, 
+                                                                 statistic, nSamples, 
+                                                                 nWindows, d, N)
+    }
+    
+    return(results)
 } 
 
 
@@ -890,35 +890,35 @@ analyseBranchPoint = function(attributes,
 #'                                         cholPseudoTime[!is.na(cholPseudoTime)], 
 #'                                         hepAttributes)
 distanceBetweenTrajectories = function(attributes1,
-                              pseudotime1,
-                              attributes2)
+                                       pseudotime1,
+                                       attributes2)
 {
-  
-  distanceBetweenTrajectoriesTest(attributes1, pseudotime1, attributes2)
     
-  ## ###################################################
-  ## dataframe to store distances  
-  results = data.frame(pseudotime = numeric(), distances =  numeric())
-  
-  ## ###################################################
-  ## iterate through points for first trajectory
-  for (name in names(pseudotime1)){
-    distances = c()
-
+    distanceBetweenTrajectoriesTest(attributes1, pseudotime1, attributes2)
+    
     ## ###################################################
-    ## iterate through points in second trajectory and calculate euclidean distance to
-    ## point in first trajectory
-    for (i in 1:nrow(attributes2)){
-      distances = c(distances, Norm(attributes1[name,] - attributes2[i,]))
+    ## dataframe to store distances  
+    results = data.frame(pseudotime = numeric(), distances =  numeric())
+    
+    ## ###################################################
+    ## iterate through points for first trajectory
+    for (name in names(pseudotime1)){
+        distances = c()
+        
+        ## ###################################################
+        ## iterate through points in second trajectory and calculate euclidean distance to
+        ## point in first trajectory
+        for (i in seq_len(nrow(attributes2))){
+            distances = c(distances, Norm(attributes1[name,] - attributes2[i,]))
+        }
+        
+        ## ###################################################
+        ## store the minimum distance
+        results = rbind(results, data.frame(pseudotime = pseudotime1[[name]], distance = min(distances)))
     }
     
-    ## ###################################################
-    ## store the minimum distance
-    results = rbind(results, data.frame(pseudotime = pseudotime1[[name]], distance = min(distances)))
-  }
-  
-  results = results[order(results$pseudotime),]
-  return(results)
+    results = results[order(results$pseudotime),]
+    return(results)
 }
 
 
@@ -943,7 +943,7 @@ distanceBetweenTrajectories = function(attributes1,
 orthonormalBasis = function(x)
 {
     orthonormalBasisTest(x)
-        
+    
     x = x / Norm(x)
     B = matrix(0,nrow=3,ncol=3)
     
@@ -1003,25 +1003,25 @@ circleOnTheUnitSphere = function(center,radius,N=36)
     ## ###################################################
     ## Get the orthonormal basis:
     B = orthonormalBasis(center)
-
+    
     ## ###################################################
     ## The planar center of the circle:
     ctr = cos(radius) * center
-
+    
     ## ###################################################
     ## The planar radius of the circle:
     R = sin(radius)
-
+    
     ## ###################################################
     ## We sweep out the circle with these:
     x = R * B[2,]
     y = R * B[3,]
-
+    
     theta = (0:N) * (2 * pi / N)
     circle = matrix(0,nrow=N+1,ncol=3)
-    for(i in 1:(N+1))
+    for(i in seq_len((N+1)))
         circle[i,] = ctr + cos(theta[i]) * x + sin(theta[i]) * y
-
+    
     return(circle)
 }
 
@@ -1062,6 +1062,7 @@ circleOnTheUnitSphere = function(center,radius,N=36)
 #'     multiple figures, this should be set to TRUE which is its
 #'     default.  Otherwise, set this to FALSE in order to add
 #'     additional paths to the same figure.
+#' @return This returns 0.
 #' @export
 #' @examples
 #' plotPathProjectionCenterAndCircle(path=straightPath,
@@ -1097,7 +1098,7 @@ plotPathProjectionCenterAndCircle = function(path,
     relevantPortionLineHump = 3
     alpha = .2
     
-
+    
     ## ###################################################
     ## Translate the path to begin at the origin and scale:
     N = nrow(path)
@@ -1117,30 +1118,31 @@ plotPathProjectionCenterAndCircle = function(path,
         open3d()
         spheres3d(0,0,0,size=1,alpha=alpha)
     }
-
+    
     ## ###################################################
     ## Plot the path and mark the relevant portion:
     points3d(path,size=pathPointSize,color=color)
     lines3d(path,lwd=pathLineWidth,color=color)
-
+    
     points3d(path[from:to,],size=pathPointSize+relevantPortionPointHump,
              color=color)
     lines3d(path[from:to,],lwd=pathLineWidth+relevantPortionLineHump,
             color=color)
-
+    
     ## ###################################################
     ## Plot the projection:
     points3d(projection,size=projectionPointSize,color=color)
-
+    
     ## ###################################################
     ## Plot the center:
     points3d(matrix(center,nrow=1),size=centerSize,color=color)
-
+    
     ## ###################################################
     ## Plot the circle:
     circle = circleOnTheUnitSphere(center,radius)
     lines3d(circle,lwd=circleLineWidth,color=circleColor)
-
+    
+    return(0)
 }
 
 
@@ -1170,86 +1172,86 @@ plotPathProjectionCenterAndCircle = function(path,
 #' hepResultDistance = visualiseTrajectoryStats(hepAnswers, "distance")
 #' distanceComparison = visualiseTrajectoryStats(cholAnswers, "distance", traj2Data = hepAnswers)
 visualiseTrajectoryStats = function(traj1Data,
-                          metric,
-                          average = "mean",
-                          traj2Data = list())
-  {
-  
-  visualiseTrajectoryStatsTest(traj1Data, metric, average, traj2Data)
-  
-  ## ###################################################
-  ## Set averageFunc as actual function
-  if (average == "mean"){
-    averageFunc = mean
-  }
-  
-  if (average == "median"){
-    averageFunc = median
-  }
-  
-  ## ###################################################
-  ## Set up dataframe which will be populated with data to plot in long format
-  values = data.frame(type = character(), value = numeric())
-  
-  ## ###################################################
-  ## Code for comparing 2 trajectories
-  if (length(traj2Data) > 0){
-    for (i in 1:length(traj1Data)){
-      
-      ## ###################################################
-      ## Populate values data frame with distance data
-      if (metric == "distance"){
-        values = rbind(values, data.frame(type = "Trajectory 1", 
-                                          value = traj1Data[[i]]$sphericalData$distance))
-        values = rbind(values, data.frame(type = "Trajectory 2", 
-                                          value = traj2Data[[i]]$sphericalData$distance))
-      }
-      
-      ## ###################################################
-      ## Populate values data frame with pValue data
-      if (metric == "pValue"){
-        values = rbind(values, data.frame(type = "Trajectory 1",
-                                          value = traj1Data[[i]]$pValue))
-        values = rbind(values, data.frame(type = "Trajectory 2", 
-                                          value = traj2Data[[i]]$pValue))
-      } 
+                                    metric,
+                                    average = "mean",
+                                    traj2Data = list())
+{
+    
+    visualiseTrajectoryStatsTest(traj1Data, metric, average, traj2Data)
+    
+    ## ###################################################
+    ## Set averageFunc as actual function
+    if (average == "mean"){
+        averageFunc = mean
+    }
+    
+    if (average == "median"){
+        averageFunc = median
     }
     
     ## ###################################################
-    ## Use unpaired wilcox test to compare values for 2 trajectories
-    stats = wilcox.test(values[values$type == "Trajectory 1",]$value, 
-                        values[values$type == "Trajectory 2",]$value)
-  }
-  
-  ## ###################################################
-  ## Code for comparing sampled pathways to random pathways
-  if (length(traj2Data) == 0){
+    ## Set up dataframe which will be populated with data to plot in long format
+    values = data.frame(type = character(), value = numeric())
     
-    ## Here we can only compare distance metrics
-    if (metric != "distance"){
-      print("Metric must be distance to compare sampled to random trajectories")
-    }
-    for (i in 1:length(traj1Data)){
-      values = rbind(values, data.frame(type = "Sampled", 
-                                        value = traj1Data[[i]]$sphericalData$distance))
-      values = rbind(values, data.frame(type = "Random", 
-                                        value = averageFunc(traj1Data[[i]]$randomDistances)))
+    ## ###################################################
+    ## Code for comparing 2 trajectories
+    if (length(traj2Data) > 0){
+        for (i in seq_len(length(traj1Data))){
+            
+            ## ###################################################
+            ## Populate values data frame with distance data
+            if (metric == "distance"){
+                values = rbind(values, data.frame(type = "Trajectory 1", 
+                                                  value = traj1Data[[i]]$sphericalData$distance))
+                values = rbind(values, data.frame(type = "Trajectory 2", 
+                                                  value = traj2Data[[i]]$sphericalData$distance))
+            }
+            
+            ## ###################################################
+            ## Populate values data frame with pValue data
+            if (metric == "pValue"){
+                values = rbind(values, data.frame(type = "Trajectory 1",
+                                                  value = traj1Data[[i]]$pValue))
+                values = rbind(values, data.frame(type = "Trajectory 2", 
+                                                  value = traj2Data[[i]]$pValue))
+            } 
+        }
+        
+        ## ###################################################
+        ## Use unpaired wilcox test to compare values for 2 trajectories
+        stats = wilcox.test(values[values$type == "Trajectory 1",]$value, 
+                            values[values$type == "Trajectory 2",]$value)
     }
     
     ## ###################################################
-    ## Use paired wilcox test to compare values sampled and random pathways, 
-    ## as random trajectories are parametised based on the sampled pathways
-    stats = wilcox.test(values[values$type == "Sampled",]$value,
-                        values[values$type == "Random",]$value, paired = T)
-  }
-  
-  ## ###################################################
-  ## Create violin plot with overlaid box plot
-  p = ggplot(values, aes(x=type, y=value)) + 
-    geom_violin() + geom_boxplot(width=0.1) + labs(y = metric, x = "")
-  #print(p) # should the default be to print this???
-  results = list(stats = stats,values = values, plot=p)
-  return(list(stats = stats,values = values, plot=p))
+    ## Code for comparing sampled pathways to random pathways
+    if (length(traj2Data) == 0){
+        
+        ## Here we can only compare distance metrics
+        if (metric != "distance"){
+            print("Metric must be distance to compare sampled to random trajectories")
+        }
+        for (i in seq_len(length(traj1Data))){
+            values = rbind(values, data.frame(type = "Sampled", 
+                                              value = traj1Data[[i]]$sphericalData$distance))
+            values = rbind(values, data.frame(type = "Random", 
+                                              value = averageFunc(traj1Data[[i]]$randomDistances)))
+        }
+        
+        ## ###################################################
+        ## Use paired wilcox test to compare values sampled and random pathways, 
+        ## as random trajectories are parametised based on the sampled pathways
+        stats = wilcox.test(values[values$type == "Sampled",]$value,
+                            values[values$type == "Random",]$value, paired = TRUE)
+    }
+    
+    ## ###################################################
+    ## Create violin plot with overlaid box plot
+    p = ggplot(values, aes(x=type, y=value)) + 
+        geom_violin() + geom_boxplot(width=0.1) + labs(y = metric, x = "")
+                                        #print(p) # should the default be to print this???
+    results = list(stats = stats,values = values, plot=p)
+    return(list(stats = stats,values = values, plot=p))
 }
 
 ## ###################################################
@@ -1275,50 +1277,50 @@ visualiseTrajectoryStats = function(traj1Data,
 #' @examples 
 #' cholBranchPointStats = visualiseBranchPointStats(cholBranchPointResults)
 visualiseBranchPointStats = function(branchPointData,
-                                    average = "mean")
+                                     average = "mean")
 {
-
-  visualiseBranchPointStatsTest(branchPointData, average)
-
-  ## ###################################################
-  ## Set up dataframe which will be populated with data to plot in long format
-  branchPointValues = data.frame(type = character(), value = numeric(), trajectoryStart = numeric())
-
-  ## ###################################################
-  ## Set up dataframe to store pvalues
-  pValues = data.frame(trajectoryStart = numeric(),pValue = numeric())
-
-  ## ###################################################
-  ## Iterate through branch points
-  for (name in names(branchPointData)){
-    trajectoryStart = as.numeric(name)
-    results = visualiseTrajectoryStats(branchPointData[[name]], "distance", average = average)
-    values = results$values
-    values$trajectoryStart = trajectoryStart
-    branchPointValues = rbind(branchPointValues, values)
-    pValue = results$stats$p.value
-    pValues = rbind(pValues, data.frame(pValue = pValue, trajectoryStart = trajectoryStart))
-  }
-
-  ## ###################################################
-  ## calculate -log10(pValue)
-  pValues$logPValue = -log10(pValues$pValue)
-
-  ## ###################################################
-  ## create violin plot of distances
-  branchPointValues$trajectoryStart = as.factor(branchPointValues$trajectoryStart)
-  distancePlot = ggplot(branchPointValues[branchPointValues$type != "Random",], aes(x=trajectoryStart, y=value)) +
-    geom_violin() + geom_boxplot(width=0.1) + xlab('trajectory start') + ylab('mean distance')
-
-  ## ###################################################
-  ## create line plot of -log10 transformed p-values
-  pValuePlot = ggplot(pValues, aes(x=trajectoryStart, y=logPValue, group=1)) + geom_line( size = 1.5)  +
-    geom_point(size = 3) + xlab('Trajectory start') + ylab('-log10(p-value)')
-
-  return(list(branchPointValues = branchPointValues, pValues = pValues,
-              distancePlot = distancePlot, pValuePlot = pValuePlot))
+    
+    visualiseBranchPointStatsTest(branchPointData, average)
+    
+    ## ###################################################
+    ## Set up dataframe which will be populated with data to plot in long format
+    branchPointValues = data.frame(type = character(), value = numeric(), trajectoryStart = numeric())
+    
+    ## ###################################################
+    ## Set up dataframe to store pvalues
+    pValues = data.frame(trajectoryStart = numeric(),pValue = numeric())
+    
+    ## ###################################################
+    ## Iterate through branch points
+    for (name in names(branchPointData)){
+        trajectoryStart = as.numeric(name)
+        results = visualiseTrajectoryStats(branchPointData[[name]], "distance", average = average)
+        values = results$values
+        values$trajectoryStart = trajectoryStart
+        branchPointValues = rbind(branchPointValues, values)
+        pValue = results$stats$p.value
+        pValues = rbind(pValues, data.frame(pValue = pValue, trajectoryStart = trajectoryStart))
+    }
+    
+    ## ###################################################
+    ## calculate -log10(pValue)
+    pValues$logPValue = -log10(pValues$pValue)
+    
+    ## ###################################################
+    ## create violin plot of distances
+    branchPointValues$trajectoryStart = as.factor(branchPointValues$trajectoryStart)
+    distancePlot = ggplot(branchPointValues[branchPointValues$type != "Random",], aes(x=trajectoryStart, y=value)) +
+        geom_violin() + geom_boxplot(width=0.1) + xlab('trajectory start') + ylab('mean distance')
+    
+    ## ###################################################
+    ## create line plot of -log10 transformed p-values
+    pValuePlot = ggplot(pValues, aes(x=trajectoryStart, y=logPValue, group=1)) + geom_line( size = 1.5)  +
+        geom_point(size = 3) + xlab('Trajectory start') + ylab('-log10(p-value)')
+    
+    return(list(branchPointValues = branchPointValues, pValues = pValues,
+                distancePlot = distancePlot, pValuePlot = pValuePlot))
 }
-  
-  
-  
-  
+
+
+
+

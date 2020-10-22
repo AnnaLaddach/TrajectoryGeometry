@@ -31,4 +31,6 @@ Suggests:
 VignetteBuilder: knitr
 biocViews:
 	BiologicalQuestion,
-	StatisticalMethod
+	StatisticalMethod,
+	GeneExpression,
+	SingleCell

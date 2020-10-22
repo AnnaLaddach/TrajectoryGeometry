@@ -65,7 +65,7 @@ This function takes a single cell trajectory and analyses it starting from succe
 with the rationale that a more consistent directionality will be followed after the branch point.
 }
 \examples{
-cholBranchPointResults = analyseBranchPoint(cholAttributes[,1:3], 
+cholBranchPointResults = analyseBranchPoint(cholAttributes[,seq_len(3)], 
                          cholPseudoTime[!is.na(cholPseudoTime)],
                          randomizationParams = c('byPermutation',
                                          'permuteWithinColumns'), 

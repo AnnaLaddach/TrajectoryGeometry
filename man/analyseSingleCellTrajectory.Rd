@@ -53,14 +53,14 @@ It also optionally takes the number of pseudotime windows to sample a single cel
 The function returns a list of Answers for each comparison of a sampled path to a random path
 }
 \examples{
-cholAnswers = analyseSingleCellTrajectory(cholAttributes[,1:3], 
+cholAnswers = analyseSingleCellTrajectory(cholAttributes[,seq_len(3)], 
                                          cholPseudoTimeNormalised,
                                          nSamples = 10, 
                                          randomizationParams = c('byPermutation',
                                                          'permuteWithinColumns'), 
                                          statistic = "mean", 
                                          N = 1)
-hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3], 
+hepAnswers = analyseSingleCellTrajectory(hepAttributes[,seq_len(3)], 
                                          hepPseudoTimeNormalised, nSamples = 10, 
                                          randomizationParams = c('byPermutation',
                                                          'permuteWithinColumns'), 

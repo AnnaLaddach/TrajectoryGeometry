@@ -19,7 +19,7 @@ testPathForDirectionalityTest = function(path,from,to,d,
                                          randomizationParams,statistic,N)
 {
     
-    if(! class(path) == 'matrix')
+    if(! is(path,'matrix'))
         stop('testPathForDirectionality expects path to be a matrix')
     
     if(from >= nrow(path))
@@ -42,7 +42,7 @@ testPathForDirectionalityTest = function(path,from,to,d,
         stop(paste("testPathForDirectionality expects statistic to be",
                    "one of 'median', 'mean' or 'max'. See vignette."))
     
-    if(class(N) != 'numeric' | N < 1)
+    if(! is(N,'numeric') | N < 1)
         stop('testPathForDirectionality expects N to be a positive integer')
     
     return(0)
@@ -60,7 +60,7 @@ testPathForDirectionalityTest = function(path,from,to,d,
 #' @return A successful test returns 0, otherwise execution halts.
 projectPathToSphereTest = function(path,from,to,d)
 {
-    if(! class(path) == 'matrix')
+    if(! is(path,'matrix'))
         stop('projectPathToSphere expects path to be a matrix')
     
     if(from >= nrow(path))
@@ -90,14 +90,13 @@ projectPathToSphereTest = function(path,from,to,d)
 #' @return A successful test returns 0, otherwise execution halts.
 findSphereClusterCenterTest = function(points,statistic,normalize)
 {
-    if(! class(points) == 'matrix')
+    if(! is(points,'matrix'))
         stop('findSphereClusterCenter expects points to be a matrix')
     
     if(! statistic %in% c('median','mean','max'))
         stop(paste("findSphereClusterCenter expects statistic to be",
                    "one of 'median', 'mean' or 'max'"))
-    
-    if(! class(normalize) == 'logical')
+    if(! is(normalize,'logical'))
         stop('findSphereClusterCenter expects normalize to be a logical')
     
     return(0)
@@ -117,16 +116,16 @@ findSphereClusterCenterTest = function(points,statistic,normalize)
 #' @return A successful test returns 0, otherwise execution halts.
 findSphericalDistanceTest = function(center,points,normalize)
 {
-    if(! class(center) == 'numeric')
+    if(! is(center,'numeric'))
         stop('findSphericalDistance expects center to be numeric')
     
-    if(! class(points) == 'matrix')
+    if(! is(points,'matrix'))
         stop('findSphericalDistance expects points to be a matrix')
     
     if(length(center) != ncol(points))
         stop('findSphericalDistance expects center and points to have the same dimension')
     
-    if(! class(normalize) == 'logical')
+    if(! is(normalize,'logical'))
         stop('findSphericalDistance expects normalize to be a logical')
     
     return(0)
@@ -140,7 +139,7 @@ findSphericalDistanceTest = function(center,points,normalize)
 #' @return A successful test returns 0, otherwise execution halts.
 getSphericalDataTest = function(path,statistic)
 {
-    if(! class(path) == 'matrix')
+    if(! is(path,'matrix'))
         stop('getSphericalData expects path to be a matrix')
     
     if(! statistic %in% c('median','mean','max'))
@@ -163,7 +162,7 @@ getSphericalDataTest = function(path,statistic)
 #' @return A successful test returns 0, otherwise execution halts.
 pathToSphericalDataTest = function(path,from,to,d,statistic)
 {
-    if(! class(path) == 'matrix')
+    if(! is(path,'matrix'))
         stop('pathToSphericalData expects path to be a matrix')
     
     if(from >= nrow(path))
@@ -202,7 +201,7 @@ pathToSphericalDataTest = function(path,from,to,d,statistic)
 #' @return A successful test returns 0, otherwise execution halts.
 generateRandomPathsTest = function(path,from,to,d,randomizationParams,N)
 {
-    if(! class(path) == 'matrix')
+    if(! is(path,'matrix'))
         stop('generateRandomPaths expects path to be a matrix')
     
     if(from >= nrow(path))
@@ -221,7 +220,7 @@ generateRandomPathsTest = function(path,from,to,d,randomizationParams,N)
         stop(paste("generateRandomPaths expectsrandomizationParams[1]",
                    "to be either 'byPermutation'or 'bySteps'.  See vignette."))
     
-    if(class(N) != 'numeric' | N < 1)
+    if(! is(N,'numeric') | N < 1)
         stop('generateRandomPaths expects N to be a positive integer')
     
     return(0)
@@ -239,7 +238,7 @@ generateRandomPathsTest = function(path,from,to,d,randomizationParams,N)
 #' @return A successful test returns 0, otherwise execution halts.
 getStepLengthsTest = function(path,from,to,d)
 {
-    if(! class(path) == 'matrix')
+    if(! is(path,'matrix'))
         stop('getStepLengths expects path to be a matrix')
     
     if(from >= nrow(path))
@@ -265,11 +264,11 @@ getStepLengthsTest = function(path,from,to,d)
 #' @return A successful test returns 0, otherwise execution halts.
 getDistanceDataForPathsTest = function(paths,statistic)
 {   
-    if(! class(paths) == 'list')
+    if(! is(paths,'list'))
         stop('getDistanceDataForPaths expects paths to be a list')
     
     for (path in paths){
-        if(! class(path) == 'matrix')
+        if(! is(path,'matrix'))
             stop('getDistanceDataForPaths expects each path to be a matrix')
     }
     
@@ -306,7 +305,7 @@ generateRandomUnitVectorTest = function(d)
 #' @return A successful test returns 0, otherwise execution halts.
 pathProgressionTest = function(path,from,to,d,direction)
 {
-    if(! class(path) == 'matrix')
+    if(! is(path,'matrix'))
         stop('pathProgression expects path to be a matrix')
     
     if(from >= nrow(path))
@@ -337,10 +336,9 @@ pathProgressionTest = function(path,from,to,d,direction)
 #' @return A successful test returns 0, otherwise execution halts.
 samplePathTest = function(attributes, pseudotime, nWindows)
 {
-    if(! class(attributes) == 'matrix')
+    if(! is(attributes,'matrix'))
         stop('samplePath expects attributes to be a matrix')
-    
-    if(! class(pseudotime) == 'numeric')
+    if(! is(pseudotime,'numeric'))
         stop('samplePath expects pseudotime to be a numeric vector')
     
     if(! length(pseudotime) == nrow(attributes))
@@ -349,7 +347,7 @@ samplePathTest = function(attributes, pseudotime, nWindows)
     if(! sum(names(pseudotime) == rownames(attributes)) == length(pseudotime))
         stop('samplePath expects the names of pseudotime to match the row names of attributes')
     
-    if(! class(nWindows) == 'numeric'| ! length(nWindows) == 1 | nWindows < 1)
+    if(! is(nWindows,'numeric') | ! length(nWindows) == 1 | nWindows < 1)
         stop('samplePath expects nWindows to be a positive integer')
     
     return(0)
@@ -372,10 +370,10 @@ samplePathTest = function(attributes, pseudotime, nWindows)
 #' @return A successful test returns 0, otherwise execution halts.
 analyseSingleCellTrajectoryTest = function(attributes, pseudotime, randomizationParams, statistic, nSamples, nWindows, d, N)
 {
-    if(! class(attributes) == 'matrix')
+    if(! is(attributes,'matrix'))
         stop('analyseSingleCellTrajectory expects attributes to be a matrix')
     
-    if(! class(pseudotime) == 'numeric')
+    if(! is(pseudotime,'numeric'))
         stop('analyseSingleCellTrajectory expects pseudotime to be a numeric vector')
     
     if(! length(pseudotime) == nrow(attributes))
@@ -392,19 +390,19 @@ analyseSingleCellTrajectoryTest = function(attributes, pseudotime, randomization
         stop(paste("analyseSingleCellTrajectory expects statistic to be",
                    "one of 'median', 'mean' or 'max'. See vignette."))
     
-    if(! class(nSamples) == 'numeric'| ! length(nSamples) == 1 | nSamples < 1)
+    if(! is(nSamples,'numeric') | ! length(nSamples) == 1 | nSamples < 1)
         stop('analyseSingleCellTrajectory expects nSamples to be a positive integer')
     
-    if(! class(nWindows) == 'numeric'| ! length(nWindows) == 1 | nWindows < 1)
+    if(! is(nWindows,'numeric') | ! length(nWindows) == 1 | nWindows < 1)
         stop('analyseSingleCellTrajectory expects nWindows to be a positive integer')
     
-    if((! class(d) == 'integer' & ! class(d) == 'numeric') | d < 1 | length(d) > 1)
+    if((! is(d,'integer') & ! is(d,'numeric')) | d < 1 | length(d) > 1)
         stop('analyseSingleCellTrajectory expects d to be a positive integer')
     
     if(d > ncol(attributes))
         stop('analyseSingleCellTrajectory expects d to be <= ncol(path)')
     
-    if((! class(N) == 'integer' & ! class(N) == 'numeric') | N < 1 | length(N) > 1)
+    if((! is(N,'integer') & ! is(N,'numeric')) | N < 1 | length(N) > 1)
         stop('analyseSingleCellTrajectory expects N to be a positive integer')
     
     return(0)
@@ -434,10 +432,10 @@ analyseSingleCellTrajectoryTest = function(attributes, pseudotime, randomization
 analyseBranchPointTest = function(attributes, pseudotime, randomizationParams, statistic,
                                   start, stop, step, nSamples, nWindows, d, N)
 {
-    if(! class(attributes) == 'matrix')
+    if(! is(attributes,'matrix'))
         stop('analyseBranchPoint expects attributes to be a matrix')
     
-    if(! class(pseudotime) == 'numeric')
+    if(! is(pseudotime,'numeric'))
         stop('analyseBranchPoint expects pseudotime to be a numeric vector')
     
     if(! length(pseudotime) == nrow(attributes))
@@ -454,28 +452,28 @@ analyseBranchPointTest = function(attributes, pseudotime, randomizationParams, s
         stop(paste("analyseBranchPoint expects statistic to be",
                    "one of 'median', 'mean' or 'max'. See vignette."))
     
-    if((! class(start) == 'integer' & ! class(start) == 'numeric') | start < 0 | start > 100 | length(start) > 1)
+    if((! is(start,'integer') & ! is(start,'numeric')) | start < 0 | start > 100 | length(start) > 1)
         stop('analyseBranchPoint expects start to be a positive number between 0 and 100')
     
-    if((! class(stop) == 'integer' & ! class(stop) == 'numeric') | stop < 0 | stop > 100 | stop <= start | length(stop) > 1)
+    if((! is(stop,'integer') & ! is(stop,'numeric')) | stop < 0 | stop > 100 | stop <= start | length(stop) > 1)
         stop('analyseBranchPoint expects stop to be a positive number between start and 100')
     
-    if((! class(step) == 'integer' & ! class(step) == 'numeric') | step <= 0 | step > stop - start | length(step) > 1)
+    if((! is(step,'integer') & ! is(step,'numeric')) | step <= 0 | step > stop - start | length(step) > 1)
         stop('analyseBranchPoint expects step to be a positive number less than stop - start')
     
-    if(! class(nSamples) == 'numeric'| ! length(nSamples) == 1 | nSamples < 1)
+    if(! is(nSamples,'numeric') | ! length(nSamples) == 1 | nSamples < 1)
         stop('analyseBranchPoint expects nSamples to be a positive integer')
     
-    if(! class(nWindows) == 'numeric'| ! length(nWindows) == 1 | nWindows < 1)
+    if(! is(nWindows,'numeric') | ! length(nWindows) == 1 | nWindows < 1)
         stop('analyseBranchPoint expects nWindows to be a positive integer')
     
-    if((! class(d) == 'integer' & ! class(d) == 'numeric') | d < 1 | length(d) > 1)
+    if((! is(d,'integer') & ! is(d,'numeric')) | d < 1 | length(d) > 1)
         stop('analyseBranchPoint expects d to be a positive integer')
     
     if(d > ncol(attributes))
         stop('analyseBranchPoint expects d to be <= ncol(path)')
     
-    if((! class(N) == 'integer' & ! class(N) == 'numeric') | N < 1 | length(N) > 1)
+    if((! is(N,'integer') & ! is(N,'numeric')) | N < 1 | length(N) > 1)
         stop('analyseBranchPoint expects N to be a positive integer')
     
     return(0)
@@ -493,10 +491,10 @@ distanceBetweenTrajectoriesTest = function(attributes1,
                                            pseudotime1,
                                            attributes2)
 {
-    if(! class(attributes1) == 'matrix')
+    if(! is(attributes1,'matrix'))
         stop('distanceBetweenTrajectories expects attributes1 to be a matrix')
     
-    if(! class(pseudotime1) == 'numeric')
+    if(! is(pseudotime1,'numeric'))
         stop('distanceBetweenTrajectories expects pseudotime1 to be a numeric vector')
     
     if(! length(pseudotime1) == nrow(attributes1))
@@ -505,7 +503,7 @@ distanceBetweenTrajectoriesTest = function(attributes1,
     if(! sum(names(pseudotime1) == rownames(attributes1)) == length(pseudotime1))
         stop('distanceBetweenTrajectories expects the names of pseudotime1 to match the row names of attributes1')
     
-    if(! class(attributes2) == 'matrix')
+    if(! is(attributes2,'matrix'))
         stop('distanceBetweenTrajectories expects attributes2 to be a matrix')
     
     if(! ncol(attributes1) == ncol(attributes2))
@@ -522,7 +520,7 @@ distanceBetweenTrajectoriesTest = function(attributes1,
 #' @return A successful test returns 0, otherwise execution halts.
 orthonormalBasisTest = function(x)
 {
-    if(! (class(x) == 'numeric' &
+    if(! (is(x,'numeric') &
           length(x) == 3))
         stop('orthoNormalBasis expects x to be a numeric vector of length 3')
     
@@ -538,7 +536,7 @@ orthonormalBasisTest = function(x)
 #' @return A successful test returns 0, otherwise execution halts.
 circleOnTheUnitSphereTest  = function(center,radius,N)
 {
-    if(! (class(center) == 'numeric' &
+    if(! (is(center,'numeric') &
           length(center) == 3))
         stop('circleOnTheUnitSphere expects center to be a numeric vector of length 3')
     
@@ -592,7 +590,7 @@ plotPathProjectionCenterAndCircleTest = function(path,
                                                  scale,
                                                  newFigure)
 {
-    if(! class(path) == 'matrix')
+    if(! is(path,'matrix'))
         stop('plotPathProjectionCenterAndCircle expects path to be a matrix')
     
     if(! ncol(path) == 3)
@@ -607,13 +605,13 @@ plotPathProjectionCenterAndCircleTest = function(path,
     if(from >= to)
         stop('plotPathProjectionCenterAndCircle expects from < to')
     
-    if(! class(projection) == 'matrix')
+    if(! is(projection,'matrix'))
         stop('plotPathProjectionCenterAndCircle expects projection to be a matrix')
     
     if(! ncol(projection) == 3)
         stop('plotPathProjectionCenterAndCircle expects nrow(projection) == 3')
     
-    if(! (class(center) == 'numeric' &
+    if(! (is(center,'numeric') &
           length(center) == 3))
         stop('plotPathProjectionCenterAndCircle expects center to be numeric of length 3')
     
@@ -652,13 +650,13 @@ visualiseTrajectoryStatsTest = function(traj1Data,
                                         metric,
                                         average,
                                         traj2Data){
-    if(! class(traj1Data) == 'list')
+    if(! is(traj1Data,'list'))
         stop('visualiseTrajectoryStats expects traj1Data to be a list')
     
     if(! sum(names(traj1Data[[1]])  == c("pValue","sphericalData","randomDistances","randomizationParams")) == 4)
         stop('visualiseTrajectoryStats expects traj1Data to be the output of analyseSingleCellTrajectory')
     
-    if(! class(traj2Data) == 'list')
+    if(! is(traj2Data,'list'))
         stop('visualiseTrajectoryStats expects traj2Data to be a list')  
     
     if(length(traj2Data) > 0){
@@ -685,7 +683,7 @@ visualiseTrajectoryStatsTest = function(traj1Data,
 #' @return A successful test returns 0, otherwise execution halts.
 visualiseBranchPointStatsTest = function(branchPointData,
                                          average){
-    if(! class(branchPointData) == 'list')
+    if(! is(branchPointData,'list'))
         stop('visualiseBranchPointStats expects branchPointData to be a list')
     
     if(! sum(names(branchPointData[[names(branchPointData)[[1]]]][[1]])  == c("pValue","sphericalData","randomDistances","randomizationParams")) == 4)

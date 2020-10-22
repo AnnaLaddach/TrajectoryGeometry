@@ -58,6 +58,9 @@ multiple figures, this should be set to TRUE which is its
 default.  Otherwise, set this to FALSE in order to add
 additional paths to the same figure.}
 }
+\value{
+This returns 0.
+}
 \description{
 This function assumes you have a path in dimension 3 and you have
 found the projection for the portion under consideration, the
