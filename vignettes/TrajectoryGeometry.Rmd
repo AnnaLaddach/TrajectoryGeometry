@@ -41,9 +41,13 @@ these points are close.
 We illustrate here a path in 3-dimensional space, the projection of
 its points onto the 2-sphere and the center of a circle which
 minimizes mean distance to these points and the circle representing
-this mean distance.
+this mean distance.  We can see that some of the early steps produce
+outliers on the sphere.
 
-![a path and a sphere](pathAndSphere.png){width=50%}
+
+```{r, echo=FALSE, out.width="50%", fig.cap="A path and its projection to the sphere."}
+knitr::include_graphics("pathAndSphere.png")
+```
 
 This approach is very general.  Given gene expression data organized
 in a time series we can apply these methods to the gene expression, to
