@@ -43,7 +43,7 @@ its points onto the 2-sphere and the center of a circle which
 minimizes mean distance to these points and the circle representing
 this mean distance.
 
-![a path and a sphere](pathAndSphere.png)
+![a path and a sphere](pathAndSphere.png){width=50%}
 
 This approach is very general.  Given gene expression data organized
 in a time series we can apply these methods to the gene expression, to
@@ -153,14 +153,14 @@ the entries in $latex X$.
 
 ## Does a path confined to a direction consistently move in that direction?
    
-The answer here is no.  Consider a path which starts out at the origin
-and the heads out along the x-axis.  Perhaps is gets a little ways out
-and then takes to wandering back and forth.  As long as it never quite
-gets back to the origin, the methods we have described will show this
-path as highly directional.  Accordingly if you have determined that
-your path has strong directionality using these methods, it is
-appropriate to check for progression in that direction. This can be
-done with the function pathProgression() 
+The answer here is not necessarily.  Consider a path which starts out
+at the origin and the heads out along the x-axis.  Perhaps is gets a
+little ways out and then takes to wandering back and forth.  As long
+as it never quite gets back to the origin, the methods we have
+described will show this path as highly directional.  Accordingly if
+you have determined that your path has strong directionality using
+these methods, it is appropriate to check for progression in that
+direction. This can be done with the function pathProgression()
 ```{r message=FALSE}
    progress = pathProgression(straightPath,direction=straightPathCenter)
    progress = pathProgression(crookedPath,from=6,direction=crookedPathCenter)

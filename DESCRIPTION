@@ -20,7 +20,8 @@ RoxygenNote: 7.1.1
 Imports: pracma,
 	 rgl,
 	 ggplot2,
-	 stats
+	 stats,
+	 methods
 Depends: 
     R (>= 4.0)
 Suggests: 

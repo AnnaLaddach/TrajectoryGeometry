@@ -15,6 +15,7 @@
 #' @param N - The number of random paths to generated for statistical
 #'     comparison to the given path.
 #' @return A successful test returns 0, otherwise execution halts.
+#' @importFrom methods is
 testPathForDirectionalityTest = function(path,from,to,d,
                                          randomizationParams,statistic,N)
 {
