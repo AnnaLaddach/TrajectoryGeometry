@@ -134,7 +134,7 @@ the entries in $latex X$.
   the randomized paths should also be non-negative and this can be
   accomplished by including the value 'nonNegative'
   ```{r message=FALSE}
-  randomizationParams = c('bySteps','preserveLengths','nonNegaive')
+  randomizationParams = c('bySteps','preserveLengths','nonNegative')
   Y = generateRandomPaths(path=straightPath,
                           randomizationParams=randomizationParams,
                           N=10)

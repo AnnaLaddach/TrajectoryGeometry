@@ -46,9 +46,9 @@ set.seed(42)
 
 ## The data
 
-The data consists of a singleCellMatrix, which contains PCA projections derived from normalised gene expression values for each cell. Any other features which describe the cells could also be used (i.e. normalised expression) values. The columns are the PCs and the rows are the cells. Rownames should be the names of the cells.  
+The data consists of a singleCellMatrix, which contains PCA projections derived from normalised gene expression values for each cell. Any other features which describe the cells could also be used (i.e. normalised expression) values. The columns are the PCs and the rows are the cells. Rownames should be the cell IDs.  
 
-There are also vectors of pseudotime values for both trajectories. These have been inferred using the Slingshot package (Street et al., 2018). The vectors are named according to cell ID. N.B. where cells are not inferred to take part in a trajectory these are given an NA value. A number of projenitor cells are assigned to both trajectories in agreement with their "bipotential" nature. 
+There are also vectors of pseudotime values for both trajectories. These have been inferred using the Slingshot package (*Street et al., 2018*). The vectors are named according to cell ID. N.B. where cells are not inferred to take part in a trajectory these are given an NA value. A number of projenitor cells are assigned to both trajectories in agreement with their "bipotential" nature. 
 
 We will filter pseudotime trajectories and the singleCellMatrix to remove cells which do not take part in trajectories. Additionally, we will normalise pseudotime to range from 0 to 100 for each trajectory.
 
