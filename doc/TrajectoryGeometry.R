@@ -15,7 +15,7 @@ Y = generateRandomPaths(path=straightPath,
                         N=10)
 
 ## ----message=FALSE------------------------------------------------------------
-randomizationParams = c('bySteps','preserveLengths','nonNegaive')
+randomizationParams = c('bySteps','preserveLengths','nonNegative')
 Y = generateRandomPaths(path=straightPath,
                         randomizationParams=randomizationParams,
                         N=10)
