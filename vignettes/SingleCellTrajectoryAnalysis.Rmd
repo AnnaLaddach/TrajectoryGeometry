@@ -81,28 +81,28 @@ hepPath = samplePath(hepAttributes, hepPseudoTimeNormalised)
 
 
 ## Projecting path onto sphere and testing for directionality
-We will test both sampled paths for directionality and obtain data regarding their spherical projections.
+We will test both sampled paths for directionality and obtain data regarding their spherical projections. Here we compare each sampled path to 100 random paths. Generally it would be recommended to obtain a larger number of sampled paths (e.g. 1000). 
 
 ```{r}
 cholAnswerPermutation = testPathForDirectionality(cholPath[,1:3],
                                                   randomizationParams = c('byPermutation','permuteWithinColumns'),
                                                   statistic = "mean", 
-                                                  N = 1000)
+                                                  N = 100)
 
 hepAnswerPermutation = testPathForDirectionality(hepPath[,1:3],
                                                  randomizationParams = c('byPermutation','permuteWithinColumns'),
                                                  statistic = "mean", 
-                                                 N = 1000)
+                                                 N = 100)
 
 cholAnswerSteps = testPathForDirectionality(cholPath[,1:3],
                                             randomizationParams = c('bySteps','preserveLengths'),
                                             statistic = "mean", 
-                                            N = 1000)
+                                            N = 100)
 
 hepAnswerSteps = testPathForDirectionality(hepPath[,1:3],
                                            randomizationParams = c('bySteps','preserveLengths'),
                                            statistic = "mean", 
-                                           N = 1000)
+                                           N = 100)
 
 cat(paste("Mean distance of projected cholangiocyte pathway points from circle center:", cholAnswerPermutation$sphericalData$distance))
 cat(paste("\nMean distance of projected hepatocyte pathway points from circle center:", hepAnswerPermutation$sphericalData$distance))
@@ -157,14 +157,14 @@ Screenshot of the resulting figure:
 
 ## Sampling multiple paths
 
-Here we have just analysed one possible path sampled from the trajectory. Let's analyse many. We will obtain 1000 sampled paths for each trajectory and obtain a random path parameterised on each of these (here we will permute each sampled path). This will allow us to compare the properties of 1000 sampled paths to the 1000 random paths. 
+Here we have just analysed one possible path sampled from the trajectory. Let's analyse many. We will obtain 100 sampled paths for each trajectory and obtain a random path parameterised on each of these (here we will permute each sampled path). This will allow us to compare the properties of 100 sampled paths to the 100 random paths. Generally it would be recommended to obtain a larger number of sampled paths (e.g. 1000). 
 
 ```{r}
 cholAnswers = analyseSingleCellTrajectory(attributes = cholAttributes[,1:3],
                                           pseudotime = cholPseudoTimeNormalised, 
                                           randomizationParams = c('byPermutation','permuteWithinColumns'), 
                                           statistic = "mean", 
-                                          nSamples = 1000,
+                                          nSamples = 100,
                                           N = 1)
 # #N.B N = 1 allows us to generate a single random path parameterised on each sampled path.
   
@@ -172,7 +172,7 @@ hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3],
                                          hepPseudoTimeNormalised, 
                                          randomizationParams = c('byPermutation','permuteWithinColumns'), 
                                          statistic = "mean", 
-                                         nSamples = 1000, 
+                                         nSamples = 100, 
                                          N = 1)
 ```
 

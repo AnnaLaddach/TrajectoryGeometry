@@ -826,7 +826,7 @@ analyseSingleCellTrajectory = function(attributes,
 #'                          start = 0,
 #'                          stop = 50,
 #'                          step = 5,
-#'                          nSamples = 100, 
+#'                          nSamples = 10, 
 #'                          N = 1)
 analyseBranchPoint = function(attributes, 
                               pseudotime, 
