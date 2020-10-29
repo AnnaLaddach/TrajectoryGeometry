@@ -73,6 +73,6 @@ cholBranchPointResults = analyseBranchPoint(cholAttributes[,seq_len(3)],
                          start = 0,
                          stop = 50,
                          step = 5,
-                         nSamples = 100, 
+                         nSamples = 10, 
                          N = 1)
 }

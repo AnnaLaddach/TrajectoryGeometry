@@ -2,7 +2,7 @@
 % Please edit documentation in R/TrajectoryGeometry.R
 \name{samplePath}
 \alias{samplePath}
-\title{Sample a path from single cell data.}
+\title{Sample a path from single cell data}
 \usage{
 samplePath(attributes, pseudotime, nWindows = 10)
 }

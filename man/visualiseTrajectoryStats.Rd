@@ -19,7 +19,7 @@ visualiseTrajectoryStats(
 \item{average}{- if there are multiple distances available for each 
 sampled trajectory, calculate the average using "mean" or "median" (defaults to "mean").}
 
-\item{traj2Data}{either an empty list or the result of analyseSingleCellTrajectory}
+\item{-}{traj2Data either an empty list or the result of analyseSingleCellTrajectory}
 }
 \value{
 a list containing:
