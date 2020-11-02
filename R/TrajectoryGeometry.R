@@ -49,7 +49,7 @@ testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
                                   randomizationParams,statistic,N)
     
     ## ###################################################
-    ## Subset to the data under consideration:
+    ## Subset to the data which is under consideration:
     path = path[from:to,seq_len(d)]
     
     ## ###################################################

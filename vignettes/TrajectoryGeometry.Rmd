@@ -76,7 +76,7 @@ the directionality of the path $latex x_k, \dots, x_N$.
 
 ### How close are these points on the sphere?
 
-We would like to measure how compactly the set of points $latex
+We would like to measure how compactly a set of points $latex
 p_1,\dots,p_m$ sit on the sphere.  To to this we would like to find a
 center for these points and a circle (more generally as $latex N-2$
 dimensional sphere) which measures their collective
