@@ -1158,7 +1158,7 @@ plotPathProjectionCenterAndCircle = function(path,
 #' @param metric - either "pValue" or "distance"
 #' @param average - if there are multiple distances available for each 
 #' sampled trajectory, calculate the average using "mean" or "median" (defaults to "mean").
-#' @param - traj2Data either an empty list or the result of analyseSingleCellTrajectory
+#' @param traj2Data - traj2Data either an empty list or the result of analyseSingleCellTrajectory
 #' @return a list containing:
 #'  stats - output of wilcox test (paired if comparing sampled to random paths,
 #'  unpaired if comparing sampled paths for two different trajectories)

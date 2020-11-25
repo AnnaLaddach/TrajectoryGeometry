@@ -645,7 +645,7 @@ plotPathProjectionCenterAndCircleTest = function(path,
 #' @param metric - either "pValue" or "distance"
 #' @param average - if there are multiple distances available for each 
 #' sampled trajectory, calculate the average using mean or median (defaults to mean).
-#' @param traj2Data either an empty list or the result of analyseSingleCellTrajectory
+#' @param traj2Data - either an empty list or the result of analyseSingleCellTrajectory
 #' @return A successful test returns 0, otherwise execution halts.
 visualiseTrajectoryStatsTest = function(traj1Data,
                                         metric,

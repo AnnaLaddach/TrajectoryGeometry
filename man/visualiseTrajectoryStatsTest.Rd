@@ -14,7 +14,7 @@ visualiseTrajectoryStatsTest(traj1Data, metric, average, traj2Data)
 \item{average}{- if there are multiple distances available for each 
 sampled trajectory, calculate the average using mean or median (defaults to mean).}
 
-\item{traj2Data}{either an empty list or the result of analyseSingleCellTrajectory}
+\item{traj2Data}{- either an empty list or the result of analyseSingleCellTrajectory}
 }
 \value{
 A successful test returns 0, otherwise execution halts.
