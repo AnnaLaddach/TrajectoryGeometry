@@ -135,12 +135,12 @@
 ## ###################################################
 #' singleCellMatrix
 #'
-#' PCA projections derived from normalised gene expression values for 
+#' PCA projections derived from normalised gene expression values for
 #' single cells. The columns are the PCs and the rows are the cells.
 #'
 #' @format A matrix
 #' \describe{
-#' PCA projections derived from normalised gene expression values for 
+#' PCA projections derived from normalised gene expression values for
 #' single cells. The columns are the PCs and the rows are the cells.
 #' }
 #' @source Single cell data
@@ -149,16 +149,16 @@
 ## ###################################################
 #' hepAttributes
 #'
-#' PCA projections derived from normalised gene expression values for 
-#' single cells, and filtered for cells which feature in a trajectory 
-#' from hepatoblast to hepatocyte. The columns are the PCs and the 
+#' PCA projections derived from normalised gene expression values for
+#' single cells, and filtered for cells which feature in a trajectory
+#' from hepatoblast to hepatocyte. The columns are the PCs and the
 #' rows are the cells.
 #'
 #' @format A matrix
 #' \describe{
-#' PCA projections derived from normalised gene expression values for 
-#' single cells, and filtered for cells which feature in a trajectory 
-#' from hepatoblast to hepatocyte. The columns are the PCs and the 
+#' PCA projections derived from normalised gene expression values for
+#' single cells, and filtered for cells which feature in a trajectory
+#' from hepatoblast to hepatocyte. The columns are the PCs and the
 #' rows are the cells.
 #' }
 #' @source Single cell data
@@ -167,16 +167,16 @@
 ## ###################################################
 #' cholAttributes
 #'
-#' PCA projections derived from normalised gene expression values for 
-#' single cells, and filtered for cells which feature in a trajectory 
-#' from hepatoblast to cholangiocyte. The columns are the PCs and the 
+#' PCA projections derived from normalised gene expression values for
+#' single cells, and filtered for cells which feature in a trajectory
+#' from hepatoblast to cholangiocyte. The columns are the PCs and the
 #' rows are the cells.
 #'
 #' @format A matrix
 #' \describe{
-#' PCA projections derived from normalised gene expression values for 
-#' single cells, and filtered for cells which feature in a trajectory 
-#' from hepatoblast to cholangiocyte. The columns are the PCs and the 
+#' PCA projections derived from normalised gene expression values for
+#' single cells, and filtered for cells which feature in a trajectory
+#' from hepatoblast to cholangiocyte. The columns are the PCs and the
 #' rows are the cells.
 #' }
 #' @source Single cell data
@@ -187,14 +187,14 @@
 #'
 #' A vector of pseudotime values for a trajectory describing the
 #' development of hepatocytes from hepatoblasts.
-#' Pseudotime values have been inferred using the SlingShot 
+#' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
-#' 
+#'
 #' @format A vector
 #' \describe{
 #' A vector of pseudotime values for a trajectory describing the
 #' development of hepatocytes from hepatoblasts.
-#' Pseudotime values have been inferred using the SlingShot 
+#' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
 #' }
 #' @source Single cell data
@@ -205,14 +205,14 @@
 #'
 #' A vector of pseudotime values for a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
-#' Pseudotime values have been inferred using the SlingShot 
+#' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
-#' 
+#'
 #' @format A vector
 #' \describe{
 #' A vector of pseudotime values for a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
-#' Pseudotime values have been inferred using the SlingShot 
+#' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
 #' }
 #' @source Single cell data
@@ -221,17 +221,17 @@
 ## ###################################################
 #' hepPseudoTimeNormalised
 #'
-#' A vector of pseudotime values, normalised to range from 
+#' A vector of pseudotime values, normalised to range from
 #' 0 to 100, for a trajectory describing the
 #' development of hepatocytes from hepatoblasts.
-#' Pseudotime values have been inferred using the SlingShot 
+#' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
-#' 
+#'
 #' @format A vector
 #' \describe{
 #' A vector of pseudotime values for a trajectory describing the
 #' development of hepatocytes from hepatoblasts.
-#' Pseudotime values have been inferred using the SlingShot 
+#' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
 #' }
 #' @source Single cell data
@@ -240,18 +240,18 @@
 ## ###################################################
 #' cholPseudoTimeNormalised
 #'
-#' A vector of pseudotime values, normalised to range from 
+#' A vector of pseudotime values, normalised to range from
 #' 0 to 100, for a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
-#' Pseudotime values have been inferred using the SlingShot 
+#' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
-#' 
+#'
 #' @format A vector
 #' \describe{
-#' A vector of pseudotime values, normalised to range from 
+#' A vector of pseudotime values, normalised to range from
 #' 0 to 100, for a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
-#' Pseudotime values have been inferred using the SlingShot 
+#' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
 #' }
 #' @source Single cell data
@@ -260,12 +260,12 @@
 ## ###################################################
 #' hepAnswers
 #'
-#' Results of running analyseSingleCellTrajectory() on a trajectory describing the
-#' development of hepatocytes from hepatoblasts.
+#' Results of running analyseSingleCellTrajectory() on a trajectory describing
+#' the development of hepatocytes from hepatoblasts.
 #' @format A list
 #' \describe{
-#' Results of running analyseSingleCellTrajectory() on a trajectory describing the
-#' development of hepatocytes from hepatoblasts.
+#' Results of running analyseSingleCellTrajectory() on a trajectory describing
+#' the development of hepatocytes from hepatoblasts.
 #' }
 #' @source Single cell data
 "hepAnswers"
@@ -273,12 +273,12 @@
 ## ###################################################
 #' cholAnswers
 #'
-#' Results of running analyseSingleCellTrajectory() on 
+#' Results of running analyseSingleCellTrajectory() on
 #' a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
 #' @format A list
 #' \describe{
-#' Results of running analyseSingleCellTrajectory() on 
+#' Results of running analyseSingleCellTrajectory() on
 #' a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
 #' }
@@ -288,12 +288,12 @@
 ## ###################################################
 #' cholBranchPointResults
 #'
-#' Results of running analyseBranchPoint() on 
+#' Results of running analyseBranchPoint() on
 #' a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
 #' @format A list
 #' \describe{
-#' Results of running analyseBranchPoint() on 
+#' Results of running analyseBranchPoint() on
 #' a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
 #' }
