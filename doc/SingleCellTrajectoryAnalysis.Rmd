@@ -4,15 +4,15 @@ author: "Anna Laddach and Michael Shapiro"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{SingleCellTrajectoryAnalysis}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+%\VignetteIndexEntry{SingleCellTrajectoryAnalysis}
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+collapse = TRUE,
+comment = "#>"
 )
 ```
 # SingleCellTrajectoryAnalysis
@@ -85,14 +85,14 @@ We will test both sampled paths for directionality and obtain data regarding the
 
 ```{r}
 cholAnswerPermutation = testPathForDirectionality(cholPath[,1:3],
-                                                  randomizationParams = c('byPermutation','permuteWithinColumns'),
-                                                  statistic = "mean", 
-                                                  N = 100)
+                                                randomizationParams = c('byPermutation','permuteWithinColumns'),
+                                                statistic = "mean", 
+                                                N = 100)
 
 hepAnswerPermutation = testPathForDirectionality(hepPath[,1:3],
-                                                 randomizationParams = c('byPermutation','permuteWithinColumns'),
-                                                 statistic = "mean", 
-                                                 N = 100)
+                                                randomizationParams = c('byPermutation','permuteWithinColumns'),
+                                                statistic = "mean", 
+                                                N = 100)
 
 cholAnswerSteps = testPathForDirectionality(cholPath[,1:3],
                                             randomizationParams = c('bySteps','preserveLengths'),
@@ -100,9 +100,9 @@ cholAnswerSteps = testPathForDirectionality(cholPath[,1:3],
                                             N = 100)
 
 hepAnswerSteps = testPathForDirectionality(hepPath[,1:3],
-                                           randomizationParams = c('bySteps','preserveLengths'),
-                                           statistic = "mean", 
-                                           N = 100)
+                                        randomizationParams = c('bySteps','preserveLengths'),
+                                        statistic = "mean", 
+                                        N = 100)
 
 cat(paste("Mean distance of projected cholangiocyte pathway points from circle center:", cholAnswerPermutation$sphericalData$distance))
 cat(paste("\nMean distance of projected hepatocyte pathway points from circle center:", hepAnswerPermutation$sphericalData$distance))
@@ -123,14 +123,14 @@ Let's visualise the paths and their projections.
 The cholangiocyte path:
 ```{r}
 plotPathProjectionCenterAndCircle(path=cholPath[,1:3],
-                                  projection=cholAnswerPermutation$sphericalData$projections,
-                                  center=cholAnswerPermutation$sphericalData$center,
-                                  radius=cholAnswerPermutation$sphericalData$distance,
-                                  color=colors[cut(1:10,breaks=100)],
-                                  circleColor = "white",
-                                  pathPointSize = 8,
-                                  projectionPointSize = 8,
-                                  newFigure=TRUE)
+                                projection=cholAnswerPermutation$sphericalData$projections,
+                                center=cholAnswerPermutation$sphericalData$center,
+                                radius=cholAnswerPermutation$sphericalData$distance,
+                                color=colors[cut(1:10,breaks=100)],
+                                circleColor = "white",
+                                pathPointSize = 8,
+                                projectionPointSize = 8,
+                                newFigure=TRUE)
 ```
 
 Screenshot of the resulting figure:
@@ -140,14 +140,14 @@ Screenshot of the resulting figure:
 The hepatocyte path:
 ```{r}
 plotPathProjectionCenterAndCircle(path=hepPath[,1:3],
-                                  projection=hepAnswerPermutation$sphericalData$projections,
-                                  center=hepAnswerPermutation$sphericalData$center,
-                                  radius=hepAnswerPermutation$sphericalData$distance,
-                                  color=colors[cut(1:10,breaks=100)],
-                                  circleColor = "white",
-                                  pathPointSize = 8,
-                                  projectionPointSize = 8,
-                                  newFigure=TRUE)
+                                projection=hepAnswerPermutation$sphericalData$projections,
+                                center=hepAnswerPermutation$sphericalData$center,
+                                radius=hepAnswerPermutation$sphericalData$distance,
+                                color=colors[cut(1:10,breaks=100)],
+                                circleColor = "white",
+                                pathPointSize = 8,
+                                projectionPointSize = 8,
+                                newFigure=TRUE)
 ```
 
 Screenshot of the resulting figure:
@@ -161,19 +161,19 @@ Here we have just analysed one possible path sampled from the trajectory. Let's 
 
 ```{r}
 cholAnswers = analyseSingleCellTrajectory(attributes = cholAttributes[,1:3],
-                                          pseudotime = cholPseudoTimeNormalised, 
-                                          randomizationParams = c('byPermutation','permuteWithinColumns'), 
-                                          statistic = "mean", 
-                                          nSamples = 100,
-                                          N = 1)
+                                        pseudotime = cholPseudoTimeNormalised, 
+                                        randomizationParams = c('byPermutation','permuteWithinColumns'), 
+                                        statistic = "mean", 
+                                        nSamples = 100,
+                                        N = 1)
 # #N.B N = 1 allows us to generate a single random path parameterised on each sampled path.
   
 hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3], 
-                                         hepPseudoTimeNormalised, 
-                                         randomizationParams = c('byPermutation','permuteWithinColumns'), 
-                                         statistic = "mean", 
-                                         nSamples = 100, 
-                                         N = 1)
+                                        hepPseudoTimeNormalised, 
+                                        randomizationParams = c('byPermutation','permuteWithinColumns'), 
+                                        statistic = "mean", 
+                                        nSamples = 100, 
+                                        N = 1)
 ```
 
 Let's visualise the results and extract statistics. A paired Wilcox test is performed between sampled and random paths. Here a distance metric, which is indicative of how close the projected points are on the sphere, is used to compare paths. A lower distance indicates a more consistent directionality.
@@ -224,15 +224,15 @@ In the interest of time, we will only sample 100 paths for each point in pseudot
 
 ```{r}
 cholBranchPointResults = analyseBranchPoint(cholAttributes[,1:3], 
-                                          cholPseudoTime,
-                                          randomizationParams = c("byPermutation",
-                                                          "permuteWithinColumns"), 
-                                          statistic = "mean",
-                                          start = 0,
-                                          stop = 50,
-                                          step = 5,
-                                          nSamples = 100, 
-                                          N = 1)
+                                        cholPseudoTime,
+                                        randomizationParams = c("byPermutation",
+                                                        "permuteWithinColumns"), 
+                                        statistic = "mean",
+                                        start = 0,
+                                        stop = 50,
+                                        step = 5,
+                                        nSamples = 100, 
+                                        N = 1)
 ```
 
 Let's extract statistics and visualise the results.
@@ -258,15 +258,15 @@ It looks like the hepatocyte trajectory branches off around pseudotime 20.
 Again we analyse the trajectory geometry starting from successively later points.
 ```{r}
 hepBranchPointResults = analyseBranchPoint(hepAttributes[,1:3], 
-                                          hepPseudoTime,
-                                          randomizationParams = c("byPermutation",
-                                                          "permuteWithinColumns"), 
-                                          statistic = "mean",
-                                          start = 0,
-                                          stop = 50,
-                                          step = 5,
-                                          nSamples = 100, 
-                                          N = 1)
+                                        hepPseudoTime,
+                                        randomizationParams = c("byPermutation",
+                                                        "permuteWithinColumns"), 
+                                        statistic = "mean",
+                                        start = 0,
+                                        stop = 50,
+                                        step = 5,
+                                        nSamples = 100, 
+                                        N = 1)
 ```
 Let's extract statistics and visualise results.
 

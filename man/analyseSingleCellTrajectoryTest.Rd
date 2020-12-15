@@ -5,14 +5,14 @@
 \title{This tests the input to analyseSingleCellTrajectory.}
 \usage{
 analyseSingleCellTrajectoryTest(
-  attributes,
-  pseudotime,
-  randomizationParams,
-  statistic,
-  nSamples,
-  nWindows,
-  d,
-  N
+attributes,
+pseudotime,
+randomizationParams,
+statistic,
+nSamples,
+nWindows,
+d,
+N
 )
 }
 \arguments{

@@ -15,7 +15,7 @@ samplePath(attributes, pseudotime, nWindows = 10)
 }
 \value{
 sampledPath - A path consisting of a matrix of attributes of sampled cells. The rownames refer to the pseudotime windows
- each cell was sampled from.
+each cell was sampled from.
 }
 \description{
 This function takes vector of pseudotime values, and a matrix of attribute values (cell x attribute).

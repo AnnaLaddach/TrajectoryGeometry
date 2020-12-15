@@ -1,14 +1,14 @@
 citHeader("To cite TrajectoryGeometry in publications use:")
 
 citEntry(
-  entry    = "misc",
-  title    = 'TrajectoryGeometry',
-  author   = 'Anna Laddach and Michael Shapiro',
-  year     = '2020',
-  url      = 'https://github.com/AnnaLaddach/TrajectoryGeometry',
-  textVersion = paste('Anna Laddach and Michael Shapiro,',
-                      'TrajectoryGeometry: an R package for discovering',
-                      'directional change in gene expression,',
-                      'https://github.com/AnnaLaddach/TrajectoryGeometry')
-  )
+entry    = "misc",
+title    = 'TrajectoryGeometry',
+author   = 'Anna Laddach and Michael Shapiro',
+year     = '2020',
+url      = 'https://github.com/AnnaLaddach/TrajectoryGeometry',
+textVersion = paste('Anna Laddach and Michael Shapiro,',
+                    'TrajectoryGeometry: an R package for discovering',
+                    'directional change in gene expression,',
+                    'https://github.com/AnnaLaddach/TrajectoryGeometry')
+)
 

@@ -43,10 +43,10 @@
 #'                               randomizationParams=randomizationParams,
 #'                               statistic='median',N=100)
 testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
-                                     randomizationParams,statistic,N)
+                                    randomizationParams,statistic,N)
 {
     testPathForDirectionalityTest(path,from,to,d,
-                                  randomizationParams,statistic,N)
+                                randomizationParams,statistic,N)
     
     ## ###################################################
     ## Subset to the data which is under consideration:
@@ -59,8 +59,8 @@ testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
     ## ###################################################
     ## Generate random paths:
     randomPaths = generateRandomPaths(path,
-                                      randomizationParams=randomizationParams,
-                                      N=N)
+                                    randomizationParams=randomizationParams,
+                                    N=N)
     
     ## ###################################################
     ## Compute the distance statistics for random paths:
@@ -369,7 +369,7 @@ pathToSphericalData = function(path,from,to,d,statistic)
 #' randomPaths = generateRandomPaths(crookedPath,from=6,to=nrow(crookedPath),
 #'               d=ncol(crookedPath),randomizationParams=randomizationParams,N=10)
 generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
-                               randomizationParams,N)
+                            randomizationParams,N)
 {
     generateRandomPathsTest(path,from,to,d,randomizationParams,N)
     
@@ -390,8 +390,8 @@ generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
     
     if(randomizationParams[1] == 'bySteps')
         return(generateRandomPathsBySteps(path,
-                                          randomizationParams,
-                                          N))    
+                                        randomizationParams,
+                                        N))    
     
 }
 
@@ -620,7 +620,7 @@ generateRandomUnitVector = function(d)
 #' progress =
 #'     pathProgression(crookedPath,from=6,direction=crookedPathCenter)
 pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
-                           direction)
+                        direction)
 {
     pathProgressionTest(path,from,to,d,direction)
     
@@ -678,28 +678,28 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
         windowAttributes =  attributes[cells,]
   	
         ## ###################################################
-    	## Case when only one cell falls within a pseudotime window.
-    	## Turn windowAttributes into a matrix.
-    	if (is.null(dim(windowAttributes))){
+    ## Case when only one cell falls within a pseudotime window.
+    ## Turn windowAttributes into a matrix.
+    if (is.null(dim(windowAttributes))){
             windowAttributes = t(matrix(windowAttributes))
         }
         
-    	## ###################################################
-    	## Case when no cells fall within a pseudotime window.
-    	if (nrow(windowAttributes) == 0){
-      	    next
-    	}
+    ## ###################################################
+    ## Case when no cells fall within a pseudotime window.
+    if (nrow(windowAttributes) == 0){
+        next
+    }
     	
-    	## ###################################################
-    	## Randomly sample cell from pseudotime window.
-    	chosenIndex = sample(seq_len(nrow(windowAttributes)), 1)
+    ## ###################################################
+    ## Randomly sample cell from pseudotime window.
+    chosenIndex = sample(seq_len(nrow(windowAttributes)), 1)
         chosenAttributes = windowAttributes[chosenIndex,]
     	
-    	sampledPath = rbind(sampledPath, chosenAttributes)
+    sampledPath = rbind(sampledPath, chosenAttributes)
     	
-    	## ###################################################
-    	## Save window number.
-    	windowNumber = c(windowNumber, i)
+    ## ###################################################
+    ## Save window number.
+    windowNumber = c(windowNumber, i)
     }	
     
     rownames(sampledPath) = windowNumber 
@@ -751,13 +751,13 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 #'                                          statistic = "mean", 
 #'                                          N = 1)
 analyseSingleCellTrajectory = function(attributes, 
-                                       pseudotime, 
-                                       randomizationParams, 
-                                       statistic, 
-                                       nSamples = 1000, 
-                                       nWindows = 10, 
-                                       d = ncol(attributes), 
-                                       N = 1000)
+                                    pseudotime, 
+                                    randomizationParams, 
+                                    statistic, 
+                                    nSamples = 1000, 
+                                    nWindows = 10, 
+                                    d = ncol(attributes), 
+                                    N = 1000)
 {
     
     analyseSingleCellTrajectoryTest(attributes, pseudotime, 
@@ -773,7 +773,7 @@ analyseSingleCellTrajectory = function(attributes,
     for (i in seq_len(nSamples)){
         path = samplePath(attributes, pseudotime, nWindows = nWindows)
         answers[[i]] = testPathForDirectionality(path, randomizationParams = randomizationParams, 
-                                                 statistic = statistic, N = N, d = d)
+                                                statistic = statistic, N = N, d = d)
         if (i %% 100 == 0){
             print(paste(i, "sampled paths analysed"))
         }
@@ -829,22 +829,22 @@ analyseSingleCellTrajectory = function(attributes,
 #'                          nSamples = 10, 
 #'                          N = 1)
 analyseBranchPoint = function(attributes, 
-                              pseudotime, 
-                              randomizationParams, 
-                              statistic,
-                              start = (max(pseudotime) - min(pseudotime))*0.25,
-                              stop = (max(pseudotime) - min(pseudotime))*0.75,
-                              step = (max(pseudotime) - min(pseudotime))*0.05,
-                              nSamples = 1000, 
-                              nWindows = 10, 
-                              d = ncol(attributes), 
-                              N = 1)
+                            pseudotime, 
+                            randomizationParams, 
+                            statistic,
+                            start = (max(pseudotime) - min(pseudotime))*0.25,
+                            stop = (max(pseudotime) - min(pseudotime))*0.75,
+                            step = (max(pseudotime) - min(pseudotime))*0.05,
+                            nSamples = 1000, 
+                            nWindows = 10, 
+                            d = ncol(attributes), 
+                            N = 1)
 {
     
     
     analyseBranchPointTest(attributes, pseudotime, randomizationParams, 
-                           statistic, start, stop, step,
-                           nSamples, nWindows, d, N)
+                        statistic, start, stop, step,
+                        nSamples, nWindows, d, N)
     
     ## ###################################################
     ## normalise pseudotime to range between 0 and 100
@@ -862,9 +862,9 @@ analyseBranchPoint = function(attributes,
         pseudotime_selected = (pseudotime_selected - min(pseudotime_selected))/(max(pseudotime_selected) - min(pseudotime_selected))*100 
         attributes_selected = attributes[names(pseudotime_selected),]
         results[[as.character(i)]] = analyseSingleCellTrajectory(attributes_selected, pseudotime_selected, 
-                                                                 randomizationParams, 
-                                                                 statistic, nSamples, 
-                                                                 nWindows, d, N)
+                                                                randomizationParams, 
+                                                                statistic, nSamples, 
+                                                                nWindows, d, N)
     }
     
     return(results)
@@ -890,8 +890,8 @@ analyseBranchPoint = function(attributes,
 #'                                         cholPseudoTime[!is.na(cholPseudoTime)], 
 #'                                         hepAttributes)
 distanceBetweenTrajectories = function(attributes1,
-                                       pseudotime1,
-                                       attributes2)
+                                    pseudotime1,
+                                    attributes2)
 {
     
     distanceBetweenTrajectoriesTest(attributes1, pseudotime1, attributes2)
@@ -1072,22 +1072,22 @@ circleOnTheUnitSphere = function(center,radius,N=36)
 #'                                  color='red',
 #'                                  newFigure=TRUE)
 plotPathProjectionCenterAndCircle = function(path,
-                                             from=1,
-                                             to=nrow(path),
-                                             projection,
-                                             center,
-                                             radius,
-                                             color,
-                                             circleColor="white",
-                                             pathPointSize = 8,
-                                             projectionPointSize = 8,
-                                             scale=1.5,
-                                             newFigure=TRUE)
+                                            from=1,
+                                            to=nrow(path),
+                                            projection,
+                                            center,
+                                            radius,
+                                            color,
+                                            circleColor="white",
+                                            pathPointSize = 8,
+                                            projectionPointSize = 8,
+                                            scale=1.5,
+                                            newFigure=TRUE)
 {
     plotPathProjectionCenterAndCircleTest(path,from,to,projection,
-                                          center,radius,color,circleColor,
-                                          pathPointSize,projectionPointSize,
-                                          scale,newFigure)
+                                        center,radius,color,circleColor,
+                                        pathPointSize,projectionPointSize,
+                                        scale,newFigure)
     
     ## ###################################################
     ## Constants.  Maybe they should become parameters?
@@ -1125,7 +1125,7 @@ plotPathProjectionCenterAndCircle = function(path,
     lines3d(path,lwd=pathLineWidth,color=color)
     
     points3d(path[from:to,],size=pathPointSize+relevantPortionPointHump,
-             color=color)
+            color=color)
     lines3d(path[from:to,],lwd=pathLineWidth+relevantPortionLineHump,
             color=color)
     
@@ -1202,18 +1202,18 @@ visualiseTrajectoryStats = function(traj1Data,
             ## Populate values data frame with distance data
             if (metric == "distance"){
                 values = rbind(values, data.frame(type = "Trajectory 1", 
-                                                  value = traj1Data[[i]]$sphericalData$distance))
+                                                value = traj1Data[[i]]$sphericalData$distance))
                 values = rbind(values, data.frame(type = "Trajectory 2", 
-                                                  value = traj2Data[[i]]$sphericalData$distance))
+                                                value = traj2Data[[i]]$sphericalData$distance))
             }
             
             ## ###################################################
             ## Populate values data frame with pValue data
             if (metric == "pValue"){
                 values = rbind(values, data.frame(type = "Trajectory 1",
-                                                  value = traj1Data[[i]]$pValue))
+                                                value = traj1Data[[i]]$pValue))
                 values = rbind(values, data.frame(type = "Trajectory 2", 
-                                                  value = traj2Data[[i]]$pValue))
+                                                value = traj2Data[[i]]$pValue))
             } 
         }
         
@@ -1233,9 +1233,9 @@ visualiseTrajectoryStats = function(traj1Data,
         }
         for (i in seq_len(length(traj1Data))){
             values = rbind(values, data.frame(type = "Sampled", 
-                                              value = traj1Data[[i]]$sphericalData$distance))
+                                            value = traj1Data[[i]]$sphericalData$distance))
             values = rbind(values, data.frame(type = "Random", 
-                                              value = averageFunc(traj1Data[[i]]$randomDistances)))
+                                            value = averageFunc(traj1Data[[i]]$randomDistances)))
         }
         
         ## ###################################################
@@ -1277,7 +1277,7 @@ visualiseTrajectoryStats = function(traj1Data,
 #' @examples 
 #' cholBranchPointStats = visualiseBranchPointStats(cholBranchPointResults)
 visualiseBranchPointStats = function(branchPointData,
-                                     average = "mean")
+                                    average = "mean")
 {
     
     visualiseBranchPointStatsTest(branchPointData, average)

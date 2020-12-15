@@ -5,13 +5,13 @@
 \title{Test a path for directionality}
 \usage{
 testPathForDirectionality(
-  path,
-  from = 1,
-  to = nrow(path),
-  d = ncol(path),
-  randomizationParams,
-  statistic,
-  N
+path,
+from = 1,
+to = nrow(path),
+d = ncol(path),
+randomizationParams,
+statistic,
+N
 )
 }
 \arguments{
@@ -37,13 +37,13 @@ comparison to the given path.}
 }
 \value{
 This returns a list giving whose entries are:
-  pValue - the p-value for the path and statistic in question;
-  sphericalData - a list containing the projections of the path to
+pValue - the p-value for the path and statistic in question;
+sphericalData - a list containing the projections of the path to
     the sphere, the center of that sphere and the statistic for
     distance to that center;
-  randomDistances - the corresponding distances for randomly chosen;
+randomDistances - the corresponding distances for randomly chosen;
     paths;
-  randomizationParams - the choice of randomization parameters
+randomizationParams - the choice of randomization parameters
 }
 \description{
 This is the core function of this package.  It takes a path, and a
@@ -53,9 +53,9 @@ for the directionality of that path.
 \examples{
 randomizationParams = c('byPermutation','permuteWithinColumns')
 p = testPathForDirectionality(path=straightPath,
-                              randomizationParams=randomizationParams,
-                              statistic='median',N=100)
+                            randomizationParams=randomizationParams,
+                            statistic='median',N=100)
 q = testPathForDirectionality(path=crookedPath,from=6,
-                              randomizationParams=randomizationParams,
-                              statistic='median',N=100)
+                            randomizationParams=randomizationParams,
+                            statistic='median',N=100)
 }

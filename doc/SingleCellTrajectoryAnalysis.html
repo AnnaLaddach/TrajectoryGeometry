@@ -7,48 +7,48 @@
 
 <script type="text/javascript">
 window.onload = function() {
-  var imgs = document.getElementsByTagName('img'), i, img;
-  for (i = 0; i < imgs.length; i++) {
+var imgs = document.getElementsByTagName('img'), i, img;
+for (i = 0; i < imgs.length; i++) {
     img = imgs[i];
     // center an image if it is the only element of its parent
     if (img.parentElement.childElementCount === 1)
-      img.parentElement.style.textAlign = 'center';
-  }
+    img.parentElement.style.textAlign = 'center';
+}
 };
 </script>
 
 <!-- Styles for R syntax highlighter -->
 <style type="text/css">
-   pre .operator,
-   pre .paren {
-     color: rgb(104, 118, 135)
-   }
+pre .operator,
+pre .paren {
+    color: rgb(104, 118, 135)
+}
 
-   pre .literal {
-     color: #990073
-   }
+pre .literal {
+    color: #990073
+}
 
-   pre .number {
-     color: #099;
-   }
+pre .number {
+    color: #099;
+}
 
-   pre .comment {
-     color: #998;
-     font-style: italic
-   }
+pre .comment {
+    color: #998;
+    font-style: italic
+}
 
-   pre .keyword {
-     color: #900;
-     font-weight: bold
-   }
+pre .keyword {
+    color: #900;
+    font-weight: bold
+}
 
-   pre .identifier {
-     color: rgb(0, 0, 0);
-   }
+pre .identifier {
+    color: rgb(0, 0, 0);
+}
 
-   pre .string {
-     color: #d14;
-   }
+pre .string {
+    color: #d14;
+}
 </style>
 
 <!-- R syntax highlighter -->
@@ -61,138 +61,138 @@ hljs.initHighlightingOnLoad();
 
 <style type="text/css">
 body, td {
-   font-family: sans-serif;
-   background-color: white;
-   font-size: 13px;
+font-family: sans-serif;
+background-color: white;
+font-size: 13px;
 }
 
 body {
-  max-width: 800px;
-  margin: auto;
-  padding: 1em;
-  line-height: 20px;
+max-width: 800px;
+margin: auto;
+padding: 1em;
+line-height: 20px;
 }
 
 tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
 }
 
 h1 {
-   font-size:2.2em;
+font-size:2.2em;
 }
 
 h2 {
-   font-size:1.8em;
+font-size:1.8em;
 }
 
 h3 {
-   font-size:1.4em;
+font-size:1.4em;
 }
 
 h4 {
-   font-size:1.0em;
+font-size:1.0em;
 }
 
 h5 {
-   font-size:0.9em;
+font-size:0.9em;
 }
 
 h6 {
-   font-size:0.8em;
+font-size:0.8em;
 }
 
 a:visited {
-   color: rgb(50%, 0%, 50%);
+color: rgb(50%, 0%, 50%);
 }
 
 pre, img {
-  max-width: 100%;
+max-width: 100%;
 }
 pre {
-  overflow-x: auto;
+overflow-x: auto;
 }
 pre code {
-   display: block; padding: 0.5em;
+display: block; padding: 0.5em;
 }
 
 code {
-  font-size: 92%;
-  border: 1px solid #ccc;
+font-size: 92%;
+border: 1px solid #ccc;
 }
 
 code[class] {
-  background-color: #F8F8F8;
+background-color: #F8F8F8;
 }
 
 table, td, th {
-  border: none;
+border: none;
 }
 
 blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
+color:#666666;
+margin:0;
+padding-left: 1em;
+border-left: 0.5em #EEE solid;
 }
 
 hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
+height: 0px;
+border-bottom: none;
+border-top-width: thin;
+border-top-style: dotted;
+border-top-color: #999999;
 }
 
 @media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
-   }
+* {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+}
 
-   body {
-      font-size:12pt;
-      max-width:100%;
-   }
+body {
+    font-size:12pt;
+    max-width:100%;
+}
 
-   a, a:visited {
-      text-decoration: underline;
-   }
+a, a:visited {
+    text-decoration: underline;
+}
 
-   hr {
-      visibility: hidden;
-      page-break-before: always;
-   }
+hr {
+    visibility: hidden;
+    page-break-before: always;
+}
 
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
-   }
+pre, blockquote {
+    padding-right: 1em;
+    page-break-inside: avoid;
+}
 
-   tr, img {
-      page-break-inside: avoid;
-   }
+tr, img {
+    page-break-inside: avoid;
+}
 
-   img {
-      max-width: 100% !important;
-   }
+img {
+    max-width: 100% !important;
+}
 
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
-   }
+@page :left {
+    margin: 15mm 20mm 15mm 10mm;
+}
 
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
-   }
+@page :right {
+    margin: 15mm 10mm 15mm 20mm;
+}
 
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
+p, h2, h3 {
+    orphans: 3; widows: 3;
+}
 
-   h2, h3 {
-      page-break-after: avoid;
-   }
+h2, h3 {
+    page-break-after: avoid;
+}
 }
 </style>
 
@@ -270,14 +270,14 @@ hepPath = samplePath(hepAttributes, hepPseudoTimeNormalised)
 <p>We will test both sampled paths for directionality and obtain data regarding their spherical projections. Here we compare each sampled path to 100 random paths. Generally it would be recommended to obtain a larger number of sampled paths (e.g. 1000). </p>
 
 <pre><code class="r">cholAnswerPermutation = testPathForDirectionality(cholPath[,1:3],
-                                                  randomizationParams = c(&#39;byPermutation&#39;,&#39;permuteWithinColumns&#39;),
-                                                  statistic = &quot;mean&quot;, 
-                                                  N = 100)
+                                                randomizationParams = c(&#39;byPermutation&#39;,&#39;permuteWithinColumns&#39;),
+                                                statistic = &quot;mean&quot;, 
+                                                N = 100)
 
 hepAnswerPermutation = testPathForDirectionality(hepPath[,1:3],
-                                                 randomizationParams = c(&#39;byPermutation&#39;,&#39;permuteWithinColumns&#39;),
-                                                 statistic = &quot;mean&quot;, 
-                                                 N = 100)
+                                                randomizationParams = c(&#39;byPermutation&#39;,&#39;permuteWithinColumns&#39;),
+                                                statistic = &quot;mean&quot;, 
+                                                N = 100)
 
 cholAnswerSteps = testPathForDirectionality(cholPath[,1:3],
                                             randomizationParams = c(&#39;bySteps&#39;,&#39;preserveLengths&#39;),
@@ -285,9 +285,9 @@ cholAnswerSteps = testPathForDirectionality(cholPath[,1:3],
                                             N = 100)
 
 hepAnswerSteps = testPathForDirectionality(hepPath[,1:3],
-                                           randomizationParams = c(&#39;bySteps&#39;,&#39;preserveLengths&#39;),
-                                           statistic = &quot;mean&quot;, 
-                                           N = 100)
+                                        randomizationParams = c(&#39;bySteps&#39;,&#39;preserveLengths&#39;),
+                                        statistic = &quot;mean&quot;, 
+                                        N = 100)
 
 cat(paste(&quot;Mean distance of projected cholangiocyte pathway points from circle center:&quot;, cholAnswerPermutation$sphericalData$distance))
 #&gt; Mean distance of projected cholangiocyte pathway points from circle center: 0.437649561271638
@@ -325,14 +325,14 @@ cat(paste(&quot;\nP value for hepatocyte pathway:&quot;, hepAnswerSteps$pValue))
 <p>The cholangiocyte path:</p>
 
 <pre><code class="r">plotPathProjectionCenterAndCircle(path=cholPath[,1:3],
-                                  projection=cholAnswerPermutation$sphericalData$projections,
-                                  center=cholAnswerPermutation$sphericalData$center,
-                                  radius=cholAnswerPermutation$sphericalData$distance,
-                                  color=colors[cut(1:10,breaks=100)],
-                                  circleColor = &quot;white&quot;,
-                                  pathPointSize = 8,
-                                  projectionPointSize = 8,
-                                  newFigure=TRUE)
+                                projection=cholAnswerPermutation$sphericalData$projections,
+                                center=cholAnswerPermutation$sphericalData$center,
+                                radius=cholAnswerPermutation$sphericalData$distance,
+                                color=colors[cut(1:10,breaks=100)],
+                                circleColor = &quot;white&quot;,
+                                pathPointSize = 8,
+                                projectionPointSize = 8,
+                                newFigure=TRUE)
 #&gt; [1] 0
 </code></pre>
 
@@ -343,14 +343,14 @@ cat(paste(&quot;\nP value for hepatocyte pathway:&quot;, hepAnswerSteps$pValue))
 <p>The hepatocyte path:</p>
 
 <pre><code class="r">plotPathProjectionCenterAndCircle(path=hepPath[,1:3],
-                                  projection=hepAnswerPermutation$sphericalData$projections,
-                                  center=hepAnswerPermutation$sphericalData$center,
-                                  radius=hepAnswerPermutation$sphericalData$distance,
-                                  color=colors[cut(1:10,breaks=100)],
-                                  circleColor = &quot;white&quot;,
-                                  pathPointSize = 8,
-                                  projectionPointSize = 8,
-                                  newFigure=TRUE)
+                                projection=hepAnswerPermutation$sphericalData$projections,
+                                center=hepAnswerPermutation$sphericalData$center,
+                                radius=hepAnswerPermutation$sphericalData$distance,
+                                color=colors[cut(1:10,breaks=100)],
+                                circleColor = &quot;white&quot;,
+                                pathPointSize = 8,
+                                projectionPointSize = 8,
+                                newFigure=TRUE)
 #&gt; [1] 0
 </code></pre>
 
@@ -363,20 +363,20 @@ cat(paste(&quot;\nP value for hepatocyte pathway:&quot;, hepAnswerSteps$pValue))
 <p>Here we have just analysed one possible path sampled from the trajectory. Let&#39;s analyse many. We will obtain 100 sampled paths for each trajectory and obtain a random path parameterised on each of these (here we will permute each sampled path). This will allow us to compare the properties of 100 sampled paths to the 100 random paths. Generally it would be recommended to obtain a larger number of sampled paths (e.g. 1000). </p>
 
 <pre><code class="r">cholAnswers = analyseSingleCellTrajectory(attributes = cholAttributes[,1:3],
-                                          pseudotime = cholPseudoTimeNormalised, 
-                                          randomizationParams = c(&#39;byPermutation&#39;,&#39;permuteWithinColumns&#39;), 
-                                          statistic = &quot;mean&quot;, 
-                                          nSamples = 100,
-                                          N = 1)
+                                        pseudotime = cholPseudoTimeNormalised, 
+                                        randomizationParams = c(&#39;byPermutation&#39;,&#39;permuteWithinColumns&#39;), 
+                                        statistic = &quot;mean&quot;, 
+                                        nSamples = 100,
+                                        N = 1)
 #&gt; [1] &quot;100 sampled paths analysed&quot;
 # #N.B N = 1 allows us to generate a single random path parameterised on each sampled path.
 
 hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3], 
-                                         hepPseudoTimeNormalised, 
-                                         randomizationParams = c(&#39;byPermutation&#39;,&#39;permuteWithinColumns&#39;), 
-                                         statistic = &quot;mean&quot;, 
-                                         nSamples = 100, 
-                                         N = 1)
+                                        hepPseudoTimeNormalised, 
+                                        randomizationParams = c(&#39;byPermutation&#39;,&#39;permuteWithinColumns&#39;), 
+                                        statistic = &quot;mean&quot;, 
+                                        nSamples = 100, 
+                                        N = 1)
 #&gt; [1] &quot;100 sampled paths analysed&quot;
 </code></pre>
 
@@ -443,15 +443,15 @@ plot(distances$pseudotime, distances$distance, xlab = &quot;cholangiocyte pseudo
 In the interest of time, we will only sample 100 paths for each point in pseudotime. Generally, it would be recommended to sample a larger number of paths (e.g. 1000).</p>
 
 <pre><code class="r">cholBranchPointResults = analyseBranchPoint(cholAttributes[,1:3], 
-                                          cholPseudoTime,
-                                          randomizationParams = c(&quot;byPermutation&quot;,
-                                                          &quot;permuteWithinColumns&quot;), 
-                                          statistic = &quot;mean&quot;,
-                                          start = 0,
-                                          stop = 50,
-                                          step = 5,
-                                          nSamples = 100, 
-                                          N = 1)
+                                        cholPseudoTime,
+                                        randomizationParams = c(&quot;byPermutation&quot;,
+                                                        &quot;permuteWithinColumns&quot;), 
+                                        statistic = &quot;mean&quot;,
+                                        start = 0,
+                                        stop = 50,
+                                        step = 5,
+                                        nSamples = 100, 
+                                        N = 1)
 #&gt; [1] &quot;analysing trajectory from 0 onwards&quot;
 #&gt; [1] &quot;100 sampled paths analysed&quot;
 #&gt; [1] &quot;analysing trajectory from 5 onwards&quot;
@@ -506,15 +506,15 @@ plot(distances$pseudotime, distances$distance, xlab = &quot;hepatocyte pseudotim
 <p>Again we analyse the trajectory geometry starting from successively later points.</p>
 
 <pre><code class="r">hepBranchPointResults = analyseBranchPoint(hepAttributes[,1:3], 
-                                          hepPseudoTime,
-                                          randomizationParams = c(&quot;byPermutation&quot;,
-                                                          &quot;permuteWithinColumns&quot;), 
-                                          statistic = &quot;mean&quot;,
-                                          start = 0,
-                                          stop = 50,
-                                          step = 5,
-                                          nSamples = 100, 
-                                          N = 1)
+                                        hepPseudoTime,
+                                        randomizationParams = c(&quot;byPermutation&quot;,
+                                                        &quot;permuteWithinColumns&quot;), 
+                                        statistic = &quot;mean&quot;,
+                                        start = 0,
+                                        stop = 50,
+                                        step = 5,
+                                        nSamples = 100, 
+                                        N = 1)
 #&gt; [1] &quot;analysing trajectory from 0 onwards&quot;
 #&gt; [1] &quot;100 sampled paths analysed&quot;
 #&gt; [1] &quot;analysing trajectory from 5 onwards&quot;

@@ -5,10 +5,10 @@
 \title{Visualise Trajectory Stats}
 \usage{
 visualiseTrajectoryStats(
-  traj1Data,
-  metric,
-  average = "mean",
-  traj2Data = list()
+traj1Data,
+metric,
+average = "mean",
+traj2Data = list()
 )
 }
 \arguments{
@@ -23,10 +23,10 @@ sampled trajectory, calculate the average using "mean" or "median" (defaults to 
 }
 \value{
 a list containing:
- stats - output of wilcox test (paired if comparing sampled to random paths,
- unpaired if comparing sampled paths for two different trajectories)
- values - dataframe containing plotted data in long format
- plot - ggplot object
+stats - output of wilcox test (paired if comparing sampled to random paths,
+unpaired if comparing sampled paths for two different trajectories)
+values - dataframe containing plotted data in long format
+plot - ggplot object
 }
 \description{
 This function creates plots and extracts statistics for comparisons of metrics 

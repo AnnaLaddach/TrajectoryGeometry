@@ -5,18 +5,18 @@
 \title{This tests the inputs to plotPathProjectionCenterAndCircle}
 \usage{
 plotPathProjectionCenterAndCircleTest(
-  path,
-  from,
-  to,
-  projection,
-  center,
-  radius,
-  color,
-  circleColor,
-  pathPointSize,
-  projectionPointSize,
-  scale,
-  newFigure
+path,
+from,
+to,
+projection,
+center,
+radius,
+color,
+circleColor,
+pathPointSize,
+projectionPointSize,
+scale,
+newFigure
 )
 }
 \arguments{

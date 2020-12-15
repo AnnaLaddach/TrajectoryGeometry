@@ -5,12 +5,12 @@
 \title{Produce random paths modeled on a given path}
 \usage{
 generateRandomPaths(
-  path,
-  from = 1,
-  to = nrow(path),
-  d = ncol(path),
-  randomizationParams,
-  N
+path,
+from = 1,
+to = nrow(path),
+d = ncol(path),
+randomizationParams,
+N
 )
 }
 \arguments{
@@ -47,5 +47,5 @@ randomizationParams.
 \examples{
 randomizationParams = c('byPermutation','permuteWithinColumns')
 randomPaths = generateRandomPaths(crookedPath,from=6,to=nrow(crookedPath),
-              d=ncol(crookedPath),randomizationParams=randomizationParams,N=10)
+            d=ncol(crookedPath),randomizationParams=randomizationParams,N=10)
 }

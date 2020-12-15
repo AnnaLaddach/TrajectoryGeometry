@@ -4,15 +4,15 @@ author: "Anna Laddach and Michael Shapiro"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{TrajectoryGeometry}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+%\VignetteIndexEntry{TrajectoryGeometry}
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+collapse = TRUE,
+comment = "#>"
 )
 ```
 # TrajectoryGeometry
@@ -116,44 +116,44 @@ ambient space of $latex X$  and one produces random paths by permuting
 the entries in $latex X$.
 
 * Random steps.  Here we produce a path starting at the same point as
-  $latex X$ and having the same number steps.  
-  * There is an option to require the steps to have the same length as
-  those of $latex X$.  This is done by including 'preserveLengths' in
-  the randomization parameter.  If this is omitted all steps will have
-  length 1.
-  ```{r message=FALSE}
-  library(TrajectoryGeometry)
-  randomizationParams = c('bySteps','preserveLengths')
-  Y = generateRandomPaths(path=straightPath,
-                          randomizationParams=randomizationParams,
-                          N=10)
-  ```
-  * Negative values in the randomized paths may be reasonable in the
-  case where one is working with PCA data and can expect negative
-  values. However, in the case of non-negative gene expression data,
-  the randomized paths should also be non-negative and this can be
-  accomplished by including the value 'nonNegative'
-  ```{r message=FALSE}
-  randomizationParams = c('bySteps','preserveLengths','nonNegative')
-  Y = generateRandomPaths(path=straightPath,
-                          randomizationParams=randomizationParams,
-                          N=10)
-  ```
+$latex X$ and having the same number steps.  
+* There is an option to require the steps to have the same length as
+those of $latex X$.  This is done by including 'preserveLengths' in
+the randomization parameter.  If this is omitted all steps will have
+length 1.
+```{r message=FALSE}
+library(TrajectoryGeometry)
+randomizationParams = c('bySteps','preserveLengths')
+Y = generateRandomPaths(path=straightPath,
+                        randomizationParams=randomizationParams,
+                        N=10)
+```
+* Negative values in the randomized paths may be reasonable in the
+case where one is working with PCA data and can expect negative
+values. However, in the case of non-negative gene expression data,
+the randomized paths should also be non-negative and this can be
+accomplished by including the value 'nonNegative'
+```{r message=FALSE}
+randomizationParams = c('bySteps','preserveLengths','nonNegative')
+Y = generateRandomPaths(path=straightPath,
+                        randomizationParams=randomizationParams,
+                        N=10)
+```
 * Permutation.  Here we produce the randomized paths by permuting the
-  entries of $latex X$.  This can be done either by permuting the
-  entries of $latex X$ freely or permuting values within each column
-  spearately.  The former may be appropriate in the case of PCA data
-  or in the case of normalized gene expression data where the
-  expression levels are fairly uniform between genes.  However, in the
-  case where different genes have significantly different expression
-  levels, it seems appropriate to restrict to permutations which
-  preserve columns.  These operations are carried out as above using
-  either of the following:
-  *
- 	 ```{r message=FALSE}
-	 randomizationParams = c('byPermutation','permuteAsMatrix')
-	 randomizationParams = c('byPermutation','permuteWithinColumns')
-	 ```
+entries of $latex X$.  This can be done either by permuting the
+entries of $latex X$ freely or permuting values within each column
+spearately.  The former may be appropriate in the case of PCA data
+or in the case of normalized gene expression data where the
+expression levels are fairly uniform between genes.  However, in the
+case where different genes have significantly different expression
+levels, it seems appropriate to restrict to permutations which
+preserve columns.  These operations are carried out as above using
+either of the following:
+*
+```{r message=FALSE}
+randomizationParams = c('byPermutation','permuteAsMatrix')
+randomizationParams = c('byPermutation','permuteWithinColumns')
+```
 
 ## Does a path confined to a direction consistently move in that direction?
    
@@ -166,8 +166,8 @@ you have determined that your path has strong directionality using
 these methods, it is appropriate to check for progression in that
 direction. This can be done with the function pathProgression()
 ```{r message=FALSE}
-   progress = pathProgression(straightPath,direction=straightPathCenter)
-   progress = pathProgression(crookedPath,from=6,direction=crookedPathCenter)
+progress = pathProgression(straightPath,direction=straightPathCenter)
+progress = pathProgression(crookedPath,from=6,direction=crookedPathCenter)
 ``` 
 ## Stability
 

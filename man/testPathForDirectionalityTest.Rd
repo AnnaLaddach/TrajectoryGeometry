@@ -5,13 +5,13 @@
 \title{Test the inputs to testPathForDirectionality}
 \usage{
 testPathForDirectionalityTest(
-  path,
-  from,
-  to,
-  d,
-  randomizationParams,
-  statistic,
-  N
+path,
+from,
+to,
+d,
+randomizationParams,
+statistic,
+N
 )
 }
 \arguments{

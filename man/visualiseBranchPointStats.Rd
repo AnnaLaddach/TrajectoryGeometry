@@ -14,12 +14,12 @@ sampled trajectory, calculate the average using "mean" or "median" (defaults to 
 }
 \value{
 a list containing:
- branchPointValues - dataframe containing data underlying distance plot in long format
- pValues- dataframe containing data underlying p-value plot in long format
- distancePlot - ggplot object, violin plots of distance metric for sampled paths 
+branchPointValues - dataframe containing data underlying distance plot in long format
+pValues- dataframe containing data underlying p-value plot in long format
+distancePlot - ggplot object, violin plots of distance metric for sampled paths 
                 for different trajectory different starting points
- pValue - ggplot object, line plot of -log10 transformed p-valuesfor comparing sampled paths
-          to random paths for different trajectory starting points
+pValue - ggplot object, line plot of -log10 transformed p-valuesfor comparing sampled paths
+        to random paths for different trajectory starting points
 }
 \description{
 This function creates plots and extracts statistics for analysing branch 

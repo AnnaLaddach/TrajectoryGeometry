@@ -1,7 +1,7 @@
 ## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+collapse = TRUE,
+comment = "#>"
 )
 
 ## ---- echo=FALSE, out.width="50%", fig.cap="hepatoblast trajectory"-----------
@@ -39,14 +39,14 @@ hepPath = samplePath(hepAttributes, hepPseudoTimeNormalised)
 
 ## -----------------------------------------------------------------------------
 cholAnswerPermutation = testPathForDirectionality(cholPath[,1:3],
-                                                  randomizationParams = c('byPermutation','permuteWithinColumns'),
-                                                  statistic = "mean", 
-                                                  N = 100)
+                                                randomizationParams = c('byPermutation','permuteWithinColumns'),
+                                                statistic = "mean", 
+                                                N = 100)
 
 hepAnswerPermutation = testPathForDirectionality(hepPath[,1:3],
-                                                 randomizationParams = c('byPermutation','permuteWithinColumns'),
-                                                 statistic = "mean", 
-                                                 N = 100)
+                                                randomizationParams = c('byPermutation','permuteWithinColumns'),
+                                                statistic = "mean", 
+                                                N = 100)
 
 cholAnswerSteps = testPathForDirectionality(cholPath[,1:3],
                                             randomizationParams = c('bySteps','preserveLengths'),
@@ -54,9 +54,9 @@ cholAnswerSteps = testPathForDirectionality(cholPath[,1:3],
                                             N = 100)
 
 hepAnswerSteps = testPathForDirectionality(hepPath[,1:3],
-                                           randomizationParams = c('bySteps','preserveLengths'),
-                                           statistic = "mean", 
-                                           N = 100)
+                                        randomizationParams = c('bySteps','preserveLengths'),
+                                        statistic = "mean", 
+                                        N = 100)
 
 cat(paste("Mean distance of projected cholangiocyte pathway points from circle center:", cholAnswerPermutation$sphericalData$distance))
 cat(paste("\nMean distance of projected hepatocyte pathway points from circle center:", hepAnswerPermutation$sphericalData$distance))
@@ -71,41 +71,41 @@ cat(paste("\nP value for hepatocyte pathway:", hepAnswerSteps$pValue))
 
 ## -----------------------------------------------------------------------------
 plotPathProjectionCenterAndCircle(path=cholPath[,1:3],
-                                  projection=cholAnswerPermutation$sphericalData$projections,
-                                  center=cholAnswerPermutation$sphericalData$center,
-                                  radius=cholAnswerPermutation$sphericalData$distance,
-                                  color=colors[cut(1:10,breaks=100)],
-                                  circleColor = "white",
-                                  pathPointSize = 8,
-                                  projectionPointSize = 8,
-                                  newFigure=TRUE)
+                                projection=cholAnswerPermutation$sphericalData$projections,
+                                center=cholAnswerPermutation$sphericalData$center,
+                                radius=cholAnswerPermutation$sphericalData$distance,
+                                color=colors[cut(1:10,breaks=100)],
+                                circleColor = "white",
+                                pathPointSize = 8,
+                                projectionPointSize = 8,
+                                newFigure=TRUE)
 
 ## -----------------------------------------------------------------------------
 plotPathProjectionCenterAndCircle(path=hepPath[,1:3],
-                                  projection=hepAnswerPermutation$sphericalData$projections,
-                                  center=hepAnswerPermutation$sphericalData$center,
-                                  radius=hepAnswerPermutation$sphericalData$distance,
-                                  color=colors[cut(1:10,breaks=100)],
-                                  circleColor = "white",
-                                  pathPointSize = 8,
-                                  projectionPointSize = 8,
-                                  newFigure=TRUE)
+                                projection=hepAnswerPermutation$sphericalData$projections,
+                                center=hepAnswerPermutation$sphericalData$center,
+                                radius=hepAnswerPermutation$sphericalData$distance,
+                                color=colors[cut(1:10,breaks=100)],
+                                circleColor = "white",
+                                pathPointSize = 8,
+                                projectionPointSize = 8,
+                                newFigure=TRUE)
 
 ## -----------------------------------------------------------------------------
 cholAnswers = analyseSingleCellTrajectory(attributes = cholAttributes[,1:3],
-                                          pseudotime = cholPseudoTimeNormalised, 
-                                          randomizationParams = c('byPermutation','permuteWithinColumns'), 
-                                          statistic = "mean", 
-                                          nSamples = 100,
-                                          N = 1)
+                                        pseudotime = cholPseudoTimeNormalised, 
+                                        randomizationParams = c('byPermutation','permuteWithinColumns'), 
+                                        statistic = "mean", 
+                                        nSamples = 100,
+                                        N = 1)
 # #N.B N = 1 allows us to generate a single random path parameterised on each sampled path.
   
 hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3], 
-                                         hepPseudoTimeNormalised, 
-                                         randomizationParams = c('byPermutation','permuteWithinColumns'), 
-                                         statistic = "mean", 
-                                         nSamples = 100, 
-                                         N = 1)
+                                        hepPseudoTimeNormalised, 
+                                        randomizationParams = c('byPermutation','permuteWithinColumns'), 
+                                        statistic = "mean", 
+                                        nSamples = 100, 
+                                        N = 1)
 
 ## -----------------------------------------------------------------------------
 cholResultDistance = visualiseTrajectoryStats(cholAnswers, "distance")
@@ -135,15 +135,15 @@ plot(distances$pseudotime, distances$distance, xlab = "cholangiocyte pseudotime"
 
 ## -----------------------------------------------------------------------------
 cholBranchPointResults = analyseBranchPoint(cholAttributes[,1:3], 
-                                          cholPseudoTime,
-                                          randomizationParams = c("byPermutation",
-                                                          "permuteWithinColumns"), 
-                                          statistic = "mean",
-                                          start = 0,
-                                          stop = 50,
-                                          step = 5,
-                                          nSamples = 100, 
-                                          N = 1)
+                                        cholPseudoTime,
+                                        randomizationParams = c("byPermutation",
+                                                        "permuteWithinColumns"), 
+                                        statistic = "mean",
+                                        start = 0,
+                                        stop = 50,
+                                        step = 5,
+                                        nSamples = 100, 
+                                        N = 1)
 
 ## -----------------------------------------------------------------------------
 cholBranchPointStats = visualiseBranchPointStats(cholBranchPointResults)
@@ -158,15 +158,15 @@ plot(distances$pseudotime, distances$distance, xlab = "hepatocyte pseudotime", y
 
 ## -----------------------------------------------------------------------------
 hepBranchPointResults = analyseBranchPoint(hepAttributes[,1:3], 
-                                          hepPseudoTime,
-                                          randomizationParams = c("byPermutation",
-                                                          "permuteWithinColumns"), 
-                                          statistic = "mean",
-                                          start = 0,
-                                          stop = 50,
-                                          step = 5,
-                                          nSamples = 100, 
-                                          N = 1)
+                                        hepPseudoTime,
+                                        randomizationParams = c("byPermutation",
+                                                        "permuteWithinColumns"), 
+                                        statistic = "mean",
+                                        start = 0,
+                                        stop = 50,
+                                        step = 5,
+                                        nSamples = 100, 
+                                        N = 1)
 
 ## -----------------------------------------------------------------------------
 hepBranchPointStats = visualiseBranchPointStats(hepBranchPointResults)

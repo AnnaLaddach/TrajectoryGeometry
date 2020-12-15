@@ -5,17 +5,17 @@
 \title{This tests the input to analyseBranchPoint.}
 \usage{
 analyseBranchPointTest(
-  attributes,
-  pseudotime,
-  randomizationParams,
-  statistic,
-  start,
-  stop,
-  step,
-  nSamples,
-  nWindows,
-  d,
-  N
+attributes,
+pseudotime,
+randomizationParams,
+statistic,
+start,
+stop,
+step,
+nSamples,
+nWindows,
+d,
+N
 )
 }
 \arguments{

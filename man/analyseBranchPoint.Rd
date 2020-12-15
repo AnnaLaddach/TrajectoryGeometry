@@ -5,17 +5,17 @@
 \title{Analyse branch point.}
 \usage{
 analyseBranchPoint(
-  attributes,
-  pseudotime,
-  randomizationParams,
-  statistic,
-  start = (max(pseudotime) - min(pseudotime)) * 0.25,
-  stop = (max(pseudotime) - min(pseudotime)) * 0.75,
-  step = (max(pseudotime) - min(pseudotime)) * 0.05,
-  nSamples = 1000,
-  nWindows = 10,
-  d = ncol(attributes),
-  N = 1
+attributes,
+pseudotime,
+randomizationParams,
+statistic,
+start = (max(pseudotime) - min(pseudotime)) * 0.25,
+stop = (max(pseudotime) - min(pseudotime)) * 0.75,
+step = (max(pseudotime) - min(pseudotime)) * 0.05,
+nSamples = 1000,
+nWindows = 10,
+d = ncol(attributes),
+N = 1
 )
 }
 \arguments{
@@ -49,16 +49,16 @@ comparison to the given path (defaults to 1000).}
 }
 \value{
 This returns a list of results for analyseSingleCellTrajectory, named by trajectory starting point.
-   Each result from analyseSingleCellTrajectory is a list which contains an entry for each sampled path.
-   Each  of these entries is a list containing information comparing the sampled path in question
-   to random paths. The entries consist of:
-   pValue - the p-value for the path and statistic in question;
-   sphericalData - a list containing the projections of the path to
+Each result from analyseSingleCellTrajectory is a list which contains an entry for each sampled path.
+Each  of these entries is a list containing information comparing the sampled path in question
+to random paths. The entries consist of:
+pValue - the p-value for the path and statistic in question;
+sphericalData - a list containing the projections of the path to
     the sphere, the center of that sphere and the statistic for
     distance to that center;
-   randomDistances - the corresponding distances for randomly chosen;
+randomDistances - the corresponding distances for randomly chosen;
     paths;
-   randomizationParams - the choice of randomization parameters
+randomizationParams - the choice of randomization parameters
 }
 \description{
 This function takes a single cell trajectory and analyses it starting from successively later points in pseudotime,
@@ -66,13 +66,13 @@ with the rationale that a more consistent directionality will be followed after 
 }
 \examples{
 cholBranchPointResults = analyseBranchPoint(cholAttributes[,seq_len(3)], 
-                         cholPseudoTime[!is.na(cholPseudoTime)],
-                         randomizationParams = c('byPermutation',
-                                         'permuteWithinColumns'), 
-                         statistic = "mean",
-                         start = 0,
-                         stop = 50,
-                         step = 5,
-                         nSamples = 10, 
-                         N = 1)
+                        cholPseudoTime[!is.na(cholPseudoTime)],
+                        randomizationParams = c('byPermutation',
+                                        'permuteWithinColumns'), 
+                        statistic = "mean",
+                        start = 0,
+                        stop = 50,
+                        step = 5,
+                        nSamples = 10, 
+                        N = 1)
 }

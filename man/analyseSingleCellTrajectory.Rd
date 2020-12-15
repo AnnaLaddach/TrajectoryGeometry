@@ -5,14 +5,14 @@
 \title{Analyse a single cell trajectory.}
 \usage{
 analyseSingleCellTrajectory(
-  attributes,
-  pseudotime,
-  randomizationParams,
-  statistic,
-  nSamples = 1000,
-  nWindows = 10,
-  d = ncol(attributes),
-  N = 1000
+attributes,
+pseudotime,
+randomizationParams,
+statistic,
+nSamples = 1000,
+nWindows = 10,
+d = ncol(attributes),
+N = 1000
 )
 }
 \arguments{
@@ -37,14 +37,14 @@ comparison to the given path (defaults to 1000).}
 }
 \value{
 This returns a list, where each entry is itself a list containing information comparing a sampled path
-  to random paths. These entries consist of:
-  pValue - the p-value for the path and statistic in question;
-  sphericalData - a list containing the projections of the path to
+to random paths. These entries consist of:
+pValue - the p-value for the path and statistic in question;
+sphericalData - a list containing the projections of the path to
     the sphere, the center of that sphere and the statistic for
     distance to that center;
-  randomDistances - the corresponding distances for randomly chosen;
+randomDistances - the corresponding distances for randomly chosen;
     paths;
-  randomizationParams - the choice of randomization parameters
+randomizationParams - the choice of randomization parameters
 }
 \description{
 This function analyses a single cell trajectory by sampling multiple paths and comparing each path to random paths.
@@ -54,16 +54,16 @@ The function returns a list of Answers for each comparison of a sampled path to 
 }
 \examples{
 cholAnswers = analyseSingleCellTrajectory(cholAttributes[,seq_len(3)], 
-                                         cholPseudoTimeNormalised,
-                                         nSamples = 10, 
-                                         randomizationParams = c('byPermutation',
-                                                         'permuteWithinColumns'), 
-                                         statistic = "mean", 
-                                         N = 1)
+                                        cholPseudoTimeNormalised,
+                                        nSamples = 10, 
+                                        randomizationParams = c('byPermutation',
+                                                        'permuteWithinColumns'), 
+                                        statistic = "mean", 
+                                        N = 1)
 hepAnswers = analyseSingleCellTrajectory(hepAttributes[,seq_len(3)], 
-                                         hepPseudoTimeNormalised, nSamples = 10, 
-                                         randomizationParams = c('byPermutation',
-                                                         'permuteWithinColumns'), 
-                                         statistic = "mean", 
-                                         N = 1)
+                                        hepPseudoTimeNormalised, nSamples = 10, 
+                                        randomizationParams = c('byPermutation',
+                                                        'permuteWithinColumns'), 
+                                        statistic = "mean", 
+                                        N = 1)
 }
