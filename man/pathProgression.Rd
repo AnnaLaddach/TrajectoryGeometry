@@ -33,7 +33,7 @@ statistic.
 }
 \examples{
 progress =
-    pathProgression(straightPath,direction=straightPathCenter)
+    pathProgression(straight_path,direction=straight_path_center)
 progress =
-    pathProgression(crookedPath,from=6,direction=crookedPathCenter)
+    pathProgression(crooked_path,from=6,direction=crooked_path_center)
 }

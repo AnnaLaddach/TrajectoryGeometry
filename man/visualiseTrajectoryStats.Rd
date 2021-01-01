@@ -5,10 +5,10 @@
 \title{Visualise Trajectory Stats}
 \usage{
 visualiseTrajectoryStats(
-traj1Data,
-metric,
-average = "mean",
-traj2Data = list()
+  traj1Data,
+  metric,
+  average = "mean",
+  traj2Data = list()
 )
 }
 \arguments{
@@ -16,25 +16,28 @@ traj2Data = list()
 
 \item{metric}{- either "pValue" or "distance"}
 
-\item{average}{- if there are multiple distances available for each 
-sampled trajectory, calculate the average using "mean" or "median" (defaults to "mean").}
+\item{average}{- if there are multiple distances available for each
+sampled trajectory, calculate the average using "mean" or "median"
+(defaults to "mean").}
 
-\item{traj2Data}{- traj2Data either an empty list or the result of analyseSingleCellTrajectory}
+\item{traj2Data}{- traj2Data either an empty list or the result of
+analyseSingleCellTrajectory}
 }
 \value{
 a list containing:
-stats - output of wilcox test (paired if comparing sampled to random paths,
-unpaired if comparing sampled paths for two different trajectories)
-values - dataframe containing plotted data in long format
-plot - ggplot object
+ stats - output of wilcox test (paired if comparing sampled to random paths,
+ unpaired if comparing sampled paths for two different trajectories)
+ values - dataframe containing plotted data in long format
+ plot - ggplot object
 }
 \description{
-This function creates plots and extracts statistics for comparisons of metrics 
-for sampled paths to random paths. It can also create plots for comparing two sets
-of sampled paths by providing the traj2Data argument.
+This function creates plots and extracts statistics for comparisons of
+metrics for sampled paths to random paths. It can also create plots for
+comparing two sets of sampled paths by providing the traj2Data argument.
 }
 \examples{
-cholResultDistance = visualiseTrajectoryStats(cholAnswers, "distance")
-hepResultDistance = visualiseTrajectoryStats(hepAnswers, "distance")
-distanceComparison = visualiseTrajectoryStats(cholAnswers, "distance", traj2Data = hepAnswers)
+cholResultDistance = visualiseTrajectoryStats(chol_answers, "distance")
+hepResultDistance = visualiseTrajectoryStats(hep_answers, "distance")
+distanceComparison = visualiseTrajectoryStats(chol_answers, "distance",
+    traj2Data = hep_answers)
 }

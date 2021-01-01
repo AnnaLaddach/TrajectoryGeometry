@@ -7,27 +7,31 @@
 samplePath(attributes, pseudotime, nWindows = 10)
 }
 \arguments{
-\item{attributes}{- An n x d (cell x attribute) matrix of numeric attributes for single cell data. Rownames should be cell names.}
+\item{attributes}{- An n x d (cell x attribute) matrix of numeric attributes
+for single cell data. Rownames should be cell names.}
 
 \item{pseudotime}{- A named numeric vector of pseudotime values for cells.}
 
-\item{nWindows}{- The number of windows pseudotime should be split into to sample cells from. Defaults to 10.}
+\item{nWindows}{- The number of windows pseudotime should be split into to
+sample cells from. Defaults to 10.}
 }
 \value{
-sampledPath - A path consisting of a matrix of attributes of sampled cells. The rownames refer to the pseudotime windows
-each cell was sampled from.
+sampledPath - A path consisting of a matrix of attributes of sampled
+cells. The rownames refer to the pseudotime windows cell was sampled from.
 }
 \description{
-This function takes vector of pseudotime values, and a matrix of attribute values (cell x attribute).
-It also optionally takes the number of pseudotime windows to sample a single cell from. This defaults to 10.
-The function returns a matrix of sampled attribute values which form the coordinates of the
-sampled path. The matrix of attribute values should consist of numeric values
-relevant to a pseudotime trajectory i.e. gene expression values or PCA projections.
-The vector of pseudotime values should be named according to cell names. 
-Simarly the row names of the matrix of attribute values should be cell names.
-Row names for the returned matrix of the sampled path give the window number a cell was sampled from.
+This function takes vector of pseudotime values, and a matrix of attribute
+values (cell x attribute). It also optionally takes the number of pseudotime
+windows to sample a single cell from. This defaults to 10.
+The function returns a matrix of sampled attribute values which form the
+coordinates of the sampled path. The matrix of attribute values should
+consist of numeric values relevant to a pseudotime trajectory i.e. gene
+expression values or PCA projections. The vector of pseudotime values should
+be named according to cell names. Simarly the row names of the matrix of
+attribute values should be cell names. Row names for the returned matrix of
+the sampled path give the window number a cell was sampled from.
 }
 \examples{
-samplePath(cholAttributes, cholPseudoTimeNormalised)
-samplePath(hepAttributes, hepPseudoTimeNormalised)
+samplePath(chol_attributes, chol_pseudo_time_normalised)
+samplePath(hep_attributes, hep_pseudo_time_normalised)
 }

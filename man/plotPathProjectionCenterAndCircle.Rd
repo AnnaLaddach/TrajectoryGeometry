@@ -5,18 +5,18 @@
 \title{Plot a path, its projection, its center and its circle}
 \usage{
 plotPathProjectionCenterAndCircle(
-path,
-from = 1,
-to = nrow(path),
-projection,
-center,
-radius,
-color,
-circleColor = "white",
-pathPointSize = 8,
-projectionPointSize = 8,
-scale = 1.5,
-newFigure = TRUE
+  path,
+  from = 1,
+  to = nrow(path),
+  projection,
+  center,
+  radius,
+  color,
+  circleColor = "white",
+  pathPointSize = 8,
+  projectionPointSize = 8,
+  scale = 1.5,
+  newFigure = TRUE
 )
 }
 \arguments{
@@ -41,10 +41,10 @@ data.}
 \item{circleColor}{- Sets the colour of the circle.
 Defaults to white.}
 
-\item{pathPointSize}{- Sets the size of points which represent the 
+\item{pathPointSize}{- Sets the size of points which represent the
 path. Defaults to 8.}
 
-\item{projectionPointSize}{- Sets the size of points which represent the 
+\item{projectionPointSize}{- Sets the size of points which represent the
 projected path. Defaults to 8.}
 
 \item{scale}{- The path will be start (its actual start) at 0 and
@@ -70,10 +70,10 @@ the sphere and plots all this in your favorite color.  It can be
 called repeatedly to add additional paths in different colors.
 }
 \examples{
-plotPathProjectionCenterAndCircle(path=straightPath,
-                                projection=straightPathProjection,
-                                center=straightPathCenter,
-                                radius=straightPathRadius,
-                                color='red',
-                                newFigure=TRUE)
+plotPathProjectionCenterAndCircle(path=straight_path,
+                                 projection=straight_path_projection,
+                                 center=straight_path_center,
+                                 radius=straight_path_radius,
+                                 color='red',
+                                 newFigure=TRUE)
 }

@@ -124,7 +124,7 @@ length 1.
 ```{r message=FALSE}
 library(TrajectoryGeometry)
 randomizationParams = c('bySteps','preserveLengths')
-Y = generateRandomPaths(path=straightPath,
+Y = generateRandomPaths(path=straight_path,
                         randomizationParams=randomizationParams,
                         N=10)
 ```
@@ -135,7 +135,7 @@ the randomized paths should also be non-negative and this can be
 accomplished by including the value 'nonNegative'
 ```{r message=FALSE}
 randomizationParams = c('bySteps','preserveLengths','nonNegative')
-Y = generateRandomPaths(path=straightPath,
+Y = generateRandomPaths(path=straight_path,
                         randomizationParams=randomizationParams,
                         N=10)
 ```
@@ -166,8 +166,8 @@ you have determined that your path has strong directionality using
 these methods, it is appropriate to check for progression in that
 direction. This can be done with the function pathProgression()
 ```{r message=FALSE}
-progress = pathProgression(straightPath,direction=straightPathCenter)
-progress = pathProgression(crookedPath,from=6,direction=crookedPathCenter)
+progress = pathProgression(straight_path,direction=straight_path_center)
+progress = pathProgression(crooked_path,from=6,direction=crooked_path_center)
 ``` 
 ## Stability
 
@@ -182,7 +182,7 @@ projection occupy large portions of the sphere.  Accordingly
 testPathForDirectionality() may be bamboozled out of detecting
 directionality.  A prophylaxis against this is the following: 
 ```{r message=FALSE} 
-direction = oscillation[nrow(straightPath),] - oscillation[1,] 
+direction = oscillation[nrow(straight_path),] - oscillation[1,] 
 progress = pathProgression(oscillation,direction=direction) 
 ``` 
 This will allow you to detect a portion of the path which does not

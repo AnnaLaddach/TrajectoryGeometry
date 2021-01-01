@@ -7,25 +7,33 @@
 distanceBetweenTrajectories(attributes1, pseudotime1, attributes2)
 }
 \arguments{
-\item{attributes1}{- An n x d (cell x attribute) matrix of numeric attributes for the first single cell trajectory.}
+\item{attributes1}{- An n x d (cell x attribute) matrix of numeric
+attributes for the first single cell trajectory.}
 
-\item{pseudotime1}{- A named numeric vector of pseudotime values for the first single cell trajectory, 
+\item{pseudotime1}{- A named numeric vector of pseudotime values for the
+first single cell trajectory,
 names should match rownames of atrributes1.}
 
-\item{attributes2}{- An n x d (cell x attribute) matrix of numeric attributes for the sencond single cell trajectory.}
+\item{attributes2}{- An n x d (cell x attribute) matrix of numeric
+attributes for the sencond single cell trajectory.}
 }
 \value{
-results - a dataframe containing pseudotime values (for the first trajectory), 
-    and distances (the minimimum euclidian distance between the two trajectories at that point in pseudotime).
+results - a dataframe containing pseudotime values
+    (for the first trajectory), and distances (the minimimum euclidian
+    distance between the two trajectories at that point in pseudotime).
 }
 \description{
-This function compares two single cell trajectories (representative of different lineages within the same dataset),
-and finds the minimum euclidean distance between the first and the second trajectory at each point in pseudotime.
-Please note, attributes can either be values for single cells, or attributes which have been smoothed over pseudotime.
-Likewise the pseudotime values should be for single cells, or for smoothed attributes over pseudotime
+This function compares two single cell trajectories (representative of
+different lineages within the same dataset),
+and finds the minimum euclidean distance between the first and the second
+trajectory at each point in pseudotime.
+Please note, attributes can either be values for single cells, or attributes
+which have been smoothed over pseudotime.
+Likewise the pseudotime values should be for single cells, or for smoothed
+attributes over pseudotime
 }
 \examples{
-distances = distanceBetweenTrajectories(cholAttributes, 
-                                        cholPseudoTime[!is.na(cholPseudoTime)], 
-                                        hepAttributes)
+distances = distanceBetweenTrajectories(chol_attributes,
+                                     chol_pseudo_time[!is.na(chol_pseudo_time)],
+                                     hep_attributes)
 }

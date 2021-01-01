@@ -1,21 +1,25 @@
 
+## ###################################################
+## Documentation has been commented out as none of these
+## functions are exported.
 
 ## ###################################################
-#' Test the inputs to testPathForDirectionality
-#'
-#' @param path - An n x m matrix representing a series of n points in
-#'     dimension m.
-#' @param from - The starting place along the path which will be
-#'     treated as the center of the sphere.
-#' @param to - The end point of the path.
-#' @param d - The dimension under consideration.
-#' @param statistic - Allowable values are 'median', 'mean' or 'max'
-#' @param randomizationParams - A character vector which is used to
-#'     control the production of randomized paths for comparison.
-#' @param N - The number of random paths to generated for statistical
-#'     comparison to the given path.
-#' @return A successful test returns 0, otherwise execution halts.
-#' @importFrom methods is
+## ' Test the inputs to testPathForDirectionality
+## '
+## ' @param path - An n x m matrix representing a series of n points in
+## '     dimension m.
+## ' @param from - The starting place along the path which will be
+## '     treated as the center of the sphere.
+## ' @param to - The end point of the path.
+## ' @param d - The dimension under consideration.
+## ' @param statistic - Allowable values are 'median', 'mean' or 'max'
+## ' @param randomizationParams - A character vector which is used to
+## '     control the production of randomized paths for comparison.
+## ' @param N - The number of random paths to generated for statistical
+## '     comparison to the given path.
+## ' @return A successful test returns 0, otherwise execution halts.
+
+##' @importFrom methods is
 testPathForDirectionalityTest = function(path,from,to,d,
                                         randomizationParams,statistic,N)
 {
@@ -50,15 +54,15 @@ testPathForDirectionalityTest = function(path,from,to,d,
 }
 
 ## ###################################################
-#' This tests the inputs to projectPathToSphere
-#'
-#' @param path - This is an mxn dimensional matrix. Each row is
-#'     considered a point.
-#' @param from - The starting place along the path which will be
-#'     treated as the center of the sphere.
-#' @param to - The end point of the path.
-#' @param d - The dimension under consideration.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs to projectPathToSphere
+## '
+## ' @param path - This is an mxn dimensional matrix. Each row is
+## '     considered a point.
+## ' @param from - The starting place along the path which will be
+## '     treated as the center of the sphere.
+## ' @param to - The end point of the path.
+## ' @param d - The dimension under consideration.
+## ' @return A successful test returns 0, otherwise execution halts.
 projectPathToSphereTest = function(path,from,to,d)
 {
     if(! is(path,'matrix'))
@@ -80,15 +84,15 @@ projectPathToSphereTest = function(path,from,to,d)
 }
 
 ## ###################################################
-#' This tests the inputs to findSphereClusterCenter
-#'
-#' @param points - A set of n points on the (d-1) sphere given as an n
-#'     x d matrix.
-#' @param statistic - The statistic to be minimized.  Allowable values
-#'     are 'median','mean' or 'max'.
-#' @param normalize - If this is set to TRUE, the function will start
-#'     by normalizing the input points.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs to findSphereClusterCenter
+## '
+## ' @param points - A set of n points on the (d-1) sphere given as an n
+## '     x d matrix.
+## ' @param statistic - The statistic to be minimized.  Allowable values
+## '     are 'median','mean' or 'max'.
+## ' @param normalize - If this is set to TRUE, the function will start
+## '     by normalizing the input points.
+## ' @return A successful test returns 0, otherwise execution halts.
 findSphereClusterCenterTest = function(points,statistic,normalize)
 {
     if(! is(points,'matrix'))
@@ -104,17 +108,17 @@ findSphereClusterCenterTest = function(points,statistic,normalize)
 }
 
 ## ###################################################
-#' This tests the inputs to findSphericalDistance
-#'
-#' @param center - The proposed point from which distance to
-#' the others should be measured.  This is a numerical vector
-#' of length d.
-#' @param points - The set of target points for which spherical
-#' distance to the center should be calculated.  This is in the
-#' form of a n x d matrix.
-#' @param normalize - If this is set to TRUE, the function will start
-#' by normalizing the input points.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs to findSphericalDistance
+## '
+## ' @param center - The proposed point from which distance to
+## ' the others should be measured.  This is a numerical vector
+## ' of length d.
+## ' @param points - The set of target points for which spherical
+## ' distance to the center should be calculated.  This is in the
+## ' form of a n x d matrix.
+## ' @param normalize - If this is set to TRUE, the function will start
+## ' by normalizing the input points.
+## ' @return A successful test returns 0, otherwise execution halts.
 findSphericalDistanceTest = function(center,points,normalize)
 {
     if(! is(center,'numeric'))
@@ -134,11 +138,11 @@ findSphericalDistanceTest = function(center,points,normalize)
 }
 
 ## ###################################################
-#' This tests the inputs to getSphericalData
-#'
-#' @param path - an m x n matrix.  Each row is considered a point
-#' @param statistic - one of 'mean','median' or 'max'
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs to getSphericalData
+## '
+## ' @param path - an m x n matrix.  Each row is considered a point
+## ' @param statistic - one of 'mean','median' or 'max'
+## ' @return A successful test returns 0, otherwise execution halts.
 getSphericalDataTest = function(path,statistic)
 {
     if(! is(path,'matrix'))
@@ -152,16 +156,16 @@ getSphericalDataTest = function(path,statistic)
 }
 
 ## ###################################################
-#' This tests the inputs to pathToSphericalData
-#'
-#' @param path - This is an mxn dimensional matrix. Each row is
-#'     considered a point.
-#' @param from - The starting place along the path which will be
-#'     treated as the center of the sphere.
-#' @param to - The end point of the path.
-#' @param d - The dimension under consideration.
-#' @param statistic - One of 'median', 'mean' or 'max'
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs to pathToSphericalData
+## '
+## ' @param path - This is an mxn dimensional matrix. Each row is
+## '     considered a point.
+## ' @param from - The starting place along the path which will be
+## '     treated as the center of the sphere.
+## ' @param to - The end point of the path.
+## ' @param d - The dimension under consideration.
+## ' @param statistic - One of 'median', 'mean' or 'max'
+## ' @return A successful test returns 0, otherwise execution halts.
 pathToSphericalDataTest = function(path,from,to,d,statistic)
 {
     if(! is(path,'matrix'))
@@ -187,20 +191,20 @@ pathToSphericalDataTest = function(path,from,to,d,statistic)
 }
 
 ## ###################################################
-#' This tests the inputs to generateRandomPaths
-#'
-#' @param path - This is an mxn dimensional matrix. Each row is
-#'     considered a point.
-#' @param from - The starting place along the path which will be
-#'     treated as the center of the sphere.
-#' @param to - The end point of the path.
-#' @param d - The dimension under consideration.
-#' @param randomizationParams - A character vector controling the
-#'     randomization method used.  It's first entry must be either
-#'     'byPermutation' or 'bySteps'  See the vignette for further
-#'     details.
-#' @param N - The number of random paths required.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs to generateRandomPaths
+## '
+## ' @param path - This is an mxn dimensional matrix. Each row is
+## '     considered a point.
+## ' @param from - The starting place along the path which will be
+## '     treated as the center of the sphere.
+## ' @param to - The end point of the path.
+## ' @param d - The dimension under consideration.
+## ' @param randomizationParams - A character vector controling the
+## '     randomization method used.  It's first entry must be either
+## '     'byPermutation' or 'bySteps'  See the vignette for further
+## '     details.
+## ' @param N - The number of random paths required.
+## ' @return A successful test returns 0, otherwise execution halts.
 generateRandomPathsTest = function(path,from,to,d,randomizationParams,N)
 {
     if(! is(path,'matrix'))
@@ -229,15 +233,15 @@ generateRandomPathsTest = function(path,from,to,d,randomizationParams,N)
 }
 
 ## ###################################################
-#' This tests the inputs to getStepLengths
-#'
-#' @param path - This is an mxn dimensional matrix. Each row is
-#'     considered a point.
-#' @param from - The starting place along the path which will be
-#'     treated as the center of the sphere.
-#' @param to - The end point of the path.
-#' @param d - The dimension under consideration.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs to getStepLengths
+## '
+## ' @param path - This is an mxn dimensional matrix. Each row is
+## '     considered a point.
+## ' @param from - The starting place along the path which will be
+## '     treated as the center of the sphere.
+## ' @param to - The end point of the path.
+## ' @param d - The dimension under consideration.
+## ' @return A successful test returns 0, otherwise execution halts.
 getStepLengthsTest = function(path,from,to,d)
 {
     if(! is(path,'matrix'))
@@ -259,11 +263,11 @@ getStepLengthsTest = function(path,from,to,d)
 }
 
 ## ###################################################
-#' This tests the inputs for getDistanceDataForPaths
-#'
-#' @param paths - A list of paths.  Each of these is an n x d matrix.
-#' @param statistic - Allowable values are 'median', 'mean' or 'max'.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs for getDistanceDataForPaths
+## '
+## ' @param paths - A list of paths.  Each of these is an n x d matrix.
+## ' @param statistic - Allowable values are 'median', 'mean' or 'max'.
+## ' @return A successful test returns 0, otherwise execution halts.
 getDistanceDataForPathsTest = function(paths,statistic)
 {
     if(! is(paths,'list'))
@@ -282,10 +286,10 @@ getDistanceDataForPathsTest = function(paths,statistic)
 }
 
 ## ###################################################
-#' This tests the inputs for generateRandomUnitVector
-#'
-#' @param d - The dimension.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs for generateRandomUnitVector
+## '
+## ' @param d - The dimension.
+## ' @return A successful test returns 0, otherwise execution halts.
 generateRandomUnitVectorTest = function(d)
 {
     if(d < 1)
@@ -295,16 +299,16 @@ generateRandomUnitVectorTest = function(d)
 }
 
 ## ###################################################
-#' This tests the inputs for pathProgression
-#'
-#' @param path - An n x d matrix
-#' @param from - The point along the path to be taken as the starting
-#'     point.
-#' @param to - The point along the path to be used as the end point.
-#' @param d - The dimension to be used.
-#' @param direction - A non-zero numeric whose length is the the
-#'     dimension.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs for pathProgression
+## '
+## ' @param path - An n x d matrix
+## ' @param from - The point along the path to be taken as the starting
+## '     point.
+## ' @param to - The point along the path to be used as the end point.
+## ' @param d - The dimension to be used.
+## ' @param direction - A non-zero numeric whose length is the the
+## '     dimension.
+## ' @return A successful test returns 0, otherwise execution halts.
 pathProgressionTest = function(path,from,to,d,direction)
 {
     if(! is(path,'matrix'))
@@ -330,14 +334,14 @@ pathProgressionTest = function(path,from,to,d,direction)
 }
 
 ## ##########################################################################
-#' This tests the inputs for samplePath.
-#'
-#' @param attributes - An n x d (cell x attribute) matrix of numeric attributes
-#' for single cell data. Rownames should be cell names.
-#' @param pseudotime - A named numeric vector of pseudotime values for cells.
-#' @param nWindows - The number of windows pseudotime should be split into to
-#' sample cells from. Defaults to 10.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs for samplePath.
+## '
+## ' @param attributes - An n x d (cell x attribute) matrix of numeric attributes
+## ' for single cell data. Rownames should be cell names.
+## ' @param pseudotime - A named numeric vector of pseudotime values for cells.
+## ' @param nWindows - The number of windows pseudotime should be split into to
+## ' sample cells from. Defaults to 10.
+## ' @return A successful test returns 0, otherwise execution halts.
 samplePathTest = function(attributes, pseudotime, nWindows)
 {
     if(! is(attributes,'matrix'))
@@ -360,22 +364,22 @@ samplePathTest = function(attributes, pseudotime, nWindows)
 }
 
 ## ##########################################################################
-#' This tests the input to analyseSingleCellTrajectory.
-#'
-#' @param attributes - An n x d (cell x attribute) matrix of numeric attributes
-#'     for single cell data. Rownames should be cell names.
-#' @param pseudotime - A named numeric vector of pseudotime values for cells.
-#' @param randomizationParams - A character vector which is used to
-#'     control the production of randomized paths for comparison.
-#' @param statistic - Allowable values are 'median', 'mean' or 'max'.
-#' @param nSamples - The number of sampled paths to generate (defaults to 1000).
-#' @param nWindows - The number of windows pseudotime should be split into to
-#'     sample cells from (defaults to 10).
-#' @param d - The dimension under consideration.  This defaults to
-#'     ncol(attributes).
-#' @param N - The number of random paths to generated for statistical
-#'     comparison to the given path (defaults to 1000).
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the input to analyseSingleCellTrajectory.
+## '
+## ' @param attributes - An n x d (cell x attribute) matrix of numeric attributes
+## '     for single cell data. Rownames should be cell names.
+## ' @param pseudotime - A named numeric vector of pseudotime values for cells.
+## ' @param randomizationParams - A character vector which is used to
+## '     control the production of randomized paths for comparison.
+## ' @param statistic - Allowable values are 'median', 'mean' or 'max'.
+## ' @param nSamples - The number of sampled paths to generate (defaults to 1000).
+## ' @param nWindows - The number of windows pseudotime should be split into to
+## '     sample cells from (defaults to 10).
+## ' @param d - The dimension under consideration.  This defaults to
+## '     ncol(attributes).
+## ' @param N - The number of random paths to generated for statistical
+## '     comparison to the given path (defaults to 1000).
+## ' @return A successful test returns 0, otherwise execution halts.
 analyseSingleCellTrajectoryTest = function(attributes, pseudotime,
     randomizationParams, statistic, nSamples, nWindows, d, N)
 {
@@ -423,31 +427,31 @@ analyseSingleCellTrajectoryTest = function(attributes, pseudotime,
 }
 
 ## ##########################################################################
-#' This tests the input to analyseBranchPoint.
-#'
-#' @param attributes - An n x d (cell x attribute) matrix of numeric attributes
-#'     for single cell data. Rownames should be cell names.
-#' @param pseudotime - A named numeric vector of pseudotime values for cells.
-#' @param randomizationParams - A character vector which is used to
-#'     control the production of randomized paths for comparison.
-#' @param statistic - Allowable values are 'median', 'mean' or 'max'.
-#' @param start - The first pseudotime value (as a percentage of the trajectory)
-#'     from which to analyse the trajectory from.
-#'     Defaults to 25\% of the way through the trajectory.
-#' @param stop - The last pseudotime value (as a percentage of the trajectory)
-#'     from which to analyse the trajectory from.
-#'     Defaults to 75\% of the way through the trajectory.
-#' @param step - The size of the step to take between successively later
-#'     starting points in pseudotime.
-#'     Defaults to 5\% of the trajectory length.
-#' @param nSamples - The number of sampled paths to generate (defaults to 1000).
-#' @param nWindows - The number of windows pseudotime should be split into to
-#'    sample cells from (defaults to 10).
-#' @param d - The dimension under consideration.  This defaults to
-#'     ncol(attributes).
-#' @param N - The number of random paths to generated for statistical
-#'     comparison to the given path (defaults to 1000).
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the input to analyseBranchPoint.
+## '
+## ' @param attributes - An n x d (cell x attribute) matrix of numeric attributes
+## '     for single cell data. Rownames should be cell names.
+## ' @param pseudotime - A named numeric vector of pseudotime values for cells.
+## ' @param randomizationParams - A character vector which is used to
+## '     control the production of randomized paths for comparison.
+## ' @param statistic - Allowable values are 'median', 'mean' or 'max'.
+## ' @param start - The first pseudotime value (as a percentage of the trajectory)
+## '     from which to analyse the trajectory from.
+## '     Defaults to 25\% of the way through the trajectory.
+## ' @param stop - The last pseudotime value (as a percentage of the trajectory)
+## '     from which to analyse the trajectory from.
+## '     Defaults to 75\% of the way through the trajectory.
+## ' @param step - The size of the step to take between successively later
+## '     starting points in pseudotime.
+## '     Defaults to 5\% of the trajectory length.
+## ' @param nSamples - The number of sampled paths to generate (defaults to 1000).
+## ' @param nWindows - The number of windows pseudotime should be split into to
+## '    sample cells from (defaults to 10).
+## ' @param d - The dimension under consideration.  This defaults to
+## '     ncol(attributes).
+## ' @param N - The number of random paths to generated for statistical
+## '     comparison to the given path (defaults to 1000).
+## ' @return A successful test returns 0, otherwise execution halts.
 analyseBranchPointTest = function(attributes, pseudotime, randomizationParams,
                             statistic, start, stop, step, nSamples, nWindows,
                             d, N)
@@ -508,16 +512,16 @@ analyseBranchPointTest = function(attributes, pseudotime, randomizationParams,
 }
 
 ## ##########################################################################
-#' This tests the imput to distanceBetweenTrajectories
-#'
-#' @param attributes1 - An n x d (cell x attribute) matrix of numeric attributes
-#' for the first single cell trajectory.
-#' @param pseudotime1 - A named numeric vector of pseudotime values for the
-#' first single cell trajectory,
-#'    names should match rownames of atrributes1.
-#' @param attributes2 - An n x d (cell x attribute) matrix of numeric attributes
-#' for the sencond single cell trajectory.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the imput to distanceBetweenTrajectories
+## '
+## ' @param attributes1 - An n x d (cell x attribute) matrix of numeric attributes
+## ' for the first single cell trajectory.
+## ' @param pseudotime1 - A named numeric vector of pseudotime values for the
+## ' first single cell trajectory,
+## '    names should match rownames of atrributes1.
+## ' @param attributes2 - An n x d (cell x attribute) matrix of numeric attributes
+## ' for the sencond single cell trajectory.
+## ' @return A successful test returns 0, otherwise execution halts.
 distanceBetweenTrajectoriesTest = function(attributes1,
                                         pseudotime1,
                                         attributes2)
@@ -550,10 +554,10 @@ distanceBetweenTrajectoriesTest = function(attributes1,
 
 
 ## ###################################################
-#' This tests the input to orthoNormalBasis
-#'
-#' @param x - A numerical vector of length 3
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the input to orthoNormalBasis
+## '
+## ' @param x - A numerical vector of length 3
+## ' @return A successful test returns 0, otherwise execution halts.
 orthonormalBasisTest = function(x)
 {
     if(! (is(x,'numeric') &
@@ -564,12 +568,12 @@ orthonormalBasisTest = function(x)
 }
 
 ## ###################################################
-#' This tests the inputs to circleOnTheUnitSphere
-#'
-#' @param center - The center of the circle.
-#' @param radius - The radius of the circle.
-#' @param N - The number of segments to approximate the circle.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs to circleOnTheUnitSphere
+## '
+## ' @param center - The center of the circle.
+## ' @param radius - The radius of the circle.
+## ' @param N - The number of segments to approximate the circle.
+## ' @return A successful test returns 0, otherwise execution halts.
 circleOnTheUnitSphereTest  = function(center,radius,N)
 {
     if(! (is(center,'numeric') &
@@ -587,33 +591,33 @@ circleOnTheUnitSphereTest  = function(center,radius,N)
 }
 
 ## ###################################################
-#' This tests the inputs to plotPathProjectionCenterAndCircle
-#'
-#' @param path - A path of dimension 3 in the form of an N x 3 matrix.
-#' @param from - The starting place of the section under
-#'     consideration.  This is used for marking the relevant
-#'     portion.
-#' @param to - Likewise.
-#' @param projection - The projection of the relevant portion of the
-#'     path.
-#' @param center - The center of the projection points.
-#' @param radius - The radius of the circle.
-#' @param color - The color to use for this path and its associated
-#'     data.
-#' @param circleColor - Sets the colour of the circle.
-#' @param pathPointSize - Sets the size of points which represent the
-#'     path.
-#' @param projectionPointSize - Sets the size of points which represent the
-#'     projected path.
-#' @param scale - The path will be start (its actual start) at 0 and
-#'     will be scaled so that its most distant point will be at this
-#'     distance from the origin.  This is to keep it comparable in
-#'     size to the sphere.
-#' @param newFigure - When plotting a single figure or the first of
-#'     multiple figures, this should be set to TRUE which is its
-#'     default.  Otherwise, set this to FALSE in order to add
-#'     additional paths to the same figure.
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the inputs to plotPathProjectionCenterAndCircle
+## '
+## ' @param path - A path of dimension 3 in the form of an N x 3 matrix.
+## ' @param from - The starting place of the section under
+## '     consideration.  This is used for marking the relevant
+## '     portion.
+## ' @param to - Likewise.
+## ' @param projection - The projection of the relevant portion of the
+## '     path.
+## ' @param center - The center of the projection points.
+## ' @param radius - The radius of the circle.
+## ' @param color - The color to use for this path and its associated
+## '     data.
+## ' @param circleColor - Sets the colour of the circle.
+## ' @param pathPointSize - Sets the size of points which represent the
+## '     path.
+## ' @param projectionPointSize - Sets the size of points which represent the
+## '     projected path.
+## ' @param scale - The path will be start (its actual start) at 0 and
+## '     will be scaled so that its most distant point will be at this
+## '     distance from the origin.  This is to keep it comparable in
+## '     size to the sphere.
+## ' @param newFigure - When plotting a single figure or the first of
+## '     multiple figures, this should be set to TRUE which is its
+## '     default.  Otherwise, set this to FALSE in order to add
+## '     additional paths to the same figure.
+## ' @return A successful test returns 0, otherwise execution halts.
 plotPathProjectionCenterAndCircleTest = function(path,
                                                 from,
                                                 to,
@@ -682,16 +686,16 @@ plotPathProjectionCenterAndCircleTest = function(path,
 }
 
 ## ###################################################
-#' This tests the input to visualiseTrajectoryStats
-#'
-#' @param traj1Data - the result of analyseSingleCellTrajectory
-#' @param metric - either "pValue" or "distance"
-#' @param average - if there are multiple distances available for each
-#' sampled trajectory, calculate the average using mean or median
-#' (defaults to mean).
-#' @param traj2Data - either an empty list or the result of
-#' analyseSingleCellTrajectory
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the input to visualiseTrajectoryStats
+## '
+## ' @param traj1Data - the result of analyseSingleCellTrajectory
+## ' @param metric - either "pValue" or "distance"
+## ' @param average - if there are multiple distances available for each
+## ' sampled trajectory, calculate the average using mean or median
+## ' (defaults to mean).
+## ' @param traj2Data - either an empty list or the result of
+## ' analyseSingleCellTrajectory
+## ' @return A successful test returns 0, otherwise execution halts.
 visualiseTrajectoryStatsTest = function(traj1Data,
                                         metric,
                                         average,
@@ -726,11 +730,11 @@ visualiseTrajectoryStatsTest = function(traj1Data,
 }
 
 ## ###################################################
-#' This tests the input to visualiseBranchPointStats
-#'
-#' @param branchPointData - the result of analyseBranchPoint
-#' @param average - if there are multiple distances available for each
-#' @return A successful test returns 0, otherwise execution halts.
+## ' This tests the input to visualiseBranchPointStats
+## '
+## ' @param branchPointData - the result of analyseBranchPoint
+## ' @param average - if there are multiple distances available for each
+## ' @return A successful test returns 0, otherwise execution halts.
 visualiseBranchPointStatsTest = function(branchPointData,
                                         average){
     if(! is(branchPointData,'list'))

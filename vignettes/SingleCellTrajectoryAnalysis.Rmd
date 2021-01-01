@@ -49,24 +49,23 @@ set.seed(42)
 
 ## The data
 
-The data consists of a singleCellMatrix, which contains PCA projections derived from normalised gene expression values for each cell. Any other features which describe the cells could also be used (i.e. normalised expression) values. The columns are the PCs and the rows are the cells. Row names should be the cell IDs.  
+The data consists of a single_cell_matrix, which contains PCA projections derived from normalised gene expression values for each cell. Any other features which describe the cells could also be used (i.e. normalised expression) values. The columns are the PCs and the rows are the cells. Row names should be the cell IDs.  
 
 There are also vectors of pseudotime values for both trajectories. These have been inferred using the Slingshot package (*Street et al., 2018*). The vectors are named according to cell ID. N.B. where cells are not inferred to take part in a trajectory these are given an NA value. A number of progenitor cells are assigned to both trajectories in agreement with their "bipotential" nature. 
 
-We will filter pseudotime trajectories and the `singleCellMatrix` to remove cells which do not take part in trajectories. Additionally, we will normalise pseudotime to range from 0 to 100 for each trajectory.
+We will filter pseudotime trajectories and the `single_cell_matrix` to remove cells which do not take part in trajectories. Additionally, we will normalise pseudotime to range from 0 to 100 for each trajectory.
 
 ```{r}
 #filter matrices
-cholAttributes = singleCellMatrix[!is.na(cholPseudoTime),]
-hepAttributes = singleCellMatrix[!is.na(hepPseudoTime),]
-
+chol_attributes = single_cell_matrix[!is.na(chol_pseudo_time),]
+hep_attributes = single_cell_matrix[!is.na(hep_pseudo_time),]
 #filter pseudotime values
-cholPseudoTime = cholPseudoTime[!is.na(cholPseudoTime)]
-hepPseudoTime = hepPseudoTime[!is.na(hepPseudoTime)]
+chol_pseudo_time = chol_pseudo_time[!is.na(chol_pseudo_time)]
+hep_pseudo_time = hep_pseudo_time[!is.na(hep_pseudo_time)]
 
 #normalise pseudotime values to range from 0 to 100
-cholPseudoTimeNormalised = cholPseudoTime  %>% {100*((. - min(.))/(max(.) - min(.)))}
-hepPseudoTimeNormalised = hepPseudoTime %>% {100*((. - min(.))/(max(.) - min(.)))}
+chol_pseudo_time_normalised = chol_pseudo_time  %>% {100*((. - min(.))/(max(.) - min(.)))}
+hep_pseudo_time_normalised = hep_pseudo_time %>% {100*((. - min(.))/(max(.) - min(.)))}
 ```
 
 
@@ -75,8 +74,8 @@ hepPseudoTimeNormalised = hepPseudoTime %>% {100*((. - min(.))/(max(.) - min(.))
 First we will sample a path through each trajectory. We will split the trajectory into 10 equal pseudotime windows and sample a single cell from each one. 
 
 ```{r}
-cholPath = samplePath(cholAttributes, cholPseudoTimeNormalised)
-hepPath = samplePath(hepAttributes, hepPseudoTimeNormalised)
+cholPath = samplePath(chol_attributes, chol_pseudo_time_normalised)
+hepPath = samplePath(hep_attributes, hep_pseudo_time_normalised)
 ```
 
 
@@ -160,16 +159,16 @@ Screenshot of the resulting figure:
 Here we have just analysed one possible path sampled from the trajectory. Let's analyse many. We will obtain 100 sampled paths for each trajectory and obtain a random path parameterised on each of these (here we will permute each sampled path). This will allow us to compare the properties of 100 sampled paths to the 100 random paths. Generally it would be recommended to obtain a larger number of sampled paths (e.g. 1000). 
 
 ```{r}
-cholAnswers = analyseSingleCellTrajectory(attributes = cholAttributes[,1:3],
-                                        pseudotime = cholPseudoTimeNormalised, 
+chol_answers = analyseSingleCellTrajectory(attributes = chol_attributes[,1:3],
+                                        pseudotime = chol_pseudo_time_normalised, 
                                         randomizationParams = c('byPermutation','permuteWithinColumns'), 
                                         statistic = "mean", 
                                         nSamples = 100,
                                         N = 1)
 # #N.B N = 1 allows us to generate a single random path parameterised on each sampled path.
   
-hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3], 
-                                        hepPseudoTimeNormalised, 
+hep_answers = analyseSingleCellTrajectory(hep_attributes[,1:3], 
+                                        hep_pseudo_time_normalised, 
                                         randomizationParams = c('byPermutation','permuteWithinColumns'), 
                                         statistic = "mean", 
                                         nSamples = 100, 
@@ -178,8 +177,8 @@ hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3],
 
 Let's visualise the results and extract statistics. A paired Wilcox test is performed between sampled and random paths. Here a distance metric, which is indicative of how close the projected points are on the sphere, is used to compare paths. A lower distance indicates a more consistent directionality.
 ```{r}
-cholResultDistance = visualiseTrajectoryStats(cholAnswers, "distance")
-hepResultDistance = visualiseTrajectoryStats(hepAnswers, "distance")
+cholResultDistance = visualiseTrajectoryStats(chol_answers, "distance")
+hepResultDistance = visualiseTrajectoryStats(hep_answers, "distance")
 
 #visualise plots
 cholResultDistance$plot
@@ -194,7 +193,7 @@ Although both cholangiocyte and hepatocyte trajectories show significant directi
 
 We can also directly compare distances for the cholangiocyte and hepatocyte pathways. Here statistics are calculated using unpaired Wilcox tests.
 ```{r}
-distanceComparison = visualiseTrajectoryStats(cholAnswers, "distance", traj2Data = hepAnswers)
+distanceComparison = visualiseTrajectoryStats(chol_answers, "distance", traj2Data = hep_answers)
 # a violin plot is returned as distanceComparison$plot
 # below we change x axis labels to indicate that the two trajectories being compared are neural and glial trajectories. 
 distanceComparison$plot + scale_x_discrete(labels=c("Cholangiocyte","Hepatocyte"))
@@ -210,8 +209,8 @@ We can hypothesise that the cholangiocyte trajectory will maintain a more consis
 First let's try to identify the approximate pseudotime value of the branch point. We can do this by calculating the minimum distances between the two trajectories for each point along the cholangiocyte trajectory. The distances between the two trajectories should be very small before the branch point and increase as the trajectories diverge after the branch point.
 
 ```{r}
-distances = distanceBetweenTrajectories(cholAttributes, cholPseudoTime,
-                            hepAttributes)
+distances = distanceBetweenTrajectories(chol_attributes, chol_pseudo_time,
+                            hep_attributes)
 
 plot(distances$pseudotime, distances$distance, xlab = "cholangiocyte pseudotime", ylab = "minimum distance")
 ```
@@ -223,8 +222,8 @@ Let's analyse the trajectory geometry starting from successive points from 0 to 
 In the interest of time, we will only sample 100 paths for each point in pseudotime. Generally, it would be recommended to sample a larger number of paths (e.g. 1000).
 
 ```{r}
-cholBranchPointResults = analyseBranchPoint(cholAttributes[,1:3], 
-                                        cholPseudoTime,
+chol_branch_point_results = analyseBranchPoint(chol_attributes[,1:3], 
+                                        chol_pseudo_time,
                                         randomizationParams = c("byPermutation",
                                                         "permuteWithinColumns"), 
                                         statistic = "mean",
@@ -237,7 +236,7 @@ cholBranchPointResults = analyseBranchPoint(cholAttributes[,1:3],
 
 Let's extract statistics and visualise the results.
 ```{r}
-cholBranchPointStats = visualiseBranchPointStats(cholBranchPointResults)
+cholBranchPointStats = visualiseBranchPointStats(chol_branch_point_results)
 print(cholBranchPointStats$distancePlot)
 print(cholBranchPointStats$pValuePlot)
 ```
@@ -247,8 +246,8 @@ We can clearly see that the mean distance decreases as we approach the branch po
 Let's investigate whether the same thing happens to the hepatocyte trajectory. First, let's estimate where the hepatocyte branch point is.
 
 ```{r}
-distances = distanceBetweenTrajectories(hepAttributes, hepPseudoTime,
-                            cholAttributes)
+distances = distanceBetweenTrajectories(hep_attributes, hep_pseudo_time,
+                            chol_attributes)
 
 plot(distances$pseudotime, distances$distance, xlab = "hepatocyte pseudotime", ylab = "minimum distance")
 ```
@@ -257,8 +256,8 @@ It looks like the hepatocyte trajectory branches off around pseudotime 20.
 
 Again we analyse the trajectory geometry starting from successively later points.
 ```{r}
-hepBranchPointResults = analyseBranchPoint(hepAttributes[,1:3], 
-                                        hepPseudoTime,
+hepBranchPointResults = analyseBranchPoint(hep_attributes[,1:3], 
+                                        hep_pseudo_time,
                                         randomizationParams = c("byPermutation",
                                                         "permuteWithinColumns"), 
                                         statistic = "mean",

@@ -10,50 +10,50 @@
 #' The path is roughly in the (1,0,0) direction.
 #' }
 #' @source Synthetic data
-"straightPath"
+"straight_path"
 
 ## ###################################################
 #' Straight path projection
 #'
-#' The projection of straightPath onto the unit sphere.  This is a
+#' The projection of straight_path onto the unit sphere.  This is a
 #' collection of 13 unit points in dimension 3
 #'
 #' @format A 13 x 3 matrix
 #' \describe{
-#' The projection of straightPath[2:14,] onto the unit sphere as seen
-#'     from straightPath[1,] .
+#' The projection of straight_path[2:14,] onto the unit sphere as seen
+#'     from straight_path[1,] .
 #' }
 #' @source Synthetic data
-"straightPathProjection"
+"straight_path_projection"
 
 
 ## ###################################################
 #' Straight path center
 #'
 #' The point on the unit sphere minimizing mean spherical distance to
-#'     the projection so straightPath
+#'     the projection so straight_path
 #'
 #' @format A vector of length 3
 #' \describe{
 #' A unit vector of length 3 minimizing distance to the points of the
-#'     projection of straightPath.
+#'     projection of straight_path.
 #' }
 #' @source Synthetic data.
-"straightPathCenter"
+"straight_path_center"
 
 ## ###################################################
 #' Straight path radius
 #'
 #' The mean spherical distance from the points of the projection of
-#' straightPath to the point minimizing this mean distance.
+#' straight_path to the point minimizing this mean distance.
 #'
 #' @format Numeric
 #' \describe{
 #' The mean spherical distance from the points of the projection of
-#' straightPath to the point minimizing this mean distance.
+#' straight_path to the point minimizing this mean distance.
 #' }
 #' @source Synthetic data
-"straightPathRadius"
+"straight_path_radius"
 
 ## ###################################################
 ## ###################################################
@@ -70,51 +70,51 @@
 #' This path changes direction after the 5th point.
 #' }
 #' @source Synthetic data
-"crookedPath"
+"crooked_path"
 
 ## ###################################################
 #' Crooked path projection
 #'
-#' The projection of the last 8 points on crookedPath onto the unit
+#' The projection of the last 8 points on crooked_path onto the unit
 #' sphere as seen from the the 6th.  This is a collection of 8 unit
 #' points in dimension 3.
 #'
 #' @format An 8 x 3 matrix
 #' \describe{
-#' The projection of crookedPath[7:14,] onto the unit sphere as seen
-#'     from crookedPath[6,] .
+#' The projection of crooked_path[7:14,] onto the unit sphere as seen
+#'     from crooked_path[6,] .
 #' }
 #' @source Synthetic data
-"crookedPathProjection"
+"crooked_path_projection"
 
 
 ## ###################################################
 #' Crooked path center
 #'
 #' The point on the unit sphere minimizing mean spherical distance to
-#'     the projection so crookedPath
+#'     the projection of crooked_path
 #'
 #' @format A vector of length 3
 #' \describe{ A unit vector of length 3
 #'     minimizing mean spherical distance to the points of the
-#'     projection of crookedPath.
+#'     projection of crooked_path.
 #' }
 #' @source Synthetic data.
-"crookedPathCenter"
+"crooked_path_center"
 
 ## ###################################################
 #' Crooked path radius
 #'
 #' The mean spherical distance from the points of the projection of
-#' crookedPath to the point minimizing this mean distance.
+#' crooked_path to the point minimizing this mean distance.
 #'
 #' @format Numeric
 #' \describe{
 #' The mean spherical distance from the points of the projection of
-#' crookedPath to the point minimizing this mean distance.
+#' crooked_path to the point minimizing this mean distance.
 #' }
 #' @source Synthetic data
-"crookedPathRadius"
+"crooked_path_radius"
 
 ## ###################################################
 #' Oscillation
@@ -133,7 +133,7 @@
 "oscillation"
 
 ## ###################################################
-#' singleCellMatrix
+#' single_cell_matrix
 #'
 #' PCA projections derived from normalised gene expression values for
 #' single cells. The columns are the PCs and the rows are the cells.
@@ -144,10 +144,10 @@
 #' single cells. The columns are the PCs and the rows are the cells.
 #' }
 #' @source Single cell data
-"singleCellMatrix"
+"single_cell_matrix"
 
 ## ###################################################
-#' hepAttributes
+#' hep_attributes
 #'
 #' PCA projections derived from normalised gene expression values for
 #' single cells, and filtered for cells which feature in a trajectory
@@ -162,10 +162,10 @@
 #' rows are the cells.
 #' }
 #' @source Single cell data
-"hepAttributes"
+"hep_attributes"
 
 ## ###################################################
-#' cholAttributes
+#' chol_attributes
 #'
 #' PCA projections derived from normalised gene expression values for
 #' single cells, and filtered for cells which feature in a trajectory
@@ -180,10 +180,10 @@
 #' rows are the cells.
 #' }
 #' @source Single cell data
-"cholAttributes"
+"chol_attributes"
 
 ## ###################################################
-#' hepPseudoTime
+#' hep_pseudo_time
 #'
 #' A vector of pseudotime values for a trajectory describing the
 #' development of hepatocytes from hepatoblasts.
@@ -198,10 +198,10 @@
 #' package. The vector is named according to cell ID.
 #' }
 #' @source Single cell data
-"hepPseudoTime"
+"hep_pseudo_time"
 
 ## ###################################################
-#' cholPseudoTime
+#' chol_pseudo_time
 #'
 #' A vector of pseudotime values for a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
@@ -216,10 +216,10 @@
 #' package. The vector is named according to cell ID.
 #' }
 #' @source Single cell data
-"cholPseudoTime"
+"chol_pseudo_time"
 
 ## ###################################################
-#' hepPseudoTimeNormalised
+#' hep_pseudo_time_normalised
 #'
 #' A vector of pseudotime values, normalised to range from
 #' 0 to 100, for a trajectory describing the
@@ -235,10 +235,10 @@
 #' package. The vector is named according to cell ID.
 #' }
 #' @source Single cell data
-"hepPseudoTimeNormalised"
+"hep_pseudo_time_normalised"
 
 ## ###################################################
-#' cholPseudoTimeNormalised
+#' chol_pseudo_time_normalised
 #'
 #' A vector of pseudotime values, normalised to range from
 #' 0 to 100, for a trajectory describing the
@@ -255,10 +255,10 @@
 #' package. The vector is named according to cell ID.
 #' }
 #' @source Single cell data
-"cholPseudoTimeNormalised"
+"chol_pseudo_time_normalised"
 
 ## ###################################################
-#' hepAnswers
+#' hep_answers
 #'
 #' Results of running analyseSingleCellTrajectory() on a trajectory describing
 #' the development of hepatocytes from hepatoblasts.
@@ -268,10 +268,10 @@
 #' the development of hepatocytes from hepatoblasts.
 #' }
 #' @source Single cell data
-"hepAnswers"
+"hep_answers"
 
 ## ###################################################
-#' cholAnswers
+#' chol_answers
 #'
 #' Results of running analyseSingleCellTrajectory() on
 #' a trajectory describing the
@@ -283,10 +283,10 @@
 #' development of cholangiocytes from hepatoblasts.
 #' }
 #' @source Single cell data
-"cholAnswers"
+"chol_answers"
 
 ## ###################################################
-#' cholBranchPointResults
+#' chol_branch_point_results
 #'
 #' Results of running analyseBranchPoint() on
 #' a trajectory describing the
@@ -298,4 +298,4 @@
 #' development of cholangiocytes from hepatoblasts.
 #' }
 #' @source Single cell data
-"cholBranchPointResults"
+"chol_branch_point_results"

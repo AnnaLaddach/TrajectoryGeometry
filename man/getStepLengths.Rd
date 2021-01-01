@@ -26,6 +26,6 @@ This function returns the length of each step in a path.
 This finds the lengths of the steps along a path
 }
 \examples{
-stepLengths = getStepLengths(path=crookedPath)
-stepLengths = getStepLengths(path=crookedPath,from=4)
+stepLengths = getStepLengths(path=crooked_path)
+stepLengths = getStepLengths(path=crooked_path,from=4)
 }

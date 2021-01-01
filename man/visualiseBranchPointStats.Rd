@@ -9,24 +9,27 @@ visualiseBranchPointStats(branchPointData, average = "mean")
 \arguments{
 \item{branchPointData}{- the result of analyseBranchPoint}
 
-\item{average}{- if there are multiple distances available for each 
-sampled trajectory, calculate the average using "mean" or "median" (defaults to "mean").}
+\item{average}{- if there are multiple distances available for each
+sampled trajectory, calculate the average using "mean" or "median" (defaults
+to "mean").}
 }
 \value{
 a list containing:
-branchPointValues - dataframe containing data underlying distance plot in long format
-pValues- dataframe containing data underlying p-value plot in long format
-distancePlot - ggplot object, violin plots of distance metric for sampled paths 
-                for different trajectory different starting points
-pValue - ggplot object, line plot of -log10 transformed p-valuesfor comparing sampled paths
-        to random paths for different trajectory starting points
+ branchPointValues - dataframe containing data underlying distance plot in
+   long format
+ pValues- dataframe containing data underlying p-value plot in long format
+ distancePlot - ggplot object, violin plots of distance metric for sampled
+    paths for different trajectory different starting points
+ pValue - ggplot object, line plot of -log10 transformed p-values for
+   comparing sampled paths to random paths for different trajectory starting
+   points
 }
 \description{
-This function creates plots and extracts statistics for analysing branch 
-points. It returns plots and underlying data for visualising distance metrics and
--log10 transformed pvalues (comparison to random trajectories) for trajectories with 
-different starting points.
+This function creates plots and extracts statistics for analysing branch
+points. It returns plots and underlying data for visualising distance
+metrics and -log10 transformed pvalues (comparison to random trajectories)
+for trajectories with different starting points.
 }
 \examples{
-cholBranchPointStats = visualiseBranchPointStats(cholBranchPointResults)
+cholBranchPointStats = visualiseBranchPointStats(chol_branch_point_results)
 }

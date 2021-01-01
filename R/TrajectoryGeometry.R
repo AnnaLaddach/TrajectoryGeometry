@@ -36,10 +36,10 @@
 #' @importFrom pracma Norm dot cross
 #' @examples
 #' randomizationParams = c('byPermutation','permuteWithinColumns')
-#' p = testPathForDirectionality(path=straightPath,
+#' p = testPathForDirectionality(path=straight_path,
 #'                               randomizationParams=randomizationParams,
 #'                               statistic='median',N=100)
-#' q = testPathForDirectionality(path=crookedPath,from=6,
+#' q = testPathForDirectionality(path=crooked_path,from=6,
 #'                               randomizationParams=randomizationParams,
 #'                               statistic='median',N=100)
 testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
@@ -101,8 +101,8 @@ testPathForDirectionality = function(path,from=1,to=nrow(path),d=ncol(path),
 #'     in the form of a (to - from) x d matrix.
 #' @export
 #' @examples
-#' projection1 = projectPathToSphere(straightPath)
-#' projection2 = projectPathToSphere(crookedPath,from=6)
+#' projection1 = projectPathToSphere(straight_path)
+#' projection2 = projectPathToSphere(crooked_path,from=6)
 projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 {
     projectPathToSphereTest(path,from,to,d)
@@ -147,7 +147,7 @@ projectPathToSphere = function(path,from=1,to=nrow(path),d=ncol(path))
 #' @importFrom stats median optim
 #' @export
 #' @examples
-#' projection = projectPathToSphere(straightPath)
+#' projection = projectPathToSphere(straight_path)
 #' center = findSphereClusterCenter(projection,'mean')
 findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 {
@@ -218,7 +218,7 @@ findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 #' radians.
 #' @export
 #' @examples
-#' distances = findSphericalDistance(straightPathCenter,straightPathProjection)
+#' distances = findSphericalDistance(straight_path_center,straight_path_projection)
 findSphericalDistance = function(center,points,normalize=FALSE)
 {
     findSphericalDistanceTest(center,points,normalize)
@@ -259,7 +259,7 @@ findSphericalDistance = function(center,points,normalize=FALSE)
 #'     to those projections and the name of the statistic used.
 #' @export
 #' @examples
-#' sphericalData = getSphericalData(straightPath,'max')
+#' sphericalData = getSphericalData(straight_path,'max')
 getSphericalData = function(path,statistic)
 {
     getSphericalDataTest(path,statistic)
@@ -295,8 +295,8 @@ getSphericalData = function(path,statistic)
 #'     to those projections and the name of the statistic used.
 #' @export
 #' @examples
-#' sphericalData = pathToSphericalData(straightPath,from=1,
-#'                                     to=nrow(straightPath), d=3,
+#' sphericalData = pathToSphericalData(straight_path,from=1,
+#'                                     to=nrow(straight_path), d=3,
 #'                                     statistic='median')
 pathToSphericalData = function(path,from,to,d,statistic)
 {
@@ -367,8 +367,8 @@ pathToSphericalData = function(path,from,to,d,statistic)
 #' @export
 #' @examples
 #' randomizationParams = c('byPermutation','permuteWithinColumns')
-#' randomPaths = generateRandomPaths(crookedPath,from=6,to=nrow(crookedPath),
-#'               d=ncol(crookedPath),randomizationParams=randomizationParams,
+#' randomPaths = generateRandomPaths(crooked_path,from=6,to=nrow(crooked_path),
+#'               d=ncol(crooked_path),randomizationParams=randomizationParams,
 #'               N=10)
 generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
                             randomizationParams,N)
@@ -400,19 +400,20 @@ generateRandomPaths = function(path,from=1,to=nrow(path),d=ncol(path),
 
 
 ## ###################################################
-#' Produce randomized paths by permutation
-#'
-#' This function produces randomized paths from a given path via
-#' permutation of its entries.  This can be done either by random
-#' permutation within each column thereby preserving the range of
-#' values within each column or by random permutation of all entries
-#' in the matrix.
-#'
-#' @param path - An n x d matrix.
-#' @param randomizationParams - A character vector used to control the
-#'     behavior of the function.
-#' @param N - The number of paths required.
-#' @return This function returns a list of random paths.
+## ' Produce randomized paths by permutation
+## ' Not exported
+## '
+## ' This function produces randomized paths from a given path via
+## ' permutation of its entries.  This can be done either by random
+## ' permutation within each column thereby preserving the range of
+## ' values within each column or by random permutation of all entries
+## ' in the matrix.
+## '
+## ' @param path - An n x d matrix.
+## ' @param randomizationParams - A character vector used to control the
+## '     behavior of the function.
+## ' @param N - The number of paths required.
+## ' @return This function returns a list of random paths.
 generateRandomPathsByPermutation =
     function(path,randomizationParams,N)
 {
@@ -455,20 +456,21 @@ generateRandomPathsByPermutation =
 }
 
 ## ###################################################
-#' Produce randomized paths by steps
-#'
-#' This function produces randomized paths from a given path by taking
-#' steps in space. This can be done either requiring that these steps
-#' have the same Euclidean length as those of the original path or
-#' allowing them to all have unit length.  It can also be done
-#' requiring the path to stay in the non-negative orthant or allowing
-#' arbitrary values.
-#'
-#' @param path - An n x d matrix.
-#' @param randomizationParams - A character vector used to control the
-#'     behavior of the function.
-#' @param N - The number of paths required.
-#' @return This function returns a list of random paths.
+## ' Produce randomized paths by steps
+## ' Not exported
+## '
+## ' This function produces randomized paths from a given path by taking
+## ' steps in space. This can be done either requiring that these steps
+## ' have the same Euclidean length as those of the original path or
+## ' allowing them to all have unit length.  It can also be done
+## ' requiring the path to stay in the non-negative orthant or allowing
+## ' arbitrary values.
+## '
+## ' @param path - An n x d matrix.
+## ' @param randomizationParams - A character vector used to control the
+## '     behavior of the function.
+## ' @param N - The number of paths required.
+## ' @return This function returns a list of random paths.
 generateRandomPathsBySteps = function(path,randomizationParams,N)
 {
     n = nrow(path)
@@ -522,8 +524,8 @@ generateRandomPathsBySteps = function(path,randomizationParams,N)
 #' @return This function returns the length of each step in a path.
 #' @export
 #' @examples
-#' stepLengths = getStepLengths(path=crookedPath)
-#' stepLengths = getStepLengths(path=crookedPath,from=4)
+#' stepLengths = getStepLengths(path=crooked_path)
+#' stepLengths = getStepLengths(path=crooked_path,from=4)
 getStepLengths = function(path,from=1,to=nrow(path),d=ncol(path))
 {
     getStepLengthsTest(path,from,to,d)
@@ -556,7 +558,7 @@ getStepLengths = function(path,from=1,to=nrow(path),d=ncol(path))
 #' @export
 #' @examples
 #' paths =
-#'     generateRandomPaths(path=straightPath,randomizationParam='bySteps',N=5)
+#'     generateRandomPaths(path=straight_path,randomizationParam='bySteps',N=5)
 #' distance = getDistanceDataForPaths(paths=paths,statistic='max')
 getDistanceDataForPaths = function(paths,statistic)
 {
@@ -619,9 +621,9 @@ generateRandomUnitVector = function(d)
 #' @export
 #' @examples
 #' progress =
-#'     pathProgression(straightPath,direction=straightPathCenter)
+#'     pathProgression(straight_path,direction=straight_path_center)
 #' progress =
-#'     pathProgression(crookedPath,from=6,direction=crookedPathCenter)
+#'     pathProgression(crooked_path,from=6,direction=crooked_path_center)
 pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
                         direction)
 {
@@ -662,8 +664,8 @@ pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
 #' cells. The rownames refer to the pseudotime windows cell was sampled from.
 #' @export
 #' @examples
-#' samplePath(cholAttributes, cholPseudoTimeNormalised)
-#' samplePath(hepAttributes, hepPseudoTimeNormalised)
+#' samplePath(chol_attributes, chol_pseudo_time_normalised)
+#' samplePath(hep_attributes, hep_pseudo_time_normalised)
 samplePath = function(attributes, pseudotime, nWindows = 10){
 
     samplePathTest(attributes, pseudotime, nWindows)
@@ -753,16 +755,16 @@ samplePath = function(attributes, pseudotime, nWindows = 10){
 #'   randomizationParams - the choice of randomization parameters
 #' @export
 #' @examples
-#' cholAnswers = analyseSingleCellTrajectory(cholAttributes[,seq_len(3)],
-#'                                          cholPseudoTimeNormalised,
+#' chol_answers = analyseSingleCellTrajectory(chol_attributes[,seq_len(3)],
+#'                                          chol_pseudo_time_normalised,
 #'                                          nSamples = 10,
 #'                                          randomizationParams =
 #'                                                      c('byPermutation',
 #'                                                    'permuteWithinColumns'),
 #'                                          statistic = "mean",
 #'                                          N = 1)
-#' hepAnswers = analyseSingleCellTrajectory(hepAttributes[,seq_len(3)],
-#'                                          hepPseudoTimeNormalised,
+#' hep_answers = analyseSingleCellTrajectory(hep_attributes[,seq_len(3)],
+#'                                          hep_pseudo_time_normalised,
 #'                                          nSamples = 10,
 #'                                          randomizationParams =
 #'                                                    c('byPermutation',
@@ -846,8 +848,8 @@ analyseSingleCellTrajectory = function(attributes,
 #'    randomizationParams - the choice of randomization parameters
 #' @export
 #' @examples
-#' cholBranchPointResults = analyseBranchPoint(cholAttributes[,seq_len(3)],
-#'                          cholPseudoTime[!is.na(cholPseudoTime)],
+#' chol_branch_point_results = analyseBranchPoint(chol_attributes[,seq_len(3)],
+#'                          chol_pseudo_time[!is.na(chol_pseudo_time)],
 #'                          randomizationParams = c('byPermutation',
 #'                                          'permuteWithinColumns'),
 #'                          statistic = "mean",
@@ -921,9 +923,9 @@ analyseBranchPoint = function(attributes,
 #'     distance between the two trajectories at that point in pseudotime).
 #' @export
 #' @examples
-#' distances = distanceBetweenTrajectories(cholAttributes,
-#'                                      cholPseudoTime[!is.na(cholPseudoTime)],
-#'                                      hepAttributes)
+#' distances = distanceBetweenTrajectories(chol_attributes,
+#'                                      chol_pseudo_time[!is.na(chol_pseudo_time)],
+#'                                      hep_attributes)
 distanceBetweenTrajectories = function(attributes1,
                                     pseudotime1,
                                     attributes2)
@@ -1102,10 +1104,10 @@ circleOnTheUnitSphere = function(center,radius,N=36)
 #' @return This returns 0.
 #' @export
 #' @examples
-#' plotPathProjectionCenterAndCircle(path=straightPath,
-#'                                  projection=straightPathProjection,
-#'                                  center=straightPathCenter,
-#'                                  radius=straightPathRadius,
+#' plotPathProjectionCenterAndCircle(path=straight_path,
+#'                                  projection=straight_path_projection,
+#'                                  center=straight_path_center,
+#'                                  radius=straight_path_radius,
 #'                                  color='red',
 #'                                  newFigure=TRUE)
 plotPathProjectionCenterAndCircle = function(path,
@@ -1207,10 +1209,10 @@ plotPathProjectionCenterAndCircle = function(path,
 #' @importFrom stats wilcox.test
 #' @export
 #' @examples
-#' cholResultDistance = visualiseTrajectoryStats(cholAnswers, "distance")
-#' hepResultDistance = visualiseTrajectoryStats(hepAnswers, "distance")
-#' distanceComparison = visualiseTrajectoryStats(cholAnswers, "distance",
-#'     traj2Data = hepAnswers)
+#' cholResultDistance = visualiseTrajectoryStats(chol_answers, "distance")
+#' hepResultDistance = visualiseTrajectoryStats(hep_answers, "distance")
+#' distanceComparison = visualiseTrajectoryStats(chol_answers, "distance",
+#'     traj2Data = hep_answers)
 visualiseTrajectoryStats = function(traj1Data,
                                     metric,
                                     average = "mean",
@@ -1319,7 +1321,7 @@ visualiseTrajectoryStats = function(traj1Data,
 #'    labs aes xlab ylab
 #' @export
 #' @examples
-#' cholBranchPointStats = visualiseBranchPointStats(cholBranchPointResults)
+#' cholBranchPointStats = visualiseBranchPointStats(chol_branch_point_results)
 visualiseBranchPointStats = function(branchPointData,
                                     average = "mean")
 {

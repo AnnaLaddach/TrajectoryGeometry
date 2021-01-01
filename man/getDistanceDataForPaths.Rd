@@ -24,6 +24,6 @@ that they are already of the correct dimensions.
 }
 \examples{
 paths =
-    generateRandomPaths(path=straightPath,randomizationParam='bySteps',N=5)
+    generateRandomPaths(path=straight_path,randomizationParam='bySteps',N=5)
 distance = getDistanceDataForPaths(paths=paths,statistic='max')
 }
