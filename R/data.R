@@ -9,7 +9,8 @@
 #' \describe{
 #' The path is roughly in the (1,0,0) direction.
 #' }
-#' @source Synthetic data
+#' @source This was created by code in createSyntheticData.R available
+#'     from https://github.com/AnnaLaddach/TrajectoryGeometryData 
 "straight_path"
 
 ## ###################################################
@@ -23,7 +24,8 @@
 #' The projection of straight_path[2:14,] onto the unit sphere as seen
 #'     from straight_path[1,] .
 #' }
-#' @source Synthetic data
+#' @source This was created by code in createSyntheticData.R available
+#'     from https://github.com/AnnaLaddach/TrajectoryGeometryData 
 "straight_path_projection"
 
 
@@ -38,7 +40,8 @@
 #' A unit vector of length 3 minimizing distance to the points of the
 #'     projection of straight_path.
 #' }
-#' @source Synthetic data.
+#' @source This was created by code in createSyntheticData.R available
+#'     from https://github.com/AnnaLaddach/TrajectoryGeometryData 
 "straight_path_center"
 
 ## ###################################################
@@ -52,7 +55,8 @@
 #' The mean spherical distance from the points of the projection of
 #' straight_path to the point minimizing this mean distance.
 #' }
-#' @source Synthetic data
+#' @source This was created by code in createSyntheticData.R available
+#'     from https://github.com/AnnaLaddach/TrajectoryGeometryData 
 "straight_path_radius"
 
 ## ###################################################
@@ -69,7 +73,10 @@
 #' \describe{
 #' This path changes direction after the 5th point.
 #' }
-#' @source Synthetic data
+#' @source This was created by code in createSyntheticData.R available
+#'     from https://github.com/AnnaLaddach/TrajectoryGeometryData  The
+#'     second author wishes to categorically deny that this variable
+#'     is named after the course of his own life.
 "crooked_path"
 
 ## ###################################################
@@ -84,7 +91,8 @@
 #' The projection of crooked_path[7:14,] onto the unit sphere as seen
 #'     from crooked_path[6,] .
 #' }
-#' @source Synthetic data
+#' @source This was created by code in createSyntheticData.R available
+#'     from https://github.com/AnnaLaddach/TrajectoryGeometryData 
 "crooked_path_projection"
 
 
@@ -113,7 +121,7 @@
 #' The mean spherical distance from the points of the projection of
 #' crooked_path to the point minimizing this mean distance.
 #' }
-#' @source Synthetic data
+#' @source This was created by code in createSyntheticData.R available from https://github.com/AnnaLaddach/TrajectoryGeometryData
 "crooked_path_radius"
 
 ## ###################################################
@@ -129,7 +137,7 @@
 #' Its purpose is to illustrate instability of spherical projection
 #' near the beginning of a path.
 #' }
-#' @source Synthetic data
+#' @source This was created by code in createSyntheticData.R available from https://github.com/AnnaLaddach/TrajectoryGeometryData
 "oscillation"
 
 ## ###################################################

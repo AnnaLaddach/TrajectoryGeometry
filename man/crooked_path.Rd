@@ -11,7 +11,10 @@ This path changes direction after the 5th point.
 }
 }
 \source{
-Synthetic data
+This was created by code in createSyntheticData.R available
+    from https://github.com/AnnaLaddach/TrajectoryGeometryData  The
+    second author wishes to categorically deny that this variable
+    is named after the course of his own life.
 }
 \usage{
 crooked_path

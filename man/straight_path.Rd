@@ -11,7 +11,8 @@ The path is roughly in the (1,0,0) direction.
 }
 }
 \source{
-Synthetic data
+This was created by code in createSyntheticData.R available
+    from https://github.com/AnnaLaddach/TrajectoryGeometryData
 }
 \usage{
 straight_path

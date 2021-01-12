@@ -12,7 +12,8 @@ A unit vector of length 3 minimizing distance to the points of the
 }
 }
 \source{
-Synthetic data.
+This was created by code in createSyntheticData.R available
+    from https://github.com/AnnaLaddach/TrajectoryGeometryData
 }
 \usage{
 straight_path_center

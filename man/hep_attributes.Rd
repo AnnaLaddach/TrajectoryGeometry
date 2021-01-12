@@ -14,7 +14,9 @@ rows are the cells.
 }
 }
 \source{
-Single cell data
+Single-cell data has been obtained from GEO (GSE90047) and the script
+    used for upstream processing is available at
+    https://github.com/AnnaLaddach/TrajectoryGeometryData
 }
 \usage{
 hep_attributes

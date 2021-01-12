@@ -12,7 +12,8 @@ The projection of crooked_path[7:14,] onto the unit sphere as seen
 }
 }
 \source{
-Synthetic data
+This was created by code in createSyntheticData.R available
+    from https://github.com/AnnaLaddach/TrajectoryGeometryData
 }
 \usage{
 crooked_path_projection

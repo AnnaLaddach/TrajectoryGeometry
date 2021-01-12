@@ -30,5 +30,6 @@ the given point and each of the others.  If requested, it
 will first normalize all of them.
 }
 \examples{
-distances = findSphericalDistance(straight_path_center,straight_path_projection)
+distances = findSphericalDistance(straight_path_center,
+    straight_path_projection)
 }

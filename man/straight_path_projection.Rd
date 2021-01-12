@@ -12,7 +12,8 @@ The projection of straight_path[2:14,] onto the unit sphere as seen
 }
 }
 \source{
-Synthetic data
+This was created by code in createSyntheticData.R available
+    from https://github.com/AnnaLaddach/TrajectoryGeometryData
 }
 \usage{
 straight_path_projection

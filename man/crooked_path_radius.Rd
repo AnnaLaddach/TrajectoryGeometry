@@ -12,7 +12,7 @@ crooked_path to the point minimizing this mean distance.
 }
 }
 \source{
-Synthetic data
+This was created by code in createSyntheticData.R available from https://github.com/AnnaLaddach/TrajectoryGeometryData
 }
 \usage{
 crooked_path_radius
