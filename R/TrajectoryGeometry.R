@@ -218,7 +218,8 @@ findSphereClusterCenter = function(points,statistic,normalize=FALSE)
 #' radians.
 #' @export
 #' @examples
-#' distances = findSphericalDistance(straight_path_center,straight_path_projection)
+#' distances = findSphericalDistance(straight_path_center,
+#'     straight_path_projection)
 findSphericalDistance = function(center,points,normalize=FALSE)
 {
     findSphericalDistanceTest(center,points,normalize)
@@ -924,8 +925,8 @@ analyseBranchPoint = function(attributes,
 #' @export
 #' @examples
 #' distances = distanceBetweenTrajectories(chol_attributes,
-#'                                      chol_pseudo_time[!is.na(chol_pseudo_time)],
-#'                                      hep_attributes)
+#'                                  chol_pseudo_time[!is.na(chol_pseudo_time)],
+#'                                  hep_attributes)
 distanceBetweenTrajectories = function(attributes1,
                                     pseudotime1,
                                     attributes2)

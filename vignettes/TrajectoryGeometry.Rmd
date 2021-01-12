@@ -28,7 +28,7 @@ That is, a direction in 2-dimensional space is a point on the circle
 space is a point on the sphere (i.e., the surface of a solid ball),
 and so on in higher dimensions. A direction in 25000-dimensional gene
 expression space is a point on the 24999-dimensional sphere in this
-space. 
+space.
 
 If we have a trajectory in some space, we can look out from the
 starting point and follow the direction of that trajectory on the
@@ -45,7 +45,8 @@ this mean distance.  We can see that some of the early steps produce
 outliers on the sphere.
 
 
-```{r, echo=FALSE, out.width="50%", fig.cap="A path and its projection to the sphere."}
+```{r, echo=FALSE, out.width="50%",
+    fig.cap="A path and its projection to the sphere."}
 knitr::include_graphics("pathAndSphere.png")
 ```
 
@@ -91,10 +92,10 @@ $$latex C = {\mathrm{argmin}}_x
 \mu(d(x,p_1),d(x,p_2),\dots,d(x,p_m))$$
 and
 $$latex R_\mu = \mu(d(x,p_1),d(x,p_2),\dots,d(x,p_m))$$
-In this way, we get a map 
-$$latex X' \mapsto R_\mu $$ 
+In this way, we get a map
+$$latex X' \mapsto R_\mu $$
 and we take $latex R_\mu$ as our measure of the clustering of the
-points $latex p_i$ and therefore of the directionality of $latex X'$. 
+points $latex p_i$ and therefore of the directionality of $latex X'$.
 
 ### Testing for statistical significance
 
@@ -156,7 +157,7 @@ randomizationParams = c('byPermutation','permuteWithinColumns')
 ```
 
 ## Does a path confined to a direction consistently move in that direction?
-   
+
 The answer here is not necessarily.  Consider a path which starts out
 at the origin and the heads out along the x-axis.  Perhaps is gets a
 little ways out and then takes to wandering back and forth.  As long
@@ -168,7 +169,7 @@ direction. This can be done with the function pathProgression()
 ```{r message=FALSE}
 progress = pathProgression(straight_path,direction=straight_path_center)
 progress = pathProgression(crooked_path,from=6,direction=crooked_path_center)
-``` 
+```
 ## Stability
 
 A related issue which can also be checked using pathProgression() is
@@ -180,15 +181,13 @@ We would like to see this as a highly directional path.  However, the
 oscillations around $latex P_0$, no matter how small, can in
 projection occupy large portions of the sphere.  Accordingly
 testPathForDirectionality() may be bamboozled out of detecting
-directionality.  A prophylaxis against this is the following: 
-```{r message=FALSE} 
-direction = oscillation[nrow(straight_path),] - oscillation[1,] 
-progress = pathProgression(oscillation,direction=direction) 
-``` 
+directionality.  A prophylaxis against this is the following:
+```{r message=FALSE}
+direction = oscillation[nrow(straight_path),] - oscillation[1,]
+progress = pathProgression(oscillation,direction=direction)
+```
 This will allow you to detect a portion of the path which does not
 depart from the neighborhood of its starting point. You can then use
 the from parameter of testPathForDirectionality() to eliminate these
 oscillations from consideration.  Note that we did not need to
 normalize direction as that is done within pathProgression().
-
-

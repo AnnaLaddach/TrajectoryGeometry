@@ -336,8 +336,8 @@ pathProgressionTest = function(path,from,to,d,direction)
 ## ##########################################################################
 ## ' This tests the inputs for samplePath.
 ## '
-## ' @param attributes - An n x d (cell x attribute) matrix of numeric attributes
-## ' for single cell data. Rownames should be cell names.
+## ' @param attributes - An n x d (cell x attribute) matrix of numeric
+## ' attributes for single cell data. Rownames should be cell names.
 ## ' @param pseudotime - A named numeric vector of pseudotime values for cells.
 ## ' @param nWindows - The number of windows pseudotime should be split into to
 ## ' sample cells from. Defaults to 10.
@@ -366,13 +366,14 @@ samplePathTest = function(attributes, pseudotime, nWindows)
 ## ##########################################################################
 ## ' This tests the input to analyseSingleCellTrajectory.
 ## '
-## ' @param attributes - An n x d (cell x attribute) matrix of numeric attributes
-## '     for single cell data. Rownames should be cell names.
+## ' @param attributes - An n x d (cell x attribute) matrix of numeric
+## '  attributes for single cell data. Rownames should be cell names.
 ## ' @param pseudotime - A named numeric vector of pseudotime values for cells.
 ## ' @param randomizationParams - A character vector which is used to
 ## '     control the production of randomized paths for comparison.
 ## ' @param statistic - Allowable values are 'median', 'mean' or 'max'.
-## ' @param nSamples - The number of sampled paths to generate (defaults to 1000).
+## ' @param nSamples - The number of sampled paths to generate
+## '    (defaults to 1000).
 ## ' @param nWindows - The number of windows pseudotime should be split into to
 ## '     sample cells from (defaults to 10).
 ## ' @param d - The dimension under consideration.  This defaults to
@@ -429,14 +430,14 @@ analyseSingleCellTrajectoryTest = function(attributes, pseudotime,
 ## ##########################################################################
 ## ' This tests the input to analyseBranchPoint.
 ## '
-## ' @param attributes - An n x d (cell x attribute) matrix of numeric attributes
-## '     for single cell data. Rownames should be cell names.
+## ' @param attributes - An n x d (cell x attribute) matrix of numeric
+## '     attributes for single cell data. Rownames should be cell names.
 ## ' @param pseudotime - A named numeric vector of pseudotime values for cells.
 ## ' @param randomizationParams - A character vector which is used to
 ## '     control the production of randomized paths for comparison.
 ## ' @param statistic - Allowable values are 'median', 'mean' or 'max'.
-## ' @param start - The first pseudotime value (as a percentage of the trajectory)
-## '     from which to analyse the trajectory from.
+## ' @param start - The first pseudotime value (as a percentage of the
+## '     trajectory) from which to analyse the trajectory from.
 ## '     Defaults to 25\% of the way through the trajectory.
 ## ' @param stop - The last pseudotime value (as a percentage of the trajectory)
 ## '     from which to analyse the trajectory from.
@@ -444,7 +445,8 @@ analyseSingleCellTrajectoryTest = function(attributes, pseudotime,
 ## ' @param step - The size of the step to take between successively later
 ## '     starting points in pseudotime.
 ## '     Defaults to 5\% of the trajectory length.
-## ' @param nSamples - The number of sampled paths to generate (defaults to 1000).
+## ' @param nSamples - The number of sampled paths to generate (defaults to
+## '    1000).
 ## ' @param nWindows - The number of windows pseudotime should be split into to
 ## '    sample cells from (defaults to 10).
 ## ' @param d - The dimension under consideration.  This defaults to
@@ -514,13 +516,14 @@ analyseBranchPointTest = function(attributes, pseudotime, randomizationParams,
 ## ##########################################################################
 ## ' This tests the imput to distanceBetweenTrajectories
 ## '
-## ' @param attributes1 - An n x d (cell x attribute) matrix of numeric attributes
+## ' @param attributes1 - An n x d (cell x attribute) matrix of numeric
+## ' attributes
 ## ' for the first single cell trajectory.
 ## ' @param pseudotime1 - A named numeric vector of pseudotime values for the
 ## ' first single cell trajectory,
 ## '    names should match rownames of atrributes1.
-## ' @param attributes2 - An n x d (cell x attribute) matrix of numeric attributes
-## ' for the sencond single cell trajectory.
+## ' @param attributes2 - An n x d (cell x attribute) matrix of numeric
+## '     attributes for the sencond single cell trajectory.
 ## ' @return A successful test returns 0, otherwise execution halts.
 distanceBetweenTrajectoriesTest = function(attributes1,
                                         pseudotime1,

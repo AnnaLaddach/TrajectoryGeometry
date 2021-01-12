@@ -143,7 +143,9 @@
 #' PCA projections derived from normalised gene expression values for
 #' single cells. The columns are the PCs and the rows are the cells.
 #' }
-#' @source Single cell data
+#' @source Single-cell data has been obtained from GEO (GSE90047) and the script
+#'     used for upstream processing is available at
+#'     https://github.com/AnnaLaddach/TrajectoryGeometryData
 "single_cell_matrix"
 
 ## ###################################################
@@ -161,7 +163,9 @@
 #' from hepatoblast to hepatocyte. The columns are the PCs and the
 #' rows are the cells.
 #' }
-#' @source Single cell data
+#' @source Single-cell data has been obtained from GEO (GSE90047) and the script
+#'     used for upstream processing is available at
+#'     https://github.com/AnnaLaddach/TrajectoryGeometryData
 "hep_attributes"
 
 ## ###################################################
@@ -179,7 +183,9 @@
 #' from hepatoblast to cholangiocyte. The columns are the PCs and the
 #' rows are the cells.
 #' }
-#' @source Single cell data
+#' @source Single-cell data has been obtained from GEO (GSE90047) and the script
+#'     used for upstream processing is available at
+#'     https://github.com/AnnaLaddach/TrajectoryGeometryData
 "chol_attributes"
 
 ## ###################################################
@@ -197,7 +203,9 @@
 #' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
 #' }
-#' @source Single cell data
+#' @source Single-cell data has been obtained from GEO (GSE90047) and the script
+#'     used for upstream processing is available at
+#'     https://github.com/AnnaLaddach/TrajectoryGeometryData
 "hep_pseudo_time"
 
 ## ###################################################
@@ -215,7 +223,9 @@
 #' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
 #' }
-#' @source Single cell data
+#' @source Single-cell data has been obtained from GEO (GSE90047) and the script
+#'     used for upstream processing is available at
+#'     https://github.com/AnnaLaddach/TrajectoryGeometryData
 "chol_pseudo_time"
 
 ## ###################################################
@@ -234,7 +244,9 @@
 #' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
 #' }
-#' @source Single cell data
+#' @source Single-cell data has been obtained from GEO (GSE90047) and the script
+#'     used for upstream processing is available at
+#'     https://github.com/AnnaLaddach/TrajectoryGeometryData
 "hep_pseudo_time_normalised"
 
 ## ###################################################
@@ -254,7 +266,9 @@
 #' Pseudotime values have been inferred using the SlingShot
 #' package. The vector is named according to cell ID.
 #' }
-#' @source Single cell data
+#' @source Single-cell data has been obtained from GEO (GSE90047) and the script
+#'     used for upstream processing is available at
+#'     https://github.com/AnnaLaddach/TrajectoryGeometryData
 "chol_pseudo_time_normalised"
 
 ## ###################################################
@@ -267,7 +281,9 @@
 #' Results of running analyseSingleCellTrajectory() on a trajectory describing
 #' the development of hepatocytes from hepatoblasts.
 #' }
-#' @source Single cell data
+#' @source Single-cell data has been obtained from GEO (GSE90047) and the script
+#'     used for upstream processing is available at
+#'     https://github.com/AnnaLaddach/TrajectoryGeometryData
 "hep_answers"
 
 ## ###################################################
@@ -282,7 +298,9 @@
 #' a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
 #' }
-#' @source Single cell data
+#' @source Single-cell data has been obtained from GEO (GSE90047) and the script
+#'     used for upstream processing is available at
+#'     https://github.com/AnnaLaddach/TrajectoryGeometryData
 "chol_answers"
 
 ## ###################################################
@@ -297,5 +315,7 @@
 #' a trajectory describing the
 #' development of cholangiocytes from hepatoblasts.
 #' }
-#' @source Single cell data
+#' @source Single-cell data has been obtained from GEO (GSE90047) and the script
+#'     used for upstream processing is available at
+#'     https://github.com/AnnaLaddach/TrajectoryGeometryData
 "chol_branch_point_results"
