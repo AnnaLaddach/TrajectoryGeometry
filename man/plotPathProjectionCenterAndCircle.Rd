@@ -5,18 +5,18 @@
 \title{Plot a path, its projection, its center and its circle}
 \usage{
 plotPathProjectionCenterAndCircle(
-  path,
-  from = 1,
-  to = nrow(path),
-  projection,
-  center,
-  radius,
-  color,
-  circleColor = "white",
-  pathPointSize = 8,
-  projectionPointSize = 8,
-  scale = 1.5,
-  newFigure = TRUE
+path,
+from = 1,
+to = nrow(path),
+projection,
+center,
+radius,
+color,
+circleColor = "white",
+pathPointSize = 8,
+projectionPointSize = 8,
+scale = 1.5,
+newFigure = TRUE
 )
 }
 \arguments{
@@ -71,9 +71,9 @@ called repeatedly to add additional paths in different colors.
 }
 \examples{
 plotPathProjectionCenterAndCircle(path=straight_path,
-                                 projection=straight_path_projection,
-                                 center=straight_path_center,
-                                 radius=straight_path_radius,
-                                 color='red',
-                                 newFigure=TRUE)
+                                projection=straight_path_projection,
+                                center=straight_path_center,
+                                radius=straight_path_radius,
+                                color='red',
+                                newFigure=TRUE)
 }
