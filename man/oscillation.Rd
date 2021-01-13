@@ -13,7 +13,8 @@ near the beginning of a path.
 }
 }
 \source{
-This was created by code in createSyntheticData.R available from https://github.com/AnnaLaddach/TrajectoryGeometryData
+This was created by code in createSyntheticData.R available from
+   https://github.com/AnnaLaddach/TrajectoryGeometryData
 }
 \usage{
 oscillation

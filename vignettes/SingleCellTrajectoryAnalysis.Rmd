@@ -4,15 +4,15 @@ author: "Anna Laddach and Michael Shapiro"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-%\VignetteIndexEntry{SingleCellTrajectoryAnalysis}
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{SingleCellTrajectoryAnalysis}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-collapse = TRUE,
-comment = "#>"
+    collapse = TRUE,
+    comment = "#>"
 )
 ```
 # SingleCellTrajectoryAnalysis
@@ -134,20 +134,25 @@ hepAnswerSteps = testPathForDirectionality(hepPath[,1:3],
     randomizationParams = c('bySteps','preserveLengths'),
     statistic = "mean",
     N = 100)
-
-cat(paste("Mean distance of projected cholangiocyte pathway points from circle
-center:", cholAnswerPermutation$sphericalData$distance))
-cat(paste("\nMean distance of projected hepatocyte pathway points from circle
-    center:", hepAnswerPermutation$sphericalData$distance))
-
-cat("\n\nPermutation results")
-cat(paste("\nP value for cholangiocyte pathway:", cholAnswerPermutation$pValue))
-cat(paste("\nP value for hepatocyte pathway:", hepAnswerPermutation$pValue))
-
-cat("\n\nRandomisation by step results")
-cat(paste("\nP value for cholangiocyte pathway:", cholAnswerSteps$pValue))
-cat(paste("\nP value for hepatocyte pathway:", hepAnswerSteps$pValue))
 ```
+
+Mean distance of projected cholangiocyte pathway points from circle center:
+`r cholAnswerPermutation$sphericalData$distance`
+
+Mean distance of projected hepatocyte pathway points from circle center:
+`r hepAnswerPermutation$sphericalData$distance`
+
+**Permutation results**  
+
+* P value for cholangiocyte pathway: `r cholAnswerPermutation$pValue`
+
+* P value for hepatocyte pathway: `r hepAnswerPermutation$pValue`  
+
+**Randomisation by step results**
+
+* P value for cholangiocyte pathway: `r cholAnswerSteps$pValue`
+
+* P value for hepatocyte pathway: `r hepAnswerSteps$pValue`  
 
 It is clear that the sampled hepatocyte pathway has a lower distance metric
 (mean distance of projected pathway points from circle center) than the
@@ -174,7 +179,9 @@ plotPathProjectionCenterAndCircle(path=cholPath[,1:3],
 
 Screenshot of the resulting figure:
 
-![Cholangiocyte path plot](cholangiocytePathPlot.png)
+```{r, echo=FALSE, out.width="50%", fig.cap="Cholangiocyte path plot"}
+knitr::include_graphics("cholangiocytePathPlot.png")
+```
 
 The hepatocyte path:
 ```{r}
@@ -191,8 +198,9 @@ plotPathProjectionCenterAndCircle(path=hepPath[,1:3],
 
 Screenshot of the resulting figure:
 
-![Hepatocyte path plot](hepatocytePathPlot.png)
-
+```{r, echo=FALSE, out.width="50%", fig.cap="Hepatocyte path plot"}
+knitr::include_graphics("hepatocytePathPlot.png")
+```
 
 ## Sampling multiple paths
 
@@ -226,20 +234,20 @@ performed between sampled and random paths. Here a distance metric, which is
 indicative of how close the projected points are on the sphere, is used to
 compare paths. A lower distance indicates a more consistent directionality.
 
-```{r}
+```{r, fig.align = 'center'}
 cholResultDistance = visualiseTrajectoryStats(chol_answers, "distance")
 hepResultDistance = visualiseTrajectoryStats(hep_answers, "distance")
 
 #visualise plots
 cholResultDistance$plot
 hepResultDistance$plot
-
-cat(paste("Cholangiocyte p value (comparison of distance metric):",
-    cholResultDistance$stats$p.value))
-
-cat(paste("\nHepatocyte p value (comparison of distance metric):",
-    hepResultDistance$stats$p.value))
 ```
+
+Cholangiocyte p value (comparison of distance metric):
+`r cholResultDistance$stats$p.value`
+
+Hepatocyte p value (comparison of distance metric):
+`r hepResultDistance$stats$p.value`
 
 Although both cholangiocyte and hepatocyte trajectories show significant
 directionality in terms of their distance metric in comparison to random paths,
@@ -247,7 +255,7 @@ the hepatocyte trajectory has a far lower p-value.
 
 We can also directly compare distances for the cholangiocyte and hepatocyte
 pathways. Here statistics are calculated using unpaired Wilcox tests.
-```{r}
+```{r, fig.align = 'center'}
 distanceComparison = visualiseTrajectoryStats(chol_answers, "distance",
     traj2Data = hep_answers)
 # a violin plot is returned as distanceComparison$plot
@@ -256,10 +264,10 @@ distanceComparison = visualiseTrajectoryStats(chol_answers, "distance",
 
 distanceComparison$plot +
     scale_x_discrete(labels=c("Cholangiocyte","Hepatocyte"))
-
-cat(paste("Comparison of cholangiocyte and hepatocyte trajectories
-    (distance metric), p value:", distanceComparison$stats$p.value))
 ```
+
+Comparison of cholangiocyte and hepatocyte trajectories (distance metric), p
+value: `r distanceComparison$stats$p.value`
 
 From this, we can clearly see that the hepatocyte trajectory shows more
 consistent directionality than the cholangiocyte trajectory.
@@ -274,7 +282,7 @@ trajectories for each point along the cholangiocyte trajectory. The distances
 between the two trajectories should be very small before the branch point and
 increase as the trajectories diverge after the branch point.
 
-```{r}
+```{r, fig.align = 'center'}
 distances = distanceBetweenTrajectories(chol_attributes, chol_pseudo_time,
     hep_attributes)
 
@@ -305,7 +313,8 @@ chol_branch_point_results = analyseBranchPoint(chol_attributes[,1:3],
 ```
 
 Let's extract statistics and visualise the results.
-```{r}
+
+```{r, fig.align = 'center'}
 cholBranchPointStats = visualiseBranchPointStats(chol_branch_point_results)
 print(cholBranchPointStats$distancePlot)
 print(cholBranchPointStats$pValuePlot)
@@ -319,7 +328,7 @@ maintains more consistent directionality after the branch point.
 Let's investigate whether the same thing happens to the hepatocyte trajectory.
 First, let's estimate where the hepatocyte branch point is.
 
-```{r}
+```{r, fig.align = 'center'}
 distances = distanceBetweenTrajectories(hep_attributes, hep_pseudo_time,
                             chol_attributes)
 
@@ -345,7 +354,7 @@ hepBranchPointResults = analyseBranchPoint(hep_attributes[,1:3],
 ```
 Let's extract statistics and visualise results.
 
-```{r}
+```{r, fig.align = 'center'}
 hepBranchPointStats = visualiseBranchPointStats(hepBranchPointResults)
 print(hepBranchPointStats$distancePlot)
 print(hepBranchPointStats$pValuePlot)
