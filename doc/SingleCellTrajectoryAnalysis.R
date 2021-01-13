@@ -1,7 +1,7 @@
 ## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
-collapse = TRUE,
-comment = "#>"
+    collapse = TRUE,
+    comment = "#>"
 )
 
 ## ---- echo=FALSE, out.width="50%", fig.cap="hepatoblast trajectory"-----------
@@ -22,153 +22,150 @@ set.seed(42)
 
 ## -----------------------------------------------------------------------------
 #filter matrices
-cholAttributes = singleCellMatrix[!is.na(cholPseudoTime),]
-hepAttributes = singleCellMatrix[!is.na(hepPseudoTime),]
-
+chol_attributes = single_cell_matrix[!is.na(chol_pseudo_time),]
+hep_attributes = single_cell_matrix[!is.na(hep_pseudo_time),]
 #filter pseudotime values
-cholPseudoTime = cholPseudoTime[!is.na(cholPseudoTime)]
-hepPseudoTime = hepPseudoTime[!is.na(hepPseudoTime)]
+chol_pseudo_time = chol_pseudo_time[!is.na(chol_pseudo_time)]
+hep_pseudo_time = hep_pseudo_time[!is.na(hep_pseudo_time)]
 
 #normalise pseudotime values to range from 0 to 100
-cholPseudoTimeNormalised = cholPseudoTime  %>% {100*((. - min(.))/(max(.) - min(.)))}
-hepPseudoTimeNormalised = hepPseudoTime %>% {100*((. - min(.))/(max(.) - min(.)))}
+chol_pseudo_time_normalised =
+    chol_pseudo_time  %>% {100*((. - min(.))/(max(.) -min(.)))}
+hep_pseudo_time_normalised =
+    hep_pseudo_time %>% {100*((. - min(.))/(max(.)- min(.)))}
 
 ## -----------------------------------------------------------------------------
-cholPath = samplePath(cholAttributes, cholPseudoTimeNormalised)
-hepPath = samplePath(hepAttributes, hepPseudoTimeNormalised)
+cholPath = samplePath(chol_attributes, chol_pseudo_time_normalised)
+hepPath = samplePath(hep_attributes, hep_pseudo_time_normalised)
 
 ## -----------------------------------------------------------------------------
 cholAnswerPermutation = testPathForDirectionality(cholPath[,1:3],
-                                                randomizationParams = c('byPermutation','permuteWithinColumns'),
-                                                statistic = "mean", 
-                                                N = 100)
+    randomizationParams = c('byPermutation','permuteWithinColumns'),
+    statistic = "mean",
+    N = 100)
 
 hepAnswerPermutation = testPathForDirectionality(hepPath[,1:3],
-                                                randomizationParams = c('byPermutation','permuteWithinColumns'),
-                                                statistic = "mean", 
-                                                N = 100)
+    randomizationParams = c('byPermutation','permuteWithinColumns'),
+    statistic = "mean",
+    N = 100)
 
 cholAnswerSteps = testPathForDirectionality(cholPath[,1:3],
-                                            randomizationParams = c('bySteps','preserveLengths'),
-                                            statistic = "mean", 
-                                            N = 100)
+    randomizationParams = c('bySteps','preserveLengths'),
+    statistic = "mean",
+    N = 100)
 
 hepAnswerSteps = testPathForDirectionality(hepPath[,1:3],
-                                        randomizationParams = c('bySteps','preserveLengths'),
-                                        statistic = "mean", 
-                                        N = 100)
-
-cat(paste("Mean distance of projected cholangiocyte pathway points from circle center:", cholAnswerPermutation$sphericalData$distance))
-cat(paste("\nMean distance of projected hepatocyte pathway points from circle center:", hepAnswerPermutation$sphericalData$distance))
-
-cat("\n\nPermutation results")
-cat(paste("\nP value for cholangiocyte pathway:", cholAnswerPermutation$pValue))
-cat(paste("\nP value for hepatocyte pathway:", hepAnswerPermutation$pValue))
-
-cat("\n\nRandomisation by step results")
-cat(paste("\nP value for cholangiocyte pathway:", cholAnswerSteps$pValue))
-cat(paste("\nP value for hepatocyte pathway:", hepAnswerSteps$pValue))
+    randomizationParams = c('bySteps','preserveLengths'),
+    statistic = "mean",
+    N = 100)
 
 ## -----------------------------------------------------------------------------
 plotPathProjectionCenterAndCircle(path=cholPath[,1:3],
-                                projection=cholAnswerPermutation$sphericalData$projections,
-                                center=cholAnswerPermutation$sphericalData$center,
-                                radius=cholAnswerPermutation$sphericalData$distance,
-                                color=colors[cut(1:10,breaks=100)],
-                                circleColor = "white",
-                                pathPointSize = 8,
-                                projectionPointSize = 8,
-                                newFigure=TRUE)
+    projection=cholAnswerPermutation$sphericalData$projections,
+    center=cholAnswerPermutation$sphericalData$center,
+    radius=cholAnswerPermutation$sphericalData$distance,
+    color=colors[cut(1:10,breaks=100)],
+    circleColor = "white",
+    pathPointSize = 8,
+    projectionPointSize = 8,
+    newFigure=TRUE)
+
+## ---- echo=FALSE, out.width="50%", fig.cap="Cholangiocyte path plot"----------
+knitr::include_graphics("cholangiocytePathPlot.png")
 
 ## -----------------------------------------------------------------------------
 plotPathProjectionCenterAndCircle(path=hepPath[,1:3],
-                                projection=hepAnswerPermutation$sphericalData$projections,
-                                center=hepAnswerPermutation$sphericalData$center,
-                                radius=hepAnswerPermutation$sphericalData$distance,
-                                color=colors[cut(1:10,breaks=100)],
-                                circleColor = "white",
-                                pathPointSize = 8,
-                                projectionPointSize = 8,
-                                newFigure=TRUE)
+    projection=hepAnswerPermutation$sphericalData$projections,
+    center=hepAnswerPermutation$sphericalData$center,
+    radius=hepAnswerPermutation$sphericalData$distance,
+    color=colors[cut(1:10,breaks=100)],
+    circleColor = "white",
+    pathPointSize = 8,
+    projectionPointSize = 8,
+    newFigure=TRUE)
+
+## ---- echo=FALSE, out.width="50%", fig.cap="Hepatocyte path plot"-------------
+knitr::include_graphics("hepatocytePathPlot.png")
 
 ## -----------------------------------------------------------------------------
-cholAnswers = analyseSingleCellTrajectory(attributes = cholAttributes[,1:3],
-                                        pseudotime = cholPseudoTimeNormalised, 
-                                        randomizationParams = c('byPermutation','permuteWithinColumns'), 
-                                        statistic = "mean", 
-                                        nSamples = 100,
-                                        N = 1)
-# #N.B N = 1 allows us to generate a single random path parameterised on each sampled path.
-  
-hepAnswers = analyseSingleCellTrajectory(hepAttributes[,1:3], 
-                                        hepPseudoTimeNormalised, 
-                                        randomizationParams = c('byPermutation','permuteWithinColumns'), 
-                                        statistic = "mean", 
-                                        nSamples = 100, 
-                                        N = 1)
+chol_answers = analyseSingleCellTrajectory(attributes = chol_attributes[,1:3],
+    pseudotime = chol_pseudo_time_normalised,
+    randomizationParams = c('byPermutation','permuteWithinColumns'),
+    statistic = "mean",
+    nSamples = 100,
+    N = 1)
+# #N.B N = 1 allows us to generate a single random path parameterised on each
+# sampled path.
 
-## -----------------------------------------------------------------------------
-cholResultDistance = visualiseTrajectoryStats(cholAnswers, "distance")
-hepResultDistance = visualiseTrajectoryStats(hepAnswers, "distance")
+hep_answers = analyseSingleCellTrajectory(hep_attributes[,1:3],
+    hep_pseudo_time_normalised,
+    randomizationParams = c('byPermutation','permuteWithinColumns'),
+    statistic = "mean",
+    nSamples = 100,
+    N = 1)
+
+## ---- fig.align = 'center'----------------------------------------------------
+cholResultDistance = visualiseTrajectoryStats(chol_answers, "distance")
+hepResultDistance = visualiseTrajectoryStats(hep_answers, "distance")
 
 #visualise plots
 cholResultDistance$plot
 hepResultDistance$plot
 
-cat(paste("Cholangiocyte p value (comparison of distance metric):", cholResultDistance$stats$p.value))
-
-cat(paste("\nHepatocyte p value (comparison of distance metric):", hepResultDistance$stats$p.value)) 
-
-## -----------------------------------------------------------------------------
-distanceComparison = visualiseTrajectoryStats(cholAnswers, "distance", traj2Data = hepAnswers)
+## ---- fig.align = 'center'----------------------------------------------------
+distanceComparison = visualiseTrajectoryStats(chol_answers, "distance",
+    traj2Data = hep_answers)
 # a violin plot is returned as distanceComparison$plot
-# below we change x axis labels to indicate that the two trajectories being compared are neural and glial trajectories. 
-distanceComparison$plot + scale_x_discrete(labels=c("Cholangiocyte","Hepatocyte"))
+# below we change x axis labels to indicate that the two trajectories being
+# compared are neural and glial trajectories.
 
-cat(paste("Comparison of cholangiocyte and hepatocyte trajectories (distance metric), p value:", distanceComparison$stats$p.value)) 
+distanceComparison$plot +
+    scale_x_discrete(labels=c("Cholangiocyte","Hepatocyte"))
+
+## ---- fig.align = 'center'----------------------------------------------------
+distances = distanceBetweenTrajectories(chol_attributes, chol_pseudo_time,
+    hep_attributes)
+
+plot(distances$pseudotime, distances$distance,
+    xlab = "cholangiocyte pseudotime", ylab = "minimum distance")
 
 ## -----------------------------------------------------------------------------
-distances = distanceBetweenTrajectories(cholAttributes, cholPseudoTime,
-                            hepAttributes)
-
-plot(distances$pseudotime, distances$distance, xlab = "cholangiocyte pseudotime", ylab = "minimum distance")
-
-## -----------------------------------------------------------------------------
-cholBranchPointResults = analyseBranchPoint(cholAttributes[,1:3], 
-                                        cholPseudoTime,
+chol_branch_point_results = analyseBranchPoint(chol_attributes[,1:3],
+                                        chol_pseudo_time,
                                         randomizationParams = c("byPermutation",
-                                                        "permuteWithinColumns"), 
+                                                        "permuteWithinColumns"),
                                         statistic = "mean",
                                         start = 0,
                                         stop = 50,
                                         step = 5,
-                                        nSamples = 100, 
+                                        nSamples = 100,
                                         N = 1)
 
-## -----------------------------------------------------------------------------
-cholBranchPointStats = visualiseBranchPointStats(cholBranchPointResults)
+## ---- fig.align = 'center'----------------------------------------------------
+cholBranchPointStats = visualiseBranchPointStats(chol_branch_point_results)
 print(cholBranchPointStats$distancePlot)
 print(cholBranchPointStats$pValuePlot)
 
-## -----------------------------------------------------------------------------
-distances = distanceBetweenTrajectories(hepAttributes, hepPseudoTime,
-                            cholAttributes)
+## ---- fig.align = 'center'----------------------------------------------------
+distances = distanceBetweenTrajectories(hep_attributes, hep_pseudo_time,
+                            chol_attributes)
 
-plot(distances$pseudotime, distances$distance, xlab = "hepatocyte pseudotime", ylab = "minimum distance")
-
-## -----------------------------------------------------------------------------
-hepBranchPointResults = analyseBranchPoint(hepAttributes[,1:3], 
-                                        hepPseudoTime,
-                                        randomizationParams = c("byPermutation",
-                                                        "permuteWithinColumns"), 
-                                        statistic = "mean",
-                                        start = 0,
-                                        stop = 50,
-                                        step = 5,
-                                        nSamples = 100, 
-                                        N = 1)
+plot(distances$pseudotime, distances$distance, xlab = "hepatocyte pseudotime",
+    ylab = "minimum distance")
 
 ## -----------------------------------------------------------------------------
+hepBranchPointResults = analyseBranchPoint(hep_attributes[,1:3],
+    hep_pseudo_time,
+    randomizationParams = c("byPermutation",
+    "permuteWithinColumns"),
+    statistic = "mean",
+    start = 0,
+    stop = 50,
+    step = 5,
+    nSamples = 100,
+    N = 1)
+
+## ---- fig.align = 'center'----------------------------------------------------
 hepBranchPointStats = visualiseBranchPointStats(hepBranchPointResults)
 print(hepBranchPointStats$distancePlot)
 print(hepBranchPointStats$pValuePlot)
