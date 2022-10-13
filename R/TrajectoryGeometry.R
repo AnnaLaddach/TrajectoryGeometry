@@ -641,6 +641,38 @@ pathProgression = function(path,from=1,to=nrow(path),d=ncol(path),
     return(distance)
 }
 
+## ##########################################################################
+#' Portion of cell variance in a given direction
+#'
+#' This function takes a direction and a set of cells epressed in PCs
+#' and determines the fraction of total variance in the given
+#' direction.
+#'
+#' @param direction - a numeric giving the direction expressed in PCs
+#' @param cells - a set of cells given as a matrix where each row is a
+#'     cell and each column is a PC.  This must have at least as many
+#'     PCs as the direction
+#' @return The fraction of total variance (across that many PCs) in
+#'     the given direction.
+#' @export
+varianceInDirection = function(direction,cells)
+{
+    varianceInDirectionTest(direction,cells)
+    
+    numPCs = length(direction)
+    cells = cells[,1:numPCs]
+
+    varianceInCells = c()
+    for(pc in colnames(cells))
+        varianceInCells[pc] = var(cells[,pc])
+
+    totalVariance = sum(varianceInCells)
+
+    progression = pathProgression(path=cells,direction=direction)
+    varianceInDirection = var(progression)
+
+    return(varianceInDirection / totalVariance)
+}
 
 ## ##########################################################################
 #' Sample a path from single cell data
@@ -1171,11 +1203,13 @@ plotPathProjectionCenterAndCircle = function(path,
 
     ## ###################################################
     ## Plot the projection:
-    points3d(projection,size=projectionPointSize,color=color)
+    ## XXXX
+    points3d(projection,size=projectionPointSize,color='blue')
 
     ## ###################################################
     ## Plot the center:
-    points3d(matrix(center,nrow=1),size=centerSize,color=color)
+    ## XXXX
+    points3d(matrix(center,nrow=1),size=centerSize,color='yellow')
 
     ## ###################################################
     ## Plot the circle:

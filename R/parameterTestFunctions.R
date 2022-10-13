@@ -333,6 +333,26 @@ pathProgressionTest = function(path,from,to,d,direction)
     return(0)
 }
 
+## ####################################################
+## ' This tests the inputs for varianceInDirection
+## ' @param direction  - a numeric giving the direction expressed in PCs
+## ' @param cells - a set of cells given as a matrix where each row is a
+## '     cell and each column is a PC.  This must have at least as many
+## '     PCs as the direction
+## ' @return The fraction of total variance (across that many PCs) in
+## '     the given direction.
+varianceInDirectionTest = function(direction,cells)
+{
+    if(! is(direction,'numeric'))
+        stop('varianceInDirection expects direction to be a numeric')
+    if(! is(cells,'matrix'))
+        stop('varianceInDirection expects cells to be a matrix')
+
+    if(ncol(cells) < length(direction))
+        stop(paste('varianceInDirection expects cells to have at',
+                   'least as many PCs as direction'))
+}
+
 ## ##########################################################################
 ## ' This tests the inputs for samplePath.
 ## '

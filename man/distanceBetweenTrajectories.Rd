@@ -34,6 +34,6 @@ attributes over pseudotime
 }
 \examples{
 distances = distanceBetweenTrajectories(chol_attributes,
-                                chol_pseudo_time[!is.na(chol_pseudo_time)],
-                                hep_attributes)
+                                 chol_pseudo_time[!is.na(chol_pseudo_time)],
+                                 hep_attributes)
 }
