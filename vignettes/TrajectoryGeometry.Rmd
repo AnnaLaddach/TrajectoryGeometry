@@ -45,8 +45,7 @@ this mean distance.  We can see that some of the early steps produce
 outliers on the sphere.
 
 
-```{r, echo=FALSE, out.width="50%",
-    fig.cap="A path and its projection to the sphere."}
+```{r, echo=FALSE, out.width="50%",fig.cap="A path and its projection to the sphere"}
 knitr::include_graphics("pathAndSphere.png")
 ```
 
@@ -59,67 +58,67 @@ component analysis of the data set.
 
 ### A Path gives points on a sphere
 
-Suppose we have a matrix $latex X$ with $latex N$ rows and $latex D$
+Suppose we have a matrix $X$ with $N$ rows and $D$
 columns. Here we consider each row as a time point and each each
 column as a feature which could be expression or normalized expression
 of a given gene or a principal component.  We therefore have a
-path consisting of $latex N$ points in $latex D$ dimensional space.
+path consisting of $N$ points in $D$ dimensional space.
 In our experience, biological trajectories are capable of changing
 direction, so we may wish to query the data for directionality
-starting at the $latex k$th time point.  Let $latex x_i$ be the $latex
-i$th row of $latex X$.  We will consider the matrix $latex X'$
-starting with the $latex k$th row of $latex X$. We view the successive
-points from $latex x_k$ and consider the successive vectors $latex
-y_1=x_{k+1} - x_k$, $latex y_2=x_{k+2} - x_k$, ..., $latex y_m=x_{N} -
-x_k$.  (Thus $latex m = N - k - 1$.)  Taking $$latex p_i = { y_i \over
-|| y_i ||}$$ gives $latex m$ points on the unit sphere which represent
-the directionality of the path $latex x_k, \dots, x_N$.
+starting at the $k$th time point.  Let $x_i$ be the $
+i$th row of $X$.  We will consider the matrix $X'$
+starting with the $k$th row of $X$. We view the successive
+points from $x_k$ and consider the successive vectors $
+y_1=x_{k+1} - x_k$, $y_2=x_{k+2} - x_k$, ..., $y_m=x_{N} -
+x_k$.  (Thus $m = N - k - 1$.)  Taking $$ p_i = { y_i \over
+|| y_i ||}$$ gives $m$ points on the unit sphere which represent
+the directionality of the path $x_k, \dots, x_N$.
 
 ### How close are these points on the sphere?
 
-We would like to measure how compactly a set of points $latex
+We would like to measure how compactly a set of points $
 p_1,\dots,p_m$ sit on the sphere.  To to this we would like to find a
-center for these points and a circle (more generally as $latex N-2$
+center for these points and a circle (more generally as $N-2$
 dimensional sphere) which measures their collective
 separation from that center.  The measure of their collective distance
 from their center could be their median, their mean or their maximum
 distance from this center.  The center is chosen to minimize whichever
 summary statistic we're using.  Distance in this context is spherical
 distance, i.e., the angular distance between points as viewed from the
-center of the sphere.  That is, we take $latex \mu$ to be one of the
+center of the sphere.  That is, we take $\mu$ to be one of the
 functions median, mean or max.  The center is then
-$$latex C = {\mathrm{argmin}}_x
+$$ C = {\mathrm{argmin}}_x
 \mu(d(x,p_1),d(x,p_2),\dots,d(x,p_m))$$
 and
-$$latex R_\mu = \mu(d(x,p_1),d(x,p_2),\dots,d(x,p_m))$$
+$$ R_\mu = \mu(d(x,p_1),d(x,p_2),\dots,d(x,p_m))$$
 In this way, we get a map
-$$latex X' \mapsto R_\mu $$
-and we take $latex R_\mu$ as our measure of the clustering of the
-points $latex p_i$ and therefore of the directionality of $latex X'$.
+$$ X' \mapsto R_\mu $$
+and we take $R_\mu$ as our measure of the clustering of the
+points $p_i$ and therefore of the directionality of $X'$.
 
 ### Testing for statistical significance
 
 We would like to test whether this clustering is statistically
-significant.  To ask whether the points $latex p_i$ are close is to
+significant.  To ask whether the points $p_i$ are close is to
 ask, close compared to what?  We do this by producing $K$ randomized paths
-$latex Y_1, \dots, Y_K$ modeled on $latex X'$.  For each of these we
-compute $latex R_{\mu,i}$.  A p-value for the directionality of $latex
-X'$ comes from the ranking of $latex R_\mu$ among $latex R_{\mu,1},
+$ Y_1, \dots, Y_K$ modeled on $X'$.  For each of these we
+compute $R_{\mu,i}$.  A p-value for the directionality of $
+X'$ comes from the ranking of $R_\mu$ among $R_{\mu,1},
 \dots, R_{\mu,K}$.  If it is less than all but 5% of these, you have
 detected a p-value of p<0.05.
 
 ### Randomization
 
 This package offers several methods for producing a set of randomized
-paths based on a path $latex X$.  They are roughly divided into two
+paths based on a path $X$.  They are roughly divided into two
 methods.  One produces a random path by taking random steps in the
-ambient space of $latex X$  and one produces random paths by permuting
-the entries in $latex X$.
+ambient space of $X$  and one produces random paths by permuting
+the entries in $X$.
 
 * Random steps.  Here we produce a path starting at the same point as
-$latex X$ and having the same number steps.  
+$ X$ and having the same number steps.  
 * There is an option to require the steps to have the same length as
-those of $latex X$.  This is done by including 'preserveLengths' in
+those of $X$.  This is done by including 'preserveLengths' in
 the randomization parameter.  If this is omitted all steps will have
 length 1.
 ```{r message=FALSE}
@@ -141,8 +140,8 @@ Y = generateRandomPaths(path=straight_path,
                         N=10)
 ```
 * Permutation.  Here we produce the randomized paths by permuting the
-entries of $latex X$.  This can be done either by permuting the
-entries of $latex X$ freely or permuting values within each column
+entries of $X$.  This can be done either by permuting the
+entries of $X$ freely or permuting values within each column
 spearately.  The former may be appropriate in the case of PCA data
 or in the case of normalized gene expression data where the
 expression levels are fairly uniform between genes.  However, in the
@@ -174,11 +173,11 @@ progress = pathProgression(crooked_path,from=6,direction=crooked_path_center)
 
 A related issue which can also be checked using pathProgression() is
 the instability of behavior in the neighborhood of the starting point
-of a path.  Consider a path which starts at a point $latex P_0$ and
-after oscillating small distances in the neighborhood of $latex P_0$
-proceeds in a highly directional manner towards a point $latex P_k$.
+of a path.  Consider a path which starts at a point $P_0$ and
+after oscillating small distances in the neighborhood of $P_0$
+proceeds in a highly directional manner towards a point $P_k$.
 We would like to see this as a highly directional path.  However, the
-oscillations around $latex P_0$, no matter how small, can in
+oscillations around $P_0$, no matter how small, can in
 projection occupy large portions of the sphere.  Accordingly
 testPathForDirectionality() may be bamboozled out of detecting
 directionality.  A prophylaxis against this is the following:
